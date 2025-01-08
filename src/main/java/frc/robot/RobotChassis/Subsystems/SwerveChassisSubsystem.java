@@ -8,8 +8,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.PathPlannerLogging;
-// import com.studica.frc.AHRS;
-// import com.studica.frc.AHRS.NavXComType;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -60,12 +60,12 @@ public class SwerveChassisSubsystem extends SubsystemBase {
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
   // NavX gyro sensor
-  //private final AHRS m_navxgyro = new AHRS(NavXComType.kMXP_SPI);
+  private final AHRS m_navxgyro = new AHRS(NavXComType.kMXP_SPI);
 
   // Pose estimator object
   public SwerveDrivePoseEstimator swervePoseEstimator = new SwerveDrivePoseEstimator(
     DriveConstants.kDriveKinematics, 
-    Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)/* m_navxgyro.getAngle */ - 90), 
+    Rotation2d.fromDegrees(m_navxgyro.getAngle()/* m_navxgyro.getAngle */ - 90), 
     getModulePositions(),
     new Pose2d(0, 0, getGyroZ())
   );
@@ -101,10 +101,11 @@ public class SwerveChassisSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
+
     // Update pose estimation
     swervePoseEstimator.updateWithTime(
       Timer.getFPGATimestamp(), 
-      Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle */), 
+      Rotation2d.fromDegrees(m_navxgyro.getAngle() /* m_navxgyro.getAngle */), 
       getModulePositions());
 
     // Add the vision estimate if new data is availible (BROKEN)
@@ -119,6 +120,8 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {field.setRobotPose(pose);});
     PathPlannerLogging.setLogTargetPoseCallback((pose) -> {field.getObject("target pose").setPose(pose);});
     PathPlannerLogging.setLogActivePathCallback((poses) -> {field.getObject("path").setPoses(poses);});
+
+    SmartDashboard.putNumber("yaw", m_navxgyro.getAngle());
     
   }
 
@@ -138,7 +141,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     swervePoseEstimator.resetPosition(
-      Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle */),
+      Rotation2d.fromDegrees(m_navxgyro.getAngle() /* m_navxgyro.getAngle */),
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
@@ -207,10 +210,10 @@ public class SwerveChassisSubsystem extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    m_gyro.reset();
-    /* m_navxgyro.zeroYaw(); */
-    m_gyro.setGyroAngleZ(DriveConstants.kGyroOffset); // Add offset so the intake is the front
-    /* m_navxgyro.setAngleAdjustment(DriveConstants.kGyroOffset); */
+    // m_navxgyro.reset();
+    m_navxgyro.zeroYaw();
+    // m_navxgyro.setGyroAngleZ(DriveConstants.kGyroOffset); // Add offset so the intake is the front
+    m_navxgyro.setAngleAdjustment(DriveConstants.kGyroOffset);
   }
 
   /**
@@ -219,12 +222,12 @@ public class SwerveChassisSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle() */).getDegrees();
+    return Rotation2d.fromDegrees(m_navxgyro.getAngle() /* m_navxgyro.getAngle() */).getDegrees();
   }
 
   // Need to get the Rotation2D object from gyro for certain field oriented control commands
   public Rotation2d getGyroZ() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle() */);
+    return Rotation2d.fromDegrees(m_navxgyro.getAngle() /* m_navxgyro.getAngle() */);
   }
 
   /**
@@ -233,7 +236,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return m_gyro.getRate(IMUAxis.kZ) /* m_navxgyro.getRate() */ * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return m_navxgyro.getRate() /* m_navxgyro.getRate() */ * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
   public ChassisSpeeds getChassisSpeeds() {
