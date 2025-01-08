@@ -12,6 +12,7 @@ public final class Configs {
     public static final class MAXSwerveModule {
         public static final SparkMaxConfig drivingConfig = new SparkMaxConfig();
         public static final SparkMaxConfig turningConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig invertedConfig = new SparkMaxConfig();
 
         static {
             // Use module constants to calculate conversion factors and feed forward gain.
@@ -19,6 +20,9 @@ public final class Configs {
                     / ModuleConstants.kDrivingMotorReduction;
             double turningFactor = 2 * Math.PI;
             double drivingVelocityFeedForward = 1 / ModuleConstants.kDriveWheelFreeSpeedRps;
+            double drivingP = 0.04;
+            double drivingI = 0;
+            double drivingD = 0;
 
             drivingConfig
                     .idleMode(IdleMode.kBrake)
@@ -29,7 +33,7 @@ public final class Configs {
             drivingConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     // These are example gains you may need to modify them for your own robot!
-                    .pid(0.04, 0, 0)
+                    .pid(drivingP, drivingI, drivingD)
                     .velocityFF(drivingVelocityFeedForward)
                     .outputRange(-1, 1);
 
@@ -53,6 +57,19 @@ public final class Configs {
                     // longer route.
                     .positionWrappingEnabled(true)
                     .positionWrappingInputRange(0, turningFactor);
+            invertedConfig
+                    .idleMode(IdleMode.kBrake)
+                    .smartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit)
+                    .inverted(true);
+            invertedConfig.encoder
+                    .positionConversionFactor(drivingFactor) // meters
+                    .velocityConversionFactor(drivingFactor / 60.0); // meters per second
+            invertedConfig.closedLoop
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    // These are example gains you may need to modify them for your own robot!
+                    .pid(drivingP, drivingI, drivingD)
+                    .velocityFF(drivingVelocityFeedForward)
+                    .outputRange(-1, 1);
         }
     }
 
