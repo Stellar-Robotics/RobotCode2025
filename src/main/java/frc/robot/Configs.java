@@ -74,6 +74,27 @@ public final class Configs {
         }
     }
 
+    public static final class AlgaeIntakeConfig {
+
+        public static final SparkMaxConfig pickupMotorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig extensionMotorConfig = new SparkMaxConfig();
+
+        static {
+
+        pickupMotorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(30);
+
+        extensionMotorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(20);
+        
+
+        }
+        
+
+    }
+
     public static final class PathPlanner {
 
         public static RobotConfig pathPlannerConfig;
