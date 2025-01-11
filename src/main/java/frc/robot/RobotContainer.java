@@ -15,6 +15,8 @@ import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.StellarController;
 import frc.robot.RobotControl.Commands.DriveWithRotaryCommand;
+import frc.robot.RobotMechansims.AlgaeIntake.Subsystems.AlgaeIntake;
+import frc.robot.RobotMechansims.PrimaryElevator.Subsystems.PrimaryElevator;
 import frc.robot.RobotVision.VisionSubsystem;
 
 public class RobotContainer {

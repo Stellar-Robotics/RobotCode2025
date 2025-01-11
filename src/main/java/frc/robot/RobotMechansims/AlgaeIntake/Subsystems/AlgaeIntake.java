@@ -27,7 +27,16 @@ public class AlgaeIntake extends SubsystemBase {
     extensionMotor.configure(Configs.AlgaeIntakeConfig.extensionMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     pickupMotor.configure(Configs.AlgaeIntakeConfig.pickupMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+  }
 
+  public void reversePickup() {
+
+    pickupMotor.set(-0.5);
+  }
+
+  public void runPickup() {
+
+    pickupMotor.set(0.5);
   }
 
   @Override

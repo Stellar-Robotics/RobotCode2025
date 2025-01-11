@@ -95,6 +95,22 @@ public final class Configs {
 
     }
 
+    public static final class PrimaryElevatorConfig {
+
+        public static final SparkMaxConfig elevatorMotorConfig = new SparkMaxConfig();
+
+        static {
+
+                elevatorMotorConfig
+                        .idleMode(IdleMode.kBrake)
+                        .smartCurrentLimit(25);
+                elevatorMotorConfig.closedLoop
+                        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                        .pid(0.2, 0, 0);
+        }
+
+    }
+
     public static final class PathPlanner {
 
         public static RobotConfig pathPlannerConfig;
