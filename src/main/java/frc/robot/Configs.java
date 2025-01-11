@@ -5,6 +5,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.BaseConstants.ModuleConstants;
 import frc.robot.BaseConstants.PathPlannerConstants;
 
@@ -59,16 +60,21 @@ public final class Configs {
     public static final class PathPlanner {
 
         public static RobotConfig pathPlannerConfig;
+
+        // Configure Me Please
+        public static Translation2d[] moduleOffsets = {
+                new Translation2d(0, 0), // FL
+                new Translation2d(0, 0), // FR
+                new Translation2d(0, 0), // BL
+                new Translation2d(0, 0)  // BR         
+        };
         
         static {
-
-                // Configure holonomic profile
                 pathPlannerConfig = new RobotConfig(
-                PathPlannerConstants.massKG, 
-                PathPlannerConstants.momentOfInertia, 
-                PathPlannerConstants.moduleConfig, 
-                PathPlannerConstants.trackWidth,
-                PathPlannerConstants.wheelBase
+                        PathPlannerConstants.massKG, 
+                        PathPlannerConstants.momentOfInertia, 
+                        PathPlannerConstants.moduleConfig, 
+                        moduleOffsets
                 );
         }
     }
