@@ -3,6 +3,7 @@ package frc.robot;
 import com.pathplanner.lib.config.RobotConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -104,9 +105,15 @@ public final class Configs {
                 elevatorMotorConfig
                         .idleMode(IdleMode.kBrake)
                         .smartCurrentLimit(25);
+                elevatorMotorConfig.encoder
+                        .positionConversionFactor(18); // Please validate before use.
                 elevatorMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                         .pid(0.2, 0, 0);
+                elevatorMotorConfig.limitSwitch // The elevator will also have a limit switch
+                        .forwardLimitSwitchEnabled(true)
+                        .forwardLimitSwitchType(Type.kNormallyClosed)
+                        .setSparkMaxDataPortConfig();
         }
 
     }

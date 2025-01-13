@@ -14,14 +14,16 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.RobotUtilities.MiscUtils;
 
 public class PrimaryElevator extends SubsystemBase {
 
-  // Declare the variable that will hold the motor object.
+  // Constants specific to this mechanism
+  private final double maxHeightExtensionRotations = 0; // Set Me Plz
+
+  // Declare the variables to store their respective objects.
   private final SparkMax elevatorMotor;
-
   private final RelativeEncoder elevatorEncoder;
-
   private final SparkClosedLoopController elevatorCLC;
 
   /** Creates a new PrimaryElevator. */
@@ -29,19 +31,30 @@ public class PrimaryElevator extends SubsystemBase {
 
     // Put a new motor object into the elevatorMotor variable.
     elevatorMotor = new SparkMax(motorId, MotorType.kBrushless);
-    // Got the encoder from another object and put it in the elevatorEncoder.
+
+    // Get encoder and clc and put them in their respective variables
     elevatorEncoder = elevatorMotor.getEncoder();
-    // Get closed loop controler
     elevatorCLC = elevatorMotor.getClosedLoopController();
 
+    // Apply configuration in Configs
     elevatorMotor.configure(Configs.PrimaryElevatorConfig.elevatorMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
+  @Deprecated
+/* Use goToPositionClamped instead. */
   public void goToPosition(double position) {
-
     elevatorCLC.setReference(position, ControlType.kDutyCycle);
+  }
 
+  // Set the position of the elevator using CLC.  (Contains a clamp for safety)
+  public void goToPositionClamped(double position) {
+    elevatorCLC.setReference(MiscUtils.clamp(0, maxHeightExtensionRotations, position), ControlType.kDutyCycle);
+  }
+
+  // Get the position of the elevator
+  public double getPosition() {
+    return elevatorEncoder.getPosition();
   }
 
   
