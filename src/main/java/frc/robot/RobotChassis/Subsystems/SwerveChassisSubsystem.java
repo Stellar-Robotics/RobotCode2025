@@ -108,8 +108,8 @@ public class SwerveChassisSubsystem extends SubsystemBase {
       Rotation2d.fromDegrees(-m_navxgyro.getAngle()), 
       getModulePositions());
 
-    // Add the vision estimate if new data is availible (BROKEN)
-    var visionEst = RobotContainer.getSingletonInstance().getVisionEstimate(); // (Causes sim to throw a SparkMax duplicate instance error!)
+    // Add the vision estimate if new data is availible
+    var visionEst = RobotContainer.getSingletonInstance().getVisionEstimate();
     if (visionEst != null) {
       // add vision estimate to pose
       swervePoseEstimator.addVisionMeasurement(visionEst, Timer.getFPGATimestamp());
