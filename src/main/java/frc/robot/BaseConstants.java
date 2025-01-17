@@ -72,7 +72,7 @@ public final class BaseConstants {
 
     // Gyro Orintation
     public static final boolean kGyroReversed = false;
-    public static final double kGyroOffset = -90;
+    public static final double kGyroOffset = -270; // was at -90
   }
 
   public static final class ModuleConstants {

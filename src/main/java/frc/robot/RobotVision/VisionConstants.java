@@ -22,7 +22,7 @@ public class VisionConstants {
         /* These names are the same as the camera name in
          * chosen the photon client for each camera and
          * are identified as so in network tables */ 
-        public static final String cameraName1 = "StellarVision1";
+        public static final String cameraName1 = "StellarVision";
 
     }
 
@@ -33,7 +33,8 @@ public class VisionConstants {
         public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.5/*-0.3524*/, 0, 0.2318), new Rotation3d(0, Math.toRadians(-32), Math.toRadians(185)));
 
         // Get apriltag position data via FIRST provided json file (ChangeMe for 2025)
-        public static final AprilTagFieldLayout tagPositions = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+        public static final AprilTagFieldLayout tagPositions = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+
 
     }
 
