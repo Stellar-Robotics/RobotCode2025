@@ -29,19 +29,15 @@ public class AlgaeIntake extends SubsystemBase {
 
   }
 
-  public void reversePickup() {
+  // Speed was set to 0.5
+  public void runPickup(double speed) {
 
-    pickupMotor.set(-0.5);
-  }
-
-  public void runPickup() {
-
-    pickupMotor.set(0.5);
+    pickupMotor.set(speed);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
+    
   }
 }
