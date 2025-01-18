@@ -36,6 +36,7 @@ public RobotContainer() {
 
   /* Initialization code is handled by calling initializeRobot in the Robot class */
   initiateRobot();
+
 }
 
   /* This class is utilizing the singleton pattern
@@ -83,7 +84,6 @@ public RobotContainer() {
 
     // Set vision periodic to run periodicly
     vision.setDefaultCommand(new RunCommand(() -> {vision.periodic();}, vision));
-
   }
 
   public Command getAutonomousCommand() {

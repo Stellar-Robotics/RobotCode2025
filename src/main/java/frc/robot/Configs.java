@@ -131,12 +131,18 @@ public final class Configs {
         };
         
         static {
-                pathPlannerConfig = new RobotConfig(
-                        PathPlannerConstants.massKG, 
-                        PathPlannerConstants.momentOfInertia, 
-                        PathPlannerConstants.moduleConfig, 
-                        moduleOffsets
-                );
+
+                try {
+                        pathPlannerConfig = RobotConfig.fromGUISettings();
+                } catch (Exception e) {
+                        System.out.println("PathPlanner Auto Config Failed, Falling back!");
+                        pathPlannerConfig = new RobotConfig(
+                                PathPlannerConstants.massKG, 
+                                PathPlannerConstants.momentOfInertia, 
+                                PathPlannerConstants.moduleConfig, 
+                                moduleOffsets
+                        );   
+                }
         }
     }
 }

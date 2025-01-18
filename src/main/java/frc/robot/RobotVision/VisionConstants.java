@@ -30,7 +30,7 @@ public class VisionConstants {
 
         // Camera 1 position relative to the robot center ([Facing Backward In Center][Quarter and a half Meter Backwards][A Quarter Meter Up][Tilted Upward Half A Radian]) (+X is front of robot)
         //public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.35, 0, 0.25), new Rotation3d(0, -0.535 * Math.PI, Math.toRadians(180)));
-        public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.5/*-0.3524*/, 0, 0.2318), new Rotation3d(0, Math.toRadians(-32), Math.toRadians(185)));
+        public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.5/*-0.3524*/, 0, 0.2318), new Rotation3d(0, Math.toRadians(-32), Math.toRadians(180)));
 
         // Get apriltag position data via FIRST provided json file (ChangeMe for 2025)
         public static final AprilTagFieldLayout tagPositions = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
