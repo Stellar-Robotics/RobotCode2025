@@ -72,15 +72,14 @@ public class MiscUtils {
 
     // A quick function to get red aliance status
     public static BooleanSupplier isRedAlliance() {
-
-        var alliance = DriverStation.getAlliance();
-
-        if (alliance.isPresent()) {
-            return () -> alliance.get() == DriverStation.Alliance.Red;
-        }
-
-        return () -> false;
-
+        // Return an anonymous function for the caller to run when needed
+        return () -> {
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+            }
+            return false;
+        };
     }
 
     // A function to normaize the PID setpoint in order to eliminate osscilations along -180 and 180
