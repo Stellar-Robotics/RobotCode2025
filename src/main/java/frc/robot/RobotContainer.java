@@ -7,16 +7,14 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
-import frc.robot.RobotControl.StellarController;
+import frc.robot.RobotControl.CommandStellarController;
 import frc.robot.RobotControl.Commands.DriveWithRotaryCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 
@@ -27,8 +25,8 @@ public class RobotContainer {
   private VisionSubsystem vision; // Vision subsystem
 
   // Declare controllers
-  public StellarController driverController = new StellarController(0);
-  public XboxController operatorController = new XboxController(1);
+  public CommandStellarController driverController = new CommandStellarController(0);
+  public CommandXboxController operatorController = new CommandXboxController(1);
 
   // Declare Auto Selector
   private SendableChooser<Command> autoChooser;
@@ -86,11 +84,8 @@ public class RobotContainer {
 
 
   public void configureButtonBinds() {
-    // Get command triggers for the stellarcontroller because we have no command class for it.
-    Trigger centerButton = new JoystickButton(driverController, 6);
-
     // Bind commands to triggers
-    centerButton.whileTrue(new DriveWithRotaryCommand(false, true, true, chassis)); // Change me for 2025
+    driverController.rightCenterButton().whileTrue(new DriveWithRotaryCommand(false, true, true, chassis)); // Change me for 2025
   }
 
 
