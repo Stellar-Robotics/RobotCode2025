@@ -4,17 +4,17 @@
 
 package frc.robot.RobotControl;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.IOConstants;
 
 /** This class's purpose is to manage drive and operator control to the robot. */
 public class ControllerIO {
 
     // Temporarily set to public
-    public XboxController xboxController;
-    public StellarController stellarController;
-    public Joystick joystickController;
+    public CommandXboxController xboxController;
+    public CommandStellarController stellarController;
+    public CommandJoystick joystickController;
 
     // Singleton pattern handling
     private static ControllerIO primaryInst;
@@ -83,19 +83,19 @@ public class ControllerIO {
 
     // Initiate an xbox controller
     public void InitXBOX(boolean isSecondary) {
-        xboxController = new XboxController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
+        xboxController = new CommandXboxController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
         System.out.println("Initiated New Xbox Controller");
     }
 
     // Initiate a joystick
     public void InitJOYSTICK(boolean isSecondary) {
-        joystickController = new Joystick(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
+        joystickController = new CommandJoystick(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
         System.out.println("Initiated New Joystick Controller");
     }
 
     // Initiate a custom stellar controller
     public void InitSTELLAR(boolean isSecondary) {
-        stellarController = new StellarController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
+        stellarController = new CommandStellarController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
         System.out.println("Initiated New Stellar Controller");
     }
 

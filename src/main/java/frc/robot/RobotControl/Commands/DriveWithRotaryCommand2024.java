@@ -2,22 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.RobotChassis.Commands;
+package frc.robot.RobotControl.Commands;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.BaseConstants.IOConstants;
+import frc.robot.BaseConstants.MiscConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotUtilities.MiscUtils;
 import frc.robot.RobotUtilities.SwerveUtils;
 
-public class DriveWithRotaryCommand extends Command {
-  
+/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+public class DriveWithRotaryCommand2024 extends Command {
+
   // Create variables for the arguments passed in so they can be refrenced class wide
   private SwerveChassisSubsystem chassis;
   private boolean rateLimit;
@@ -36,18 +40,11 @@ public class DriveWithRotaryCommand extends Command {
   // Define the PID for the rotary dial
   private PIDController rotaryPID = new PIDController(0.01, 0 , 0);
 
-    /**
-   * Method to drive the robot using joystick info.
-   *
-   * @param chassis       The SubsystemContainer object the output is applied to.
-   * @param useDeadband   Whether to utiltize deadband for the controls.
-   * @param fieldRelative Whether the provided x and y speeds are relative to the
-   *                      field.
-   * @param rateLimit     Whether to enable rate limiting for smoother control.
-   */
 
-  public DriveWithRotaryCommand(Boolean rateLimit, Boolean useDeadband, Boolean fieldRelative, SwerveChassisSubsystem chassis) {
-
+  /** Creates a new DriveWithRotary. */
+  public DriveWithRotaryCommand2024(Boolean rateLimit, Boolean useDeadband, Boolean fieldRelative, SwerveChassisSubsystem chassis) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    
     // Allows for these objects to be refrenced class wide
     this.chassis = chassis;
     this.rateLimit = rateLimit;
@@ -57,9 +54,11 @@ public class DriveWithRotaryCommand extends Command {
     // Configure the rotarPID for continuous input
     rotaryPID.enableContinuousInput(0, 360);
 
+    // Config aimBot for continuous input.
+    MiscConstants.aimBot.enableContinuousInput(-180, 180);
+
     // Theres no movement without a drivetrain
     addRequirements(chassis);
-
   }
 
   // Called when the command is initially scheduled.
@@ -80,21 +79,28 @@ public class DriveWithRotaryCommand extends Command {
 
     // Obtain the singleton controller instance
     ControllerIO cIO = ControllerIO.getPrimaryInstance(ControllerIO.controllerType.STELLAR);
+    //VisionSubsystemLegacy vision = MechanismSubsystem.getVision();
 
     // (Temporary) Get raw controller axis
     double xSpeed = cIO.stellarController.getLeftX() * -1; // Invert X Axis
     double ySpeed = cIO.stellarController.getLeftY();
     Rotation2d rotaryAngle = cIO.stellarController.getRightRotary();
+    double rot; // Value will be assigned based off if were using vision or not
 
-    // Run the absolute rotary angle through the PID controller
-    double rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees());
+    rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees());
+    SmartDashboard.putString("RotationStatus", "ControllerControlled");
 
     if (useDeadband) { // Apply deadband if specified
       double[] deadbandFilter = MiscUtils.circularDeadband(xSpeed, ySpeed, IOConstants.kDriveDeadband);
 
       xSpeed = deadbandFilter[0];
       ySpeed = deadbandFilter[1];
-      
+
+    }
+
+    // Bind a button to reseting the gyro to the odometry. (slight adjustment for compatability)
+    if (cIO.stellarController.getHID().getBButtonPressed()) {
+      chassis.zeroHeading();
     }
 
     // Define the variables for holding the modified values in a broader scope
@@ -151,9 +157,12 @@ public class DriveWithRotaryCommand extends Command {
     }
 
     // Convert the commanded speeds into the correct units for the drivetrain
-    double xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond;
-    double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond;
-    double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
+    double dashTranslationSpeed = SmartDashboard.getNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
+    double dashAngularSpeed =  SmartDashboard.getNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
+
+    double xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed;
+    double ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed;
+    double rotDelivered = m_currentRotation * dashAngularSpeed;
 
     // Convert values into either a robot relative or field oriented Chassis Speed object
     ChassisSpeeds positionCommanded = fieldRelative
@@ -165,7 +174,6 @@ public class DriveWithRotaryCommand extends Command {
 
     // (Temporary) // Calls to update telemetry on SmartDashboard
     chassis.getChassisSpeeds();
-
   }
 
   // Called once the command ends or is interrupted.

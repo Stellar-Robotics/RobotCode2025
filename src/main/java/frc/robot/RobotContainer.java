@@ -15,8 +15,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.CommandStellarController;
-import frc.robot.RobotControl.Commands.DriveWithRotaryCommand;
+import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotVision.VisionSubsystem;
+import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotControl.ControllerIO.controllerType;
+
 
 public class RobotContainer {
 
@@ -25,8 +28,8 @@ public class RobotContainer {
   private VisionSubsystem vision; // Vision subsystem
 
   // Declare controllers
-  public CommandStellarController driverController = new CommandStellarController(0);
-  public CommandXboxController operatorController = new CommandXboxController(1);
+  public CommandStellarController driverController = ControllerIO.getPrimaryInstance(controllerType.STELLAR).stellarController;
+  public CommandXboxController operatorController = ControllerIO.getSecondaryInstance(controllerType.XBOX).xboxController;
 
   // Declare Auto Selector
   private SendableChooser<Command> autoChooser;
@@ -69,7 +72,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
 
     // Configure default commands for subsystems
-    chassis.setDefaultCommand(new DriveWithRotaryCommand(false, true, true, chassis));
+    chassis.setDefaultCommand(new DefaultDriveCommand(true, true, chassis));
     vision.setDefaultCommand(new RunCommand(() -> {vision.periodic();}, vision));
 
     // Bind buttons to the controllers
@@ -85,7 +88,26 @@ public class RobotContainer {
 
   public void configureButtonBinds() {
     // Bind commands to triggers
-    driverController.rightCenterButton().whileTrue(new DriveWithRotaryCommand(false, true, true, chassis)); // Change me for 2025
+
+    // operatorController.a().whileTrue( // Handle drivetrain snapping
+
+    // );
+
+    // operatorController.povUp().onTrue( // Incrament elevator preset (up)
+
+    // ).debounce(0.2);
+
+    // operatorController.povDown().onTrue( // Incrament elevator preset (down)
+
+    // ).debounce(0.2);
+
+    // operatorController.leftBumper().whileTrue( // Run algae intake inward
+
+    // );
+
+    // operatorController.leftTrigger(0.5).whileTrue( // Run algae intake outward
+    
+    // );
   }
 
 
