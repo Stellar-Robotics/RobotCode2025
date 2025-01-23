@@ -78,7 +78,7 @@ public class DriveWithRotaryCommand2024 extends Command {
     }
 
     // Obtain the singleton controller instance
-    ControllerIO cIO = ControllerIO.getPrimaryInstance(ControllerIO.controllerType.STELLAR);
+    ControllerIO cIO = ControllerIO.getPrimaryInstance();
     //VisionSubsystemLegacy vision = MechanismSubsystem.getVision();
 
     // (Temporary) Get raw controller axis

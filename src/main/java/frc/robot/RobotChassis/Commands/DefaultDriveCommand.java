@@ -66,8 +66,8 @@ public class DefaultDriveCommand extends Command {
       robotCurrentAngle += 360;
     }
 
-    // Obtain the singleton controller instance (HID object)
-    ControllerIO cIO = ControllerIO.getPrimaryInstance(ControllerIO.controllerType.STELLAR);
+    // Obtain the singleton controller instance (HID object) (Type must be stellar controller)
+    ControllerIO cIO = ControllerIO.getPrimaryInstance();
     StellarController driveController = cIO.stellarController.getHID();
 
 

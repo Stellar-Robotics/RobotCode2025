@@ -13,6 +13,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
+import frc.robot.RobotControl.ControllerIO.controllerType;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -101,6 +103,9 @@ public final class BaseConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
     public static final double kDriveDeadband = 0.3; // Was origanally 0.03
+
+    public static final controllerType kDriverControllerType = controllerType.STELLAR;
+    public static final controllerType kOperatorControllerType = controllerType.XBOX;
   }
 
   public static final class AutoConstants {

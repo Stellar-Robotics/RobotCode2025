@@ -18,7 +18,6 @@ import frc.robot.RobotControl.CommandStellarController;
 import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
-import frc.robot.RobotControl.ControllerIO.controllerType;
 
 
 public class RobotContainer {
@@ -28,8 +27,8 @@ public class RobotContainer {
   private VisionSubsystem vision; // Vision subsystem
 
   // Declare controllers
-  public CommandStellarController driverController = ControllerIO.getPrimaryInstance(controllerType.STELLAR).stellarController;
-  public CommandXboxController operatorController = ControllerIO.getSecondaryInstance(controllerType.XBOX).xboxController;
+  public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
+  public CommandXboxController operatorController = ControllerIO.getSecondaryInstance().xboxController;
 
   // Declare Auto Selector
   private SendableChooser<Command> autoChooser;
