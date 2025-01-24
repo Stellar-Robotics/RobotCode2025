@@ -88,9 +88,12 @@ public class RobotContainer {
   public void configureButtonBinds() {
     // Bind commands to triggers
 
-    // operatorController.a().whileTrue( // Handle drivetrain snapping
-
-    // );
+    /* operatorController.a().whileTrue( 
+        // Determine currently aligned reef face
+        // Determine whether robot is aligned with the center, left, or right
+        // Snap 0.165 meters (6.5 inches) left or right from the center
+        // Or 0.33 meters (1 foot, 1 inch) from one side to the other
+    ); */
 
     // operatorController.povUp().onTrue( // Incrament elevator preset (up)
 
