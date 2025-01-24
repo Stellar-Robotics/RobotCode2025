@@ -17,36 +17,41 @@ public class MechanismConstants {
     public class FieldNav {
         public static final Pose2d[] reefCoordsBlue = {
 
-            // Ordered starting clostest to origin Y and progrssing CCW
+            // Ordered starting clostest to origin Y and progressing CCW
+            // Positions probably intersect with the reef, will need to fix later
+
+            // Each branch is 6.5 inches from the center of the reef face
+
+            // Rotations are an estimate, be careful
 
             // Blue 1
             new Pose2d(3.353, 4.026, new Rotation2d()),
             // Blue 2
-            new Pose2d(3.921, 3.042, new Rotation2d()),
+            new Pose2d(3.921, 3.042, new Rotation2d(60)),
             // Blue 3
-            new Pose2d(5.058, 3.042, new Rotation2d()),
+            new Pose2d(5.058, 3.042, new Rotation2d(120)),
             // Blue 4
-            new Pose2d(5.626, 4.026, new Rotation2d()),
+            new Pose2d(5.626, 4.026, new Rotation2d(180)),
             // Blue 5
-            new Pose2d(5.058, 5.010, new Rotation2d()),
+            new Pose2d(5.058, 5.010, new Rotation2d(-120)),
             // Blue 6
-            new Pose2d(3.921, 5.010, new Rotation2d()),
+            new Pose2d(3.921, 5.010, new Rotation2d(-60)),
         };
 
         public static final Pose2d[] reefCoordsRed = {
 
             // Red 1
-            new Pose2d(11.922, 4.026, new Rotation2d()),
+            new Pose2d(11.922, 4.026, new Rotation2d(0)),
             // Red 2
-            new Pose2d(12.491, 3.042, new Rotation2d()),
+            new Pose2d(12.491, 3.042, new Rotation2d(60)),
             // Red 3
-            new Pose2d(13.627, 3.042, new Rotation2d()),
+            new Pose2d(13.627, 3.042, new Rotation2d(120)),
             // Red 4
-            new Pose2d(14.195, 4.026, new Rotation2d()),
+            new Pose2d(14.195, 4.026, new Rotation2d(180)),
             // Red 5
-            new Pose2d(13.627, 5.010, new Rotation2d()),
+            new Pose2d(13.627, 5.010, new Rotation2d(-120)),
             // Red 6
-            new Pose2d(12.491, 5.010, new Rotation2d()),
+            new Pose2d(12.491, 5.010, new Rotation2d(-60)),
         };
 
         // Constraints to use when snaping to position at reef
