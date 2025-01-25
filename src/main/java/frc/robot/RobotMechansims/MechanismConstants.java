@@ -18,40 +18,39 @@ public class MechanismConstants {
         public static final Pose2d[] reefCoordsBlue = {
 
             // Ordered starting clostest to origin Y and progressing CCW
-            // Positions probably intersect with the reef, will need to fix later
-
-            // Each branch is 6.5 inches from the center of the reef face
+            // Each position corresponds to the branch to the robot's left 
+            // When the robot is facing the respective face
 
             // Rotations are an estimate, be careful
 
             // Blue 1
-            new Pose2d(3.353, 4.026, new Rotation2d()),
+            new Pose2d(3.097, 4.200, new Rotation2d()),
             // Blue 2
-            new Pose2d(3.921, 3.042, new Rotation2d(60)),
+            new Pose2d(3.664, 2.902, new Rotation2d(60)),
             // Blue 3
-            new Pose2d(5.058, 3.042, new Rotation2d(120)),
+            new Pose2d(5.052, 2.715, new Rotation2d(120)), 
             // Blue 4
-            new Pose2d(5.626, 4.026, new Rotation2d(180)),
+            new Pose2d(5.887, 3.865, new Rotation2d(180)),
             // Blue 5
-            new Pose2d(5.058, 5.010, new Rotation2d(-120)),
+            new Pose2d(5.328, 5.155, new Rotation2d(-120)),
             // Blue 6
-            new Pose2d(3.921, 5.010, new Rotation2d(-60)),
+            new Pose2d(3.940, 5.335, new Rotation2d(-60)),
         };
 
         public static final Pose2d[] reefCoordsRed = {
 
             // Red 1
-            new Pose2d(11.922, 4.026, new Rotation2d(0)),
+            new Pose2d(11.640, 4.193, new Rotation2d(0)),
             // Red 2
-            new Pose2d(12.491, 3.042, new Rotation2d(60)),
+            new Pose2d(12.222, 2.887, new Rotation2d(60)),
             // Red 3
-            new Pose2d(13.627, 3.042, new Rotation2d(120)),
+            new Pose2d(13.610, 2.738, new Rotation2d(120)),
             // Red 4
-            new Pose2d(14.195, 4.026, new Rotation2d(180)),
+            new Pose2d(14.483, 3.865, new Rotation2d(180)),
             // Red 5
-            new Pose2d(13.627, 5.010, new Rotation2d(-120)),
+            new Pose2d(13.909, 5.155, new Rotation2d(-120)),
             // Red 6
-            new Pose2d(12.491, 5.010, new Rotation2d(-60)),
+            new Pose2d(12.521, 5.305, new Rotation2d(-60)),
         };
 
         // Constraints to use when snaping to position at reef
