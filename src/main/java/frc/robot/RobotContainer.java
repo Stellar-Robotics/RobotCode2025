@@ -4,9 +4,15 @@
 
 package frc.robot;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,7 +24,10 @@ import frc.robot.RobotControl.CommandStellarController;
 import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotMechansims.MechanismConstants;
 
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 
 public class RobotContainer {
 
@@ -88,10 +97,45 @@ public class RobotContainer {
   public void configureButtonBinds() {
     // Bind commands to triggers
 
+    PathPlannerPath snapPath;
+
     operatorController.a().whileTrue( 
         new RunCommand(() -> {
+          Pose2d currPose = chassis.getPose();
+          Pose2d closestPose = new Pose2d();
+          double closestDistance = -1;
+
+          Optional<Alliance> ally = DriverStation.getAlliance();
+
+          if (ally.isPresent()) {
+            Pose2d[] coords = ally.get() == Alliance.Blue ? MechanismConstants.FieldNav.reefCoordsBlue : MechanismConstants.FieldNav.reefCoordsRed;
+            for ( Pose2d pose : coords) {
+              double dist = currPose.getTranslation().getDistance(pose.getTranslation());
+              if (closestDistance >= 0) {
+                boolean isCloser = dist < closestDistance;
+                closestPose = isCloser ? pose : closestPose;
+                closestDistance = isCloser ? dist : closestDistance;
+              } else {
+                closestPose = pose;
+                closestDistance = dist;
+              }
+            }
+          }
           
-        })
+          List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
+            currPose,
+            closestPose
+          );
+
+          PathPlannerPath path = new PathPlannerPath(
+            waypoints,
+            MechanismConstants.FieldNav.snapConstraints, 
+            null, 
+            null
+          );
+
+          AutoBuilder.followPath(path).execute();
+        }, chassis)
     );
 
     // operatorController.povUp().onTrue( // Incrament elevator preset (up)
