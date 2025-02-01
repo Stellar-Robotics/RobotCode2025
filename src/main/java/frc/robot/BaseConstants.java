@@ -62,19 +62,19 @@ public final class BaseConstants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs (CHANGEME FOR 2025)
-    public static final int kFrontLeftDrivingCanId = 38;
-    public static final int kRearLeftDrivingCanId = 36;
-    public static final int kFrontRightDrivingCanId = 32;
-    public static final int kRearRightDrivingCanId = 34;
+    public static final int kFrontLeftDrivingCanId = 4;
+    public static final int kRearLeftDrivingCanId = 2;
+    public static final int kFrontRightDrivingCanId = 6;
+    public static final int kRearRightDrivingCanId = 8;
 
-    public static final int kFrontLeftTurningCanId = 37;
-    public static final int kRearLeftTurningCanId = 35;
-    public static final int kFrontRightTurningCanId = 31;
-    public static final int kRearRightTurningCanId = 33;
+    public static final int kFrontLeftTurningCanId = 3;
+    public static final int kRearLeftTurningCanId = 1;
+    public static final int kFrontRightTurningCanId = 5;
+    public static final int kRearRightTurningCanId = 7;
 
     // Gyro Orintation
     public static final boolean kGyroReversed = false;
-    public static final double kGyroOffset = -270; // was at -90
+    public static final double kGyroOffset = 0; // was at -270
   }
 
   public static final class ModuleConstants {
