@@ -20,8 +20,6 @@ import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
 
-import com.pathplanner.lib.path.PathPlannerPath;
-
 public class RobotContainer {
 
   // Declare subsystems
@@ -90,46 +88,8 @@ public class RobotContainer {
   public void configureButtonBinds() {
     // Bind commands to triggers
 
-    PathPlannerPath snapPath;
-
     operatorController.a().whileTrue(
       new SnapToReefCommand(chassis)
-        // new RunCommand(() -> {
-        //   Pose2d currPose = chassis.getPose();
-        //   Pose2d closestPose = new Pose2d();
-        //   double closestDistance = -1;
-
-        //   Optional<Alliance> ally = DriverStation.getAlliance();
-
-        //   if (ally.isPresent()) {
-        //     Pose2d[] coords = ally.get() == Alliance.Blue ? MechanismConstants.FieldNav.reefCoordsBlue : MechanismConstants.FieldNav.reefCoordsRed;
-        //     for ( Pose2d pose : coords) {
-        //       double dist = currPose.getTranslation().getDistance(pose.getTranslation());
-        //       if (closestDistance >= 0) {
-        //         boolean isCloser = dist < closestDistance;
-        //         closestPose = isCloser ? pose : closestPose;
-        //         closestDistance = isCloser ? dist : closestDistance;
-        //       } else {
-        //         closestPose = pose;
-        //         closestDistance = dist;
-        //       }
-        //     }
-        //   }
-          
-        //   List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-        //     currPose,
-        //     closestPose
-        //   );
-
-        //   PathPlannerPath path = new PathPlannerPath(
-        //     waypoints,
-        //     MechanismConstants.FieldNav.snapConstraints, 
-        //     null, 
-        //     null
-        //   );
-
-        //   AutoBuilder.followPath(path).execute();
-        // }, chassis)
     );
 
     // operatorController.povUp().onTrue( // Incrament elevator preset (up)

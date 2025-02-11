@@ -1,14 +1,14 @@
-package frc.robot.RobotMechansims.PrimaryElevator.Commands;
+package frc.robot.RobotMechansims.Elevator.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotMechansims.PrimaryElevator.Subsystems.PrimaryElevator;
+import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 
 public class SetElevatorCommand extends Command {
 
-    private PrimaryElevator elevator;
+    private Elevator elevator;
     private double position;
 
-    public SetElevatorCommand(PrimaryElevator elev, double pos) {
+    public SetElevatorCommand(Elevator elev, double pos) {
         this.elevator = elev;
         this.position = pos;
     }
