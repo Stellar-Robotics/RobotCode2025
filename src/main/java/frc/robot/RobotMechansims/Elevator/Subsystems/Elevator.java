@@ -18,43 +18,56 @@ import frc.robot.RobotUtilities.MiscUtils;
 
 public class Elevator extends SubsystemBase {
 
-  // Constants specific to this mechanism
+  // Define a variable that holds the max rotations that the elevator
+  // motor can spin before the elevator itself reaches max extesion.
   private final double maxHeightExtensionRotations = 0; // Set Me Plz
 
-  // Declare the variables to store their respective objects.
+  // Declare the variables that will hold the objects and refrences in this class.
   private final SparkMax elevatorMotor;
   private final RelativeEncoder elevatorEncoder;
   private final SparkClosedLoopController elevatorCLC;
 
-  /** Creates a new PrimaryElevator. */
   public Elevator(int motorId) {
 
-    // Put a new motor object into the elevatorMotor variable.
+    // Create a new motor controller object and store it in the 'elevatorMotor'
+    // variable.  We'll pass the motor controller id and the motors type into
+    // the motor controller object's constructor.
     elevatorMotor = new SparkMax(motorId, MotorType.kBrushless);
 
-    // Get encoder and clc and put them in their respective variables
+    // Use methods in the previously created motor controller object (which is stored 
+    // in the 'elevatorMotor' variable) to get a refrence to the motor's encoder and
+    // its closed loop controller.  We'll finally store those refrences in the
+    // 'elevatorEncloder' and 'elevatorCLC' variables. 
     elevatorEncoder = elevatorMotor.getEncoder();
     elevatorCLC = elevatorMotor.getClosedLoopController();
 
-    // Apply configuration in Configs
-    elevatorMotor.configure(Configs.PrimaryElevatorConfig.elevatorMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // Call the 'configure' method in the motor controller object stored in the 'elevatorMotor' variable.
+    // We'll pass in the confiruation object from another file into the 'configure' method as parameters.
+    elevatorMotor.configure(Configs.ElevatorConfig.elevatorMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-  }
-
-  @Deprecated
-/* Use goToPositionClamped instead. */
-  public void goToPosition(double position) {
-    elevatorCLC.setReference(position, ControlType.kDutyCycle);
   }
 
   // Set the position of the elevator using CLC.  (Contains a clamp for safety)
-  public void goToPositionClamped(double position) {
-    elevatorCLC.setReference(MiscUtils.clamp(0, maxHeightExtensionRotations, position), ControlType.kDutyCycle);
+  public void goToPositionClamped(double position) { 
+
+    // We're calling the 'MiscUtils.clamp' method and passing in some values and variables
+    // as parameters.  We're then assigning the output of the 'MiscUtils.clamp' method
+    // to the value of a new variable called 'positionClamped'.
+    double positionClamped = MiscUtils.clamp(0, maxHeightExtensionRotations, position);
+
+    // Calling the 'setRefrence' method in the motor object stored in the elevatorCLC vairable.
+    // We'll pass in the previously defined 'positionClamped' variable as well as
+    // the type of controller that we want to use.
+    elevatorCLC.setReference(positionClamped, ControlType.kDutyCycle);
+
   }
 
   // Get the position of the elevator
   public double getPosition() {
+
+    // We'll take the
     return elevatorEncoder.getPosition();
+
   }
 
   

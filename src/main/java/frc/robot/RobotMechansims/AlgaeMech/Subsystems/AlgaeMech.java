@@ -14,25 +14,34 @@ import frc.robot.Configs;
 
 public class AlgaeMech extends SubsystemBase {
 
+  // Declare the variables that will hold our motor controller objects.
   private final SparkMax extensionMotor;
-  private final SparkMax pickupMotor;  
+  private final SparkMax pickupMotor;
 
-
-  /** Creates a new AlgaeIntake. */
   public AlgaeMech(int extensionMotorid, int pickupMotorid) {
 
+    // Create two new motor controller objects and store them in the 'extensionMotor' and
+    // 'pickupMotor' variables.  We pass in the motor controller ids and motor
+    // types a parameters when creating the new motor controller objects.
     extensionMotor = new SparkMax(extensionMotorid, MotorType.kBrushless);
     pickupMotor = new SparkMax(pickupMotorid, MotorType.kBrushless);
 
-    extensionMotor.configure(Configs.AlgaeIntakeConfig.extensionMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    pickupMotor.configure(Configs.AlgaeIntakeConfig.pickupMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // We'll call the 'configure' method in each of our new motor controller objects
+    // that we are storing in our aformentioned variables.  We'll pass in some configuration
+    // objects from another file as parameters to the 'configure' method.
+    extensionMotor.configure(Configs.AlgaeMechConfig.extensionMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    pickupMotor.configure(Configs.AlgaeMechConfig.pickupMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
-  // Speed was set to 0.5
+  // We'll create a method that other code can call to run the intake motors.
   public void runPickup(double speed) {
 
+    // We'll call the 'set' method in the motor controller object stored
+    // in the pickupMotor variable.  We'll make sure to pass in our
+    // speed parameter.
     pickupMotor.set(speed);
+    
   }
 
   @Override

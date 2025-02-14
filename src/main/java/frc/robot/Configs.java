@@ -11,7 +11,9 @@ import frc.robot.BaseConstants.ModuleConstants;
 import frc.robot.BaseConstants.PathPlannerConstants;
 
 public final class Configs {
+
     public static final class MAXSwerveModule {
+
         public static final SparkMaxConfig drivingConfig = new SparkMaxConfig();
         public static final SparkMaxConfig turningConfig = new SparkMaxConfig();
         public static final SparkMaxConfig invertedConfig = new SparkMaxConfig();
@@ -72,31 +74,49 @@ public final class Configs {
                     .pid(drivingP, drivingI, drivingD)
                     .velocityFF(drivingVelocityFeedForward)
                     .outputRange(-1, 1);
+
         }
+
     }
 
-    public static final class AlgaeIntakeConfig {
+    public static final class AlgaeMechConfig {
 
         public static final SparkMaxConfig pickupMotorConfig = new SparkMaxConfig();
         public static final SparkMaxConfig extensionMotorConfig = new SparkMaxConfig();
 
         static {
-
-        pickupMotorConfig
+                
+            pickupMotorConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(30);
 
-        extensionMotorConfig
+            extensionMotorConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20);
-        
 
         }
-        
 
     }
 
-    public static final class PrimaryElevatorConfig {
+    public static final class CoralMechConfig {
+
+        public static final SparkMaxConfig rollerMotorConfig = new SparkMaxConfig();
+
+        static {
+
+            rollerMotorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(30);
+        
+            rollerMotorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.2, 0, 0);
+
+        }  
+
+    }
+
+    public static final class ElevatorConfig {
 
         public static final SparkMaxConfig elevatorMotorConfig = new SparkMaxConfig();
 
@@ -114,6 +134,7 @@ public final class Configs {
                         .forwardLimitSwitchEnabled(true)
                         .forwardLimitSwitchType(Type.kNormallyClosed)
                         .setSparkMaxDataPortConfig();
+
         }
 
     }
@@ -121,7 +142,7 @@ public final class Configs {
     public static final class PathPlanner {
 
         public static RobotConfig pathPlannerConfig;
-
+        
         // Configure Me Please
         public static Translation2d[] moduleOffsets = {
                 new Translation2d(0, 0), // FL
