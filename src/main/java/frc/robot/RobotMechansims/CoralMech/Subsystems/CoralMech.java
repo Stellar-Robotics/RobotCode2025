@@ -5,6 +5,7 @@
 package frc.robot.RobotMechansims.CoralMech.Subsystems;
 
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -13,28 +14,38 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.RobotUtilities.MiscUtils;
 
 public class CoralMech extends SubsystemBase {
 
   // Declare the variables to hold our motor controller and closed loop controller objects.
-  private final SparkMax rollerMotor;
+  private final SparkFlex rollerMotor;
   private final SparkClosedLoopController rollerCLC;
 
+  // Declare the variables to hold the extention motor
+  private final SparkMax coralExtension;
+  private final SparkClosedLoopController extentionCLC;
 
-  public CoralMech(int motorID) {
+  private final double maxExtension = 0;
+
+  public CoralMech(int rollerMotorID, int extentionMotorID) {
 
     // Create a new motor controller object and store it in the rollerMotor variable.
-    rollerMotor = new SparkMax(motorID, MotorType.kBrushless);
+    rollerMotor = new SparkFlex(rollerMotorID, MotorType.kBrushless);
+
+    coralExtension = new SparkMax(extentionMotorID, MotorType.kBrushless);
 
     // Get the closed loop controller object from the newly created motor controller object that is stored in
     // the rollerMotor variable.  We'll then create a refrence to that closed loop controller object in the
     // rollerCLC variable.
     rollerCLC = rollerMotor.getClosedLoopController();
 
+    extentionCLC = coralExtension.getClosedLoopController();
+
     // Call the 'configure' method inside the motor controller object (stored in the rollerMotor
     // variable).  We'll then pass in the configuration parameters that the 'configure' method is looking for.
     rollerMotor.configure(Configs.CoralMechConfig.rollerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
+    coralExtension.configure(Configs.CoralMechConfig.extensionMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public void setVelocity(double velocity) {
@@ -44,6 +55,11 @@ public class CoralMech extends SubsystemBase {
     // the velocity variable and the mode we want it to use.
     rollerCLC.setReference(velocity, ControlType.kVelocity);
 
+  }
+
+  public void goToPosition(double postition) {
+    double clampedPosition = MiscUtils.clamp(0, maxExtension, postition);
+    extentionCLC.setReference(clampedPosition, ControlType.kDutyCycle);
   }
 
   @Override

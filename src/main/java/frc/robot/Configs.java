@@ -101,6 +101,8 @@ public final class Configs {
     public static final class CoralMechConfig {
 
         public static final SparkMaxConfig rollerMotorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig extensionMotorConfig = new SparkMaxConfig();
+
 
         static {
 
@@ -109,6 +111,13 @@ public final class Configs {
                 .smartCurrentLimit(30);
         
             rollerMotorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.2, 0, 0);
+
+            extensionMotorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(25);
+            extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.2, 0, 0);
 
