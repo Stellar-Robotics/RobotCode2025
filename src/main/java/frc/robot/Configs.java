@@ -124,9 +124,8 @@ public final class Configs {
 
                 elevatorMotorConfig
                         .idleMode(IdleMode.kBrake)
-                        .smartCurrentLimit(25);
-                elevatorMotorConfig.encoder
-                        .positionConversionFactor(18); // Please validate before use.
+                        .smartCurrentLimit(25)
+                        .inverted(true);
                 elevatorMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                         .pid(0.2, 0, 0);

@@ -20,7 +20,7 @@ public class Elevator extends SubsystemBase {
 
   // Define a variable that holds the max rotations that the elevator
   // motor can spin before the elevator itself reaches max extesion.
-  private final double maxHeightExtensionRotations = 0; // Set Me Plz
+  private final double maxHeightExtensionRotations = 222; // Set Me Plz
 
   // Declare the variables that will hold the objects and refrences in this class.
   private final SparkMax elevatorMotor;
