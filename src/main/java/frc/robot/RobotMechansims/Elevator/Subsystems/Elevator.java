@@ -14,25 +14,22 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotUtilities.MiscUtils;
 
 public class Elevator extends SubsystemBase {
-
-  // Define a variable that holds the max rotations that the elevator
-  // motor can spin before the elevator itself reaches max extesion.
-  private final double maxHeightExtensionRotations = 222; // Set Me Plz
 
   // Declare the variables that will hold the objects and refrences in this class.
   private final SparkMax elevatorMotor;
   private final RelativeEncoder elevatorEncoder;
   private final SparkClosedLoopController elevatorCLC;
 
-  public Elevator(int motorId) {
+  public Elevator() {
 
     // Create a new motor controller object and store it in the 'elevatorMotor'
     // variable.  We'll pass the motor controller id and the motors type into
     // the motor controller object's constructor.
-    elevatorMotor = new SparkMax(motorId, MotorType.kBrushless);
+    elevatorMotor = new SparkMax(MechanismConstants.elevatorValues.motorID, MotorType.kBrushless);
 
     // Use methods in the previously created motor controller object (which is stored 
     // in the 'elevatorMotor' variable) to get a refrence to the motor's encoder and
@@ -53,7 +50,7 @@ public class Elevator extends SubsystemBase {
     // We're calling the 'MiscUtils.clamp' method and passing in some values and variables
     // as parameters.  We're then assigning the output of the 'MiscUtils.clamp' method
     // to the value of a new variable called 'positionClamped'.
-    double positionClamped = MiscUtils.clamp(0, maxHeightExtensionRotations, position);
+    double positionClamped = MiscUtils.clamp(0, MechanismConstants.elevatorValues.maxHeightExtensionRotations, position);
 
     // Calling the 'setRefrence' method in the motor object stored in the elevatorCLC vairable.
     // We'll pass in the previously defined 'positionClamped' variable as well as

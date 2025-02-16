@@ -119,7 +119,9 @@ public final class Configs {
                 .smartCurrentLimit(25);
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                .pid(0.2, 0, 0);
+                .pid(0.3, 0.0001, 0)
+                .maxOutput(0.25)
+                .minOutput(-0.25);
 
         }  
 

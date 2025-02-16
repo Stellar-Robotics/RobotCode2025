@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotUtilities.MiscUtils;
 
 public class CoralMech extends SubsystemBase {
@@ -26,14 +27,12 @@ public class CoralMech extends SubsystemBase {
   private final SparkMax coralExtension;
   private final SparkClosedLoopController extentionCLC;
 
-  private final double maxExtension = 0;
-
-  public CoralMech(int rollerMotorID, int extentionMotorID) {
+  public CoralMech() {
 
     // Create a new motor controller object and store it in the rollerMotor variable.
-    rollerMotor = new SparkFlex(rollerMotorID, MotorType.kBrushless);
+    rollerMotor = new SparkFlex(MechanismConstants.CoralMechValues.rollerMotorID, MotorType.kBrushless);
 
-    coralExtension = new SparkMax(extentionMotorID, MotorType.kBrushless);
+    coralExtension = new SparkMax(MechanismConstants.CoralMechValues.extensionMotorID, MotorType.kBrushless);
 
     // Get the closed loop controller object from the newly created motor controller object that is stored in
     // the rollerMotor variable.  We'll then create a refrence to that closed loop controller object in the
@@ -58,7 +57,7 @@ public class CoralMech extends SubsystemBase {
   }
 
   public void goToPosition(double postition) {
-    double clampedPosition = MiscUtils.clamp(0, maxExtension, postition);
+    double clampedPosition = MiscUtils.clamp(MechanismConstants.CoralMechValues.minExtension, MechanismConstants.CoralMechValues.maxExtension, postition);
     extentionCLC.setReference(clampedPosition, ControlType.kDutyCycle);
   }
 

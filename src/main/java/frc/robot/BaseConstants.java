@@ -61,7 +61,7 @@ public final class BaseConstants {
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
-    // SPARK MAX CAN IDs (CHANGEME FOR 2025)
+    // SPARK MAX CAN IDs
     public static final int kFrontLeftDrivingCanId = 4;
     public static final int kRearLeftDrivingCanId = 2;
     public static final int kFrontRightDrivingCanId = 6;

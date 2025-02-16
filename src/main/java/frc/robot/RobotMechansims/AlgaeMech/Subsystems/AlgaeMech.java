@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.RobotMechansims.MechanismConstants;
 
 public class AlgaeMech extends SubsystemBase {
 
@@ -18,13 +19,13 @@ public class AlgaeMech extends SubsystemBase {
   private final SparkMax extensionMotor;
   private final SparkMax pickupMotor;
 
-  public AlgaeMech(int extensionMotorid, int pickupMotorid) {
+  public AlgaeMech() {
 
     // Create two new motor controller objects and store them in the 'extensionMotor' and
     // 'pickupMotor' variables.  We pass in the motor controller ids and motor
     // types a parameters when creating the new motor controller objects.
-    extensionMotor = new SparkMax(extensionMotorid, MotorType.kBrushless);
-    pickupMotor = new SparkMax(pickupMotorid, MotorType.kBrushless);
+    extensionMotor = new SparkMax(MechanismConstants.AlgaeMechValues.extensionMotorID, MotorType.kBrushless);
+    pickupMotor = new SparkMax(MechanismConstants.AlgaeMechValues.pickupMotorID, MotorType.kBrushless);
 
     // We'll call the 'configure' method in each of our new motor controller objects
     // that we are storing in our aformentioned variables.  We'll pass in some configuration

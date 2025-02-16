@@ -19,13 +19,17 @@ import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
+import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 
 public class RobotContainer {
 
   // Declare subsystems
   private SwerveChassisSubsystem chassis; // Swerve subsystem
   private VisionSubsystem vision; // Vision subsystem
-
+  private Elevator elevator; // Elevator subsystem
+  private CoralMech coralMech; // Coral subsystem
+  //private AlgaeMech algaeMech; // Algae subsystem
   // Declare controllers
   public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
   public CommandXboxController operatorController = ControllerIO.getSecondaryInstance().xboxController;
@@ -63,6 +67,9 @@ public class RobotContainer {
     // Define subsystems
     chassis = new SwerveChassisSubsystem(); // Swerve subsystem
     vision = new VisionSubsystem(chassis.getPose());
+    elevator = new Elevator();
+    coralMech = new CoralMech();
+    //algaeMech = new AlgaeMech();
 
     // Create auto selector and post params to the dash
     autoChooser = AutoBuilder.buildAutoChooser("Default");
@@ -92,21 +99,21 @@ public class RobotContainer {
       new SnapToReefCommand(chassis)
     );
 
-    // operatorController.povUp().onTrue( // Incrament elevator preset (up)
+    operatorController.povUp().onTrue( // Incrament elevator preset (up)
+      new RunCommand(() -> {elevator.goToPositionClamped(222);}, elevator)
+    ).debounce(0.2);
 
-    // ).debounce(0.2);
+    operatorController.povDown().onTrue( // Incrament elevator preset (down)
+      new RunCommand(() -> {elevator.goToPositionClamped(0);}, elevator)
+    ).debounce(0.2);
 
-    // operatorController.povDown().onTrue( // Incrament elevator preset (down)
+    operatorController.leftBumper().whileTrue( // Run algae intake inward
+      new RunCommand(() -> {coralMech.goToPosition(-50);}, coralMech)
+    );
 
-    // ).debounce(0.2);
-
-    // operatorController.leftBumper().whileTrue( // Run algae intake inward
-
-    // );
-
-    // operatorController.leftTrigger(0.5).whileTrue( // Run algae intake outward
-    
-    // );
+    operatorController.leftTrigger(0.5).whileTrue( // Run algae intake outward
+      new RunCommand(() -> {coralMech.goToPosition(44);}, coralMech)
+    );
   }
 
 
