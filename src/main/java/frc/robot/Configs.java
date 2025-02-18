@@ -140,10 +140,10 @@ public final class Configs {
                 elevatorMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                         .pid(0.2, 0, 0);
-                elevatorMotorConfig.limitSwitch // The elevator will also have a limit switch
-                        .forwardLimitSwitchEnabled(true)
-                        .forwardLimitSwitchType(Type.kNormallyClosed)
-                        .setSparkMaxDataPortConfig();
+                // elevatorMotorConfig.limitSwitch // The elevator will also have a limit switch
+                //         .forwardLimitSwitchEnabled(true)
+                //         .forwardLimitSwitchType(Type.kNormallyClosed)
+                //         .setSparkMaxDataPortConfig();
 
         }
 
