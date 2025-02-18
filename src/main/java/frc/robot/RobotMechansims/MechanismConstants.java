@@ -68,16 +68,16 @@ public class MechanismConstants {
     }
 
     public class CoralMechValues {
-        public static final int rollerMotorID = 19;
-        public static final int extensionMotorID = 19;
+        public static final int rollerMotorID = 10;
+        public static final int extensionMotorID = 11;
 
         public static final double maxExtension = 44;
         public static final double minExtension = -50;
     }
 
     public class AlgaeMechValues {
-        public static final int extensionMotorID = 19;
-        public static final int pickupMotorID = 19;
+        public static final int extensionMotorID = 51;
+        public static final int pickupMotorID = 50;
     }
 
 }
