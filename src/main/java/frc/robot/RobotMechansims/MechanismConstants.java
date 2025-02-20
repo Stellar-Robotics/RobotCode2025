@@ -64,15 +64,15 @@ public class MechanismConstants {
 
     public class elevatorValues {
         public static final int motorID = 19;
-        public static final double maxHeightExtensionRotations = 222;
+        public static final double maxHeightExtensionRotations = 177;
     }
 
     public class CoralMechValues {
         public static final int rollerMotorID = 10;
         public static final int extensionMotorID = 11;
 
-        public static final double maxExtension = 44;
-        public static final double minExtension = -50;
+        public static final double maxExtension = 43;
+        public static final double minExtension = -48;
     }
 
     public class AlgaeMechValues {

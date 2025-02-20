@@ -100,7 +100,7 @@ public class RobotContainer {
     );
 
     operatorController.povUp().onTrue( // Incrament elevator preset (up)
-      new RunCommand(() -> {elevator.goToPositionClamped(222);}, elevator)
+      new RunCommand(() -> {elevator.goToPositionClamped(177);}, elevator)
     ).debounce(0.2);
 
     operatorController.povDown().onTrue( // Incrament elevator preset (down)

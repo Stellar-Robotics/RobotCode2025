@@ -9,6 +9,10 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+
+import java.io.Console;
+
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -55,8 +59,8 @@ public class Elevator extends SubsystemBase {
     // Calling the 'setRefrence' method in the motor object stored in the elevatorCLC vairable.
     // We'll pass in the previously defined 'positionClamped' variable as well as
     // the type of controller that we want to use.
-    elevatorCLC.setReference(positionClamped, ControlType.kDutyCycle);
-
+    REVLibError error = elevatorCLC.setReference(positionClamped, ControlType.kPosition);
+    System.out.println(error);
   }
 
   // Get the position of the elevator

@@ -58,7 +58,7 @@ public class CoralMech extends SubsystemBase {
 
   public void goToPosition(double postition) {
     double clampedPosition = MiscUtils.clamp(MechanismConstants.CoralMechValues.minExtension, MechanismConstants.CoralMechValues.maxExtension, postition);
-    extentionCLC.setReference(clampedPosition, ControlType.kDutyCycle);
+    extentionCLC.setReference(clampedPosition, ControlType.kPosition);
   }
 
   @Override

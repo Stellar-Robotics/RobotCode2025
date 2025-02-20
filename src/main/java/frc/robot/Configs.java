@@ -112,7 +112,7 @@ public final class Configs {
         
             rollerMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                .pid(0.2, 0, 0);
+                .pid(0.01, 0, 0);
 
             extensionMotorConfig
                 .idleMode(IdleMode.kBrake)
@@ -139,7 +139,7 @@ public final class Configs {
                         .inverted(true);
                 elevatorMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                        .pid(0.2, 0, 0);
+                        .pid(0.1, 0, 0);
                 // elevatorMotorConfig.limitSwitch // The elevator will also have a limit switch
                 //         .forwardLimitSwitchEnabled(true)
                 //         .forwardLimitSwitchType(Type.kNormallyClosed)
