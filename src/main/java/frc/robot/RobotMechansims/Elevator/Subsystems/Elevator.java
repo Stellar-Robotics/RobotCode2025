@@ -60,7 +60,9 @@ public class Elevator extends SubsystemBase {
     // We'll pass in the previously defined 'positionClamped' variable as well as
     // the type of controller that we want to use.
     REVLibError error = elevatorCLC.setReference(positionClamped, ControlType.kPosition);
-    System.out.println(error);
+    if (error != REVLibError.kOk) {
+      elevatorMotor.stopMotor();
+    }
   }
 
   // Get the position of the elevator
