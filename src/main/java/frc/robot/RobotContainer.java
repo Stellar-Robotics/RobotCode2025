@@ -96,22 +96,25 @@ public class RobotContainer {
   public void configureButtonBinds() {
     // Bind commands to triggers
 
+    // Switch to snapping mode
     operatorController.a().whileTrue(new SnapToReefCommand(chassis));
 
+    // Toggle the extension of the coral mechanism back and forth
     operatorController.rightBumper().toggleOnTrue(new ToggleCoralExtension(coralMech));
 
+    // Incrament elevator presets
     operatorController.povUp().onTrue( // Increment elevator preset (up)
       new RunCommand(() -> {elevator.goToPositionClamped(80);}, elevator)
     ).debounce(0.2);
-
     operatorController.povDown().onTrue( // Increment elevator preset (down)
       new RunCommand(() -> {elevator.goToPositionClamped(0);}, elevator)
     ).debounce(0.2);
 
+    // Run coral mechanism roller.
     operatorController.rightTrigger().whileTrue(
       new RunCommand(() -> {coralMech.setRollerPower(0.5);}, coralMech)
     ).onFalse(
-      new RunCommand(() -> {coralMech.setRollerPower(0.5);}, coralMech)
+      new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
   }
 
