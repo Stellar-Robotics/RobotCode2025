@@ -4,6 +4,7 @@
 
 package frc.robot.RobotMechansims.CoralMech.Subsystems;
 
+import com.revrobotics.REVLibError;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
@@ -64,7 +65,10 @@ public void setRollerPower(double setPower) {
 
   public void goToPosition(double postition) {
     double clampedPosition = MiscUtils.clamp(MechanismConstants.CoralMechValues.minExtension, MechanismConstants.CoralMechValues.maxExtension, postition);
-    extensionCLC.setReference(clampedPosition, ControlType.kPosition);
+    REVLibError error = extensionCLC.setReference(clampedPosition, ControlType.kPosition);
+    if (error != REVLibError.kOk) {
+      coralExtension.stopMotor();
+    }
   }
 
   @Override
