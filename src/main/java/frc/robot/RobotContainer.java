@@ -19,6 +19,7 @@ import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotMechansims.CoralMech.Commands.ToggleCoralExtension;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 
@@ -95,9 +96,9 @@ public class RobotContainer {
   public void configureButtonBinds() {
     // Bind commands to triggers
 
-    operatorController.a().whileTrue(
-      new SnapToReefCommand(chassis)
-    );
+    operatorController.a().whileTrue(new SnapToReefCommand(chassis));
+
+    operatorController.rightBumper().toggleOnTrue(new ToggleCoralExtension(coralMech));
 
     operatorController.povUp().onTrue( // Incrament elevator preset (up)
       new RunCommand(() -> {elevator.goToPositionClamped(177);}, elevator)
@@ -107,12 +108,10 @@ public class RobotContainer {
       new RunCommand(() -> {elevator.goToPositionClamped(0);}, elevator)
     ).debounce(0.2);
 
-    operatorController.leftBumper().whileTrue( // Run algae intake inward
-      new RunCommand(() -> {coralMech.goToPosition(-50);}, coralMech)
-    );
-
-    operatorController.leftTrigger(0.5).whileTrue( // Run algae intake outward
-      new RunCommand(() -> {coralMech.goToPosition(44);}, coralMech)
+    operatorController.rightTrigger().whileTrue(
+      new RunCommand(() -> {coralMech.setRollerPower(0.5);}, coralMech)
+    ).onFalse(
+      new RunCommand(() -> {coralMech.setRollerPower(0.5);}, coralMech)
     );
   }
 

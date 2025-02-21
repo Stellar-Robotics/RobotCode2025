@@ -73,6 +73,8 @@ public class MechanismConstants {
 
         public static final double maxExtension = 43;
         public static final double minExtension = -48;
+
+        public static boolean lastPos = false;
     }
 
     public class AlgaeMechValues {
