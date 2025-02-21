@@ -25,7 +25,7 @@ public class CoralMech extends SubsystemBase {
 
   // Declare the variables to hold the extention motor
   private final SparkMax coralExtension;
-  private final SparkClosedLoopController extentionCLC;
+  private final SparkClosedLoopController extensionCLC;
 
   public CoralMech() {
 
@@ -39,7 +39,7 @@ public class CoralMech extends SubsystemBase {
     // rollerCLC variable.
     rollerCLC = rollerMotor.getClosedLoopController();
 
-    extentionCLC = coralExtension.getClosedLoopController();
+    extensionCLC = coralExtension.getClosedLoopController();
 
     // Call the 'configure' method inside the motor controller object (stored in the rollerMotor
     // variable).  We'll then pass in the configuration parameters that the 'configure' method is looking for.
@@ -64,7 +64,7 @@ public void setRollerPower(double setPower) {
 
   public void goToPosition(double postition) {
     double clampedPosition = MiscUtils.clamp(MechanismConstants.CoralMechValues.minExtension, MechanismConstants.CoralMechValues.maxExtension, postition);
-    extentionCLC.setReference(clampedPosition, ControlType.kPosition);
+    extensionCLC.setReference(clampedPosition, ControlType.kPosition);
   }
 
   @Override

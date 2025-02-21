@@ -42,13 +42,21 @@ public class SnapToReefCommand extends Command {
     Optional<Alliance> ally = DriverStation.getAlliance();
 
     if (ally.isPresent()) {
-      Pose2d[] coords = ally.get() == Alliance.Blue ? MechanismConstants.FieldNav.reefCoordsBlue : MechanismConstants.FieldNav.reefCoordsRed;
+      Pose2d[] coords; 
+      if (ally.get() == Alliance.Blue) {
+        coords = MechanismConstants.FieldNav.reefCoordsBlue;
+      } else {
+        coords = MechanismConstants.FieldNav.reefCoordsRed;
+      }
       for ( Pose2d pose : coords) {
         double dist = currPose.getTranslation().getDistance(pose.getTranslation());
         if (closestDistance >= 0) {
           boolean isCloser = dist < closestDistance;
-          closestPose = isCloser ? pose : closestPose;
-          closestDistance = isCloser ? dist : closestDistance;
+          if (isCloser) {
+            closestPose = pose;
+            closestDistance = dist;
+          }
+          
         } else {
           closestPose = pose;
           closestDistance = dist;

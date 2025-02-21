@@ -101,7 +101,7 @@ public class RobotContainer {
     operatorController.rightBumper().toggleOnTrue(new ToggleCoralExtension(coralMech));
 
     operatorController.povUp().onTrue( // Incrament elevator preset (up)
-      new RunCommand(() -> {elevator.goToPositionClamped(177);}, elevator)
+      new RunCommand(() -> {elevator.goToPositionClamped(80);}, elevator)
     ).debounce(0.2);
 
     operatorController.povDown().onTrue( // Incrament elevator preset (down)
