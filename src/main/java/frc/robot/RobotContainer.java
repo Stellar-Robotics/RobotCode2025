@@ -105,15 +105,10 @@ public class RobotContainer {
     operatorController.rightBumper().toggleOnTrue(new ToggleCoralExtension(coralMech));
 
     // Incrament elevator presets
-    operatorController.povUp().onTrue( // Increment elevator preset (up)
-      new SetElevatorHighCommand(elevator)
-    ).debounce(0.1);
-    operatorController.povLeft().or(operatorController.povRight()).onTrue(
-      new SetElevatorMidCommand(elevator)
-    ).debounce(0.1);
-    operatorController.povDown().onTrue( // Increment elevator preset (down)
-      new SetElevatorLowCommand(elevator)
-    ).debounce(0.1);
+    operatorController.povUp().onTrue(new SetElevatorHighCommand(elevator)).debounce(0.1);
+    operatorController.povLeft().or(operatorController.povRight()).onTrue(new SetElevatorMidCommand(elevator)).debounce(0.1);
+    operatorController.povDown().onTrue(new SetElevatorLowCommand(elevator)).debounce(0.1);
+
 
     operatorController.y().onTrue(
       new RunCommand(() -> {elevator.incramentUp();}, elevator)
