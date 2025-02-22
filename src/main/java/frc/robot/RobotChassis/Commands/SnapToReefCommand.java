@@ -42,16 +42,25 @@ public class SnapToReefCommand extends Command {
     Optional<Alliance> ally = DriverStation.getAlliance();
 
     if (ally.isPresent()) {
+
+      // Get coord list based on alliance
       Pose2d[] coords; 
       if (ally.get() == Alliance.Blue) {
         coords = MechanismConstants.FieldNav.reefCoordsBlue;
       } else {
         coords = MechanismConstants.FieldNav.reefCoordsRed;
       }
+
+      // Loop through coord list to find the closest coords
       for ( Pose2d pose : coords) {
         double dist = currPose.getTranslation().getDistance(pose.getTranslation());
+
+        // Compare current closest position with new position
+        // Or use new position as the current closest 
+        // If no closest position has been established yet
         if (closestDistance >= 0) {
           boolean isCloser = dist < closestDistance;
+
           if (isCloser) {
             closestPose = pose;
             closestDistance = dist;
@@ -62,13 +71,17 @@ public class SnapToReefCommand extends Command {
           closestDistance = dist;
         }
       }
+    } else {
+      System.out.println("Snapping Failed: No Alliance Found");
     }
     
+    // Create list of waypoints from poses
     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
       currPose,
       closestPose
     );
 
+    // Create new path from waypoint list
     PathPlannerPath path = new PathPlannerPath(
       waypoints,
       MechanismConstants.FieldNav.snapConstraints, 
@@ -76,6 +89,7 @@ public class SnapToReefCommand extends Command {
       null
     );
 
+    // Follow the path
     AutoBuilder.followPath(path).execute();
   }
 
