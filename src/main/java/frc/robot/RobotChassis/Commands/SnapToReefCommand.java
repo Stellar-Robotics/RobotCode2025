@@ -23,8 +23,15 @@ public class SnapToReefCommand extends Command {
   /** Creates a new SnapToReefCommand. */
   SwerveChassisSubsystem chassis;
 
+  /**  
+   * <pre>
+   * Snaps the robot to the nearest reef face
+   * 
+   *This command currently only snaps to the left side of each reef face
+   * </pre>
+  */
   public SnapToReefCommand(SwerveChassisSubsystem chassisSubsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(chassisSubsystem);
     this.chassis = chassisSubsystem;
   }
 
@@ -33,6 +40,7 @@ public class SnapToReefCommand extends Command {
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
+  // This command currently only snaps to the left side of each reef face
   @Override
   public void execute() {
     Pose2d currPose = chassis.getPose();
