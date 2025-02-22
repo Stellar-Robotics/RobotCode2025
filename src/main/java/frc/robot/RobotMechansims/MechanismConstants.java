@@ -83,7 +83,7 @@ public class MechanismConstants {
 
         public static boolean lastPos = false;
 
-        //public static final CORALEXTENSIONPOSITION lastPos = CORALEXTENSIONPOSITION.MIDDLE;
+        public static CORALEXTENSIONPOSITION currentPos = CORALEXTENSIONPOSITION.MIDDLE;
     }
 
     public class AlgaeMechValues {

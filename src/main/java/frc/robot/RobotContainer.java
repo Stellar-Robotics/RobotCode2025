@@ -19,6 +19,7 @@ import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
 import frc.robot.RobotMechansims.CoralMech.Commands.ToggleCoralExtension;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
 import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorHighCommand;
@@ -101,6 +102,12 @@ public class RobotContainer {
     // Switch to snapping mode
     operatorController.a().whileTrue(new SnapToReefCommand(chassis));
 
+    // Incrament coral mech forward
+    operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.1);
+    
+    // Incrament coral mech backwards
+    operatorController.leftBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.1);
+
     // Toggle the extension of the coral mechanism back and forth
     operatorController.rightBumper().toggleOnTrue(new ToggleCoralExtension(coralMech));
 
@@ -117,6 +124,13 @@ public class RobotContainer {
     // Run coral mechanism roller.
     operatorController.rightTrigger().whileTrue(
       new RunCommand(() -> {coralMech.setRollerPower(operatorController.getHID().getRightTriggerAxis());}, coralMech)
+    ).onFalse(
+      new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
+    );
+
+    // Run coral mechanism roller backward.
+    operatorController.leftTrigger().whileTrue(
+      new RunCommand(() -> {coralMech.setRollerPower(operatorController.getHID().getLeftTriggerAxis());}, coralMech)
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );

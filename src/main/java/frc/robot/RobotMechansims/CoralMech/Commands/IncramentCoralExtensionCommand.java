@@ -5,23 +5,50 @@
 package frc.robot.RobotMechansims.CoralMech.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
+import frc.robot.RobotMechansims.MechanismConstants;
+import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
+import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IncramentCoralExtensionCommand extends Command {
 
-  private Elevator elevator;
+  private CoralMech coral;
+  private boolean forward;
   /** Creates a new IncramentCoralExtensionCommand. */
-  public IncramentCoralExtensionCommand(Elevator elev) {
+  public IncramentCoralExtensionCommand(CoralMech coral, boolean goingForward) {
     // Use addRequirements() here to declare subsystem dependencies.
-    elevator = elev;
+    this.coral = coral;
+    forward = goingForward;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    
+    if (forward) {
+      // Going Forward
+      if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.MIDDLE) {
+        coral.goToPosition(0); // TBD FORWARD POS
+        MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD;
+      }
+
+      if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.BACK) {
+        coral.goToPosition(0); // Set
+        MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.MIDDLE;
+      }
+
+    } else {
+      // Going Backward
+      if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.MIDDLE) {
+        coral.goToPosition(0); // TBD BACK POS
+        MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.BACK;
+      }
+      
+      if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.FORWARD) {
+        coral.goToPosition(0); // Set
+        MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.MIDDLE;
+      }
+    }
 
   }
 

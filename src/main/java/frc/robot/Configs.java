@@ -121,8 +121,8 @@ public final class Configs {
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.3, 0.0001, 0)
-                .maxOutput(0.8)
-                .minOutput(-0.8);
+                .maxOutput(0.3)
+                .minOutput(-0.3);
 
                 extensionMotorConfig2
                 .idleMode(IdleMode.kBrake)
@@ -132,8 +132,8 @@ public final class Configs {
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.3, 0.0001, 0)
-                .maxOutput(0.8)
-                .minOutput(-0.8);
+                .maxOutput(0.3)
+                .minOutput(-0.3);
 
         }  
 
