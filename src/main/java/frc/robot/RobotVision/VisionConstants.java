@@ -22,7 +22,7 @@ public class VisionConstants {
         /* These names are the same as the camera name in
          * chosen the photon client for each camera and
          * are identified as so in network tables */ 
-        public static final String cameraName1 = "StellarVision";
+        public static final String cameraName1 = "StellarCam1";
 
     }
 
@@ -31,7 +31,7 @@ public class VisionConstants {
         // Camera 1 position relative to the robot center ([Facing Backward In Center][Quarter and a half Meter Backwards][A Quarter Meter Up][Tilted Upward Half A Radian]) (+X is front of robot)
         //public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.35, 0, 0.25), new Rotation3d(0, -0.535 * Math.PI, Math.toRadians(180)));
         //public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.5/*-0.3524*/, 0, 0.2318), new Rotation3d(0, Math.toRadians(-32), Math.toRadians(180)));
-        public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.2762, -0.1683, 0.7461), new Rotation3d(90, Math.toRadians(180), Math.toRadians(174.5)));
+        public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.2762, 0.1683, 0.7461), new Rotation3d(90, Math.toRadians(0), Math.toRadians(174.5)));
 
         // Get apriltag position data via FIRST provided json file (ChangeMe for 2025)
         public static final AprilTagFieldLayout tagPositions = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);

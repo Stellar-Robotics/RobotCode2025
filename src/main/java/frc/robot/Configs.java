@@ -119,8 +119,8 @@ public final class Configs {
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.3, 0.0001, 0)
-                .maxOutput(0.45)
-                .minOutput(-0.45);
+                .maxOutput(0.8)
+                .minOutput(-0.8);
 
         }  
 
@@ -139,7 +139,7 @@ public final class Configs {
                 elevatorMotorConfig.closedLoop
                         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                         .pid(0.1, 0, 0)
-                        .minOutput(0)
+                        .minOutput(-1)
                         .maxOutput(1);
                 // elevatorMotorConfig.limitSwitch // The elevator will also have a limit switch
                 //         .forwardLimitSwitchEnabled(true)

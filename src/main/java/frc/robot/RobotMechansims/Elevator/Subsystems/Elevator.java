@@ -14,6 +14,7 @@ import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
@@ -60,7 +61,16 @@ public class Elevator extends SubsystemBase {
     REVLibError error = elevatorCLC.setReference(positionClamped, ControlType.kPosition);
     if (error != REVLibError.kOk) {
       elevatorMotor.stopMotor();
+      System.out.println("Something broke!!!!!!!!!!");
     }
+  }
+
+  public void incramentUp() {
+    elevatorCLC.setReference(elevatorEncoder.getPosition() + 1, ControlType.kPosition);
+  }
+
+  public void incramentDown() {
+    elevatorCLC.setReference(elevatorEncoder.getPosition() - 1, ControlType.kPosition);
   }
 
   // Get the position of the elevator
@@ -76,5 +86,6 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Elevator Position", elevatorEncoder.getPosition());
   }
 }

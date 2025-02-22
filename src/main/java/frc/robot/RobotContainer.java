@@ -92,7 +92,6 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 
-
   public void configureButtonBinds() {
     // Bind commands to triggers
 
@@ -104,15 +103,22 @@ public class RobotContainer {
 
     // Incrament elevator presets
     operatorController.povUp().onTrue( // Increment elevator preset (up)
-      new RunCommand(() -> {elevator.goToPositionClamped(80);}, elevator)
-    ).debounce(0.2);
+      new RunCommand(() -> {elevator.goToPositionClamped(178); System.out.println("Elevator 80");}, elevator)
+    ).debounce(0.1);
+    operatorController.povLeft().or(operatorController.povRight()).onTrue(
+      new RunCommand(() -> {elevator.goToPositionClamped(80); System.out.println("Elevator 40");}, elevator)
+    ).debounce(0.1);
     operatorController.povDown().onTrue( // Increment elevator preset (down)
-      new RunCommand(() -> {elevator.goToPositionClamped(0);}, elevator)
-    ).debounce(0.2);
+      new RunCommand(() -> {elevator.goToPositionClamped(0); System.out.println("Elevator 0");}, elevator)
+    ).debounce(0.1);
+
+    operatorController.y().onTrue(
+      new RunCommand(() -> {elevator.incramentUp();}, elevator)
+    );
 
     // Run coral mechanism roller.
     operatorController.rightTrigger().whileTrue(
-      new RunCommand(() -> {coralMech.setRollerPower(0.5);}, coralMech)
+      new RunCommand(() -> {coralMech.setRollerPower(operatorController.getHID().getRightTriggerAxis());}, coralMech)
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
