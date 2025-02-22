@@ -4,6 +4,8 @@
 
 package frc.robot.RobotMechansims.CoralMech.Commands;
 
+import java.util.logging.MemoryHandler;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
@@ -17,6 +19,7 @@ public class ToggleCoralExtension extends Command {
   public ToggleCoralExtension(CoralMech mechanism) {
     // Use addRequirements() here to declare subsystem dependencies.
     subsystem = mechanism;
+    addRequirements(mechanism);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

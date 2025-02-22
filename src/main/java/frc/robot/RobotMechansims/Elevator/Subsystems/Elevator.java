@@ -28,6 +28,12 @@ public class Elevator extends SubsystemBase {
   private final RelativeEncoder elevatorEncoder;
   private final SparkClosedLoopController elevatorCLC;
 
+  public enum POSITIONS {
+    LOW,
+    MID,
+    HIGH
+  }
+
   public Elevator() {
 
     // Create a new motor controller object and store it in the 'elevatorMotor'

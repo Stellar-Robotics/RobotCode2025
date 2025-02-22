@@ -19,6 +19,8 @@ public class IncramentCoralExtensionCommand extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     this.coral = coral;
     forward = goingForward;
+
+    addRequirements(coral);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
