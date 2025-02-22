@@ -28,12 +28,17 @@ public class CoralMech extends SubsystemBase {
   private final SparkMax coralExtension;
   private final SparkClosedLoopController extensionCLC;
 
+  private final SparkMax coralExtension2;
+
   public CoralMech() {
 
     // Create a new motor controller object and store it in the rollerMotor variable.
     rollerMotor = new SparkFlex(MechanismConstants.CoralMechValues.rollerMotorID, MotorType.kBrushless);
 
     coralExtension = new SparkMax(MechanismConstants.CoralMechValues.extensionMotorID, MotorType.kBrushless);
+
+    coralExtension2 = new SparkMax(MechanismConstants.CoralMechValues.extensionMotorID2, MotorType.kBrushless);
+
 
     // Get the closed loop controller object from the newly created motor controller object that is stored in
     // the rollerMotor variable.  We'll then create a refrence to that closed loop controller object in the
@@ -46,6 +51,8 @@ public class CoralMech extends SubsystemBase {
     // variable).  We'll then pass in the configuration parameters that the 'configure' method is looking for.
     rollerMotor.configure(Configs.CoralMechConfig.rollerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     coralExtension.configure(Configs.CoralMechConfig.extensionMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    coralExtension2.configure(Configs.CoralMechConfig.extensionMotorConfig2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
   }
 
   public void setVelocity(double velocity) {

@@ -8,6 +8,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.BaseConstants.ModuleConstants;
 import frc.robot.BaseConstants.PathPlannerConstants;
+import frc.robot.RobotMechansims.MechanismConstants;
 
 public final class Configs {
 
@@ -101,6 +102,7 @@ public final class Configs {
 
         public static final SparkMaxConfig rollerMotorConfig = new SparkMaxConfig();
         public static final SparkMaxConfig extensionMotorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig extensionMotorConfig2 = new SparkMaxConfig();
 
 
         static {
@@ -115,6 +117,17 @@ public final class Configs {
 
             extensionMotorConfig
                 .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(25);
+            extensionMotorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.3, 0.0001, 0)
+                .maxOutput(0.8)
+                .minOutput(-0.8);
+
+                extensionMotorConfig2
+                .idleMode(IdleMode.kBrake)
+                .inverted(true)
+                .follow(MechanismConstants.CoralMechValues.extensionMotorID)
                 .smartCurrentLimit(25);
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)

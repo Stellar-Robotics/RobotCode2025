@@ -70,6 +70,7 @@ public class MechanismConstants {
     public class CoralMechValues {
         public static final int rollerMotorID = 10;
         public static final int extensionMotorID = 11;
+        public static final int extensionMotorID2 = 12;
 
         public static final double maxExtension = 43;
         public static final double minExtension = -48;
