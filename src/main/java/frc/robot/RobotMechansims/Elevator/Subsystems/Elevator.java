@@ -16,6 +16,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.BaseConstants;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotUtilities.MiscUtils;
@@ -87,5 +88,11 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Elevator Position", elevatorEncoder.getPosition());
+
+    if (elevatorEncoder.getPosition() < 50) {
+      BaseConstants.DriveConstants.elevatorSpeedOverride = false;
+    } else {
+      BaseConstants.DriveConstants.elevatorSpeedOverride = true;
+    }
   }
 }
