@@ -64,7 +64,7 @@ public class MechanismConstants {
 
     public class elevatorValues {
         public static final int motorID = 19;
-        public static final double maxHeightExtensionRotations = 177;
+        public static final double maxHeightExtensionRotations = 178;
     }
 
     public class CoralMechValues {
@@ -75,7 +75,15 @@ public class MechanismConstants {
         public static final double maxExtension = 43;
         public static final double minExtension = -48;
 
+        public static enum CORALEXTENSIONPOSITION {
+            BACK,
+            MIDDLE,
+            FORWARD
+        };
+
         public static boolean lastPos = false;
+
+        //public static final CORALEXTENSIONPOSITION lastPos = CORALEXTENSIONPOSITION.MIDDLE;
     }
 
     public class AlgaeMechValues {
