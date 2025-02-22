@@ -3,18 +3,16 @@ package frc.robot.RobotMechansims.Elevator.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 
-public class SetElevatorCommand extends Command {
+public class SetElevatorHighCommand extends Command {
 
     private Elevator elevator;
-    private double position;
 
-    public SetElevatorCommand(Elevator elev, double pos) {
+    public SetElevatorHighCommand(Elevator elev) {
         this.elevator = elev;
-        this.position = pos;
     }
 
     @Override
     public void execute() {
-        this.elevator.goToPositionClamped(position);
+        this.elevator.goToPositionClamped(178);
     }
 } 
