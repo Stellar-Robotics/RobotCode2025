@@ -21,6 +21,9 @@ import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotMechansims.CoralMech.Commands.ToggleCoralExtension;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
+import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorHighCommand;
+import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorLowCommand;
+import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorMidCommand;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 
 public class RobotContainer {
@@ -103,13 +106,13 @@ public class RobotContainer {
 
     // Incrament elevator presets
     operatorController.povUp().onTrue( // Increment elevator preset (up)
-      new RunCommand(() -> {elevator.goToPositionClamped(178); System.out.println("Elevator 80");}, elevator)
+      new SetElevatorHighCommand(elevator)
     ).debounce(0.1);
     operatorController.povLeft().or(operatorController.povRight()).onTrue(
-      new RunCommand(() -> {elevator.goToPositionClamped(80); System.out.println("Elevator 40");}, elevator)
+      new SetElevatorMidCommand(elevator)
     ).debounce(0.1);
     operatorController.povDown().onTrue( // Increment elevator preset (down)
-      new RunCommand(() -> {elevator.goToPositionClamped(0); System.out.println("Elevator 0");}, elevator)
+      new SetElevatorLowCommand(elevator)
     ).debounce(0.1);
 
     operatorController.y().onTrue(
