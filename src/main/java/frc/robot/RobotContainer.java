@@ -20,7 +20,6 @@ import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
-import frc.robot.RobotMechansims.CoralMech.Commands.ToggleCoralExtension;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
 import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorCommand;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
@@ -117,7 +116,7 @@ public class RobotContainer {
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
     operatorController.leftTrigger().whileTrue(
-      new RunCommand(() -> {coralMech.setRollerPower(operatorController.getHID().getLeftTriggerAxis());}, coralMech)
+      new RunCommand(() -> {coralMech.setRollerPower(-operatorController.getHID().getLeftTriggerAxis());}, coralMech)
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );

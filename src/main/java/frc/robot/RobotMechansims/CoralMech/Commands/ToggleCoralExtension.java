@@ -4,8 +4,6 @@
 
 package frc.robot.RobotMechansims.CoralMech.Commands;
 
-import java.util.logging.MemoryHandler;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;

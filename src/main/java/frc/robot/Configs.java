@@ -126,8 +126,8 @@ public final class Configs {
 
                 extensionMotorConfig2
                 .idleMode(IdleMode.kBrake)
-                .inverted(true)
                 .follow(MechanismConstants.CoralMechValues.extensionMotorID)
+                .inverted(true)
                 .smartCurrentLimit(25);
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
