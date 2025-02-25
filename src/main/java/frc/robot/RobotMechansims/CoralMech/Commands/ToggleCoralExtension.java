@@ -17,6 +17,7 @@ public class ToggleCoralExtension extends Command {
   public ToggleCoralExtension(CoralMech mechanism) {
     // Use addRequirements() here to declare subsystem dependencies.
     subsystem = mechanism;
+    addRequirements(mechanism);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

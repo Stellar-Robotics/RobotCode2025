@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.BaseConstants;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.BaseConstants.IOConstants;
 import frc.robot.BaseConstants.MiscConstants;
@@ -106,9 +107,9 @@ public class DefaultDriveCommand extends Command {
     double dashTranslationSpeed = SmartDashboard.getNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     double dashAngularSpeed =  SmartDashboard.getNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
 
-    double xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed;
-    double ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed;
-    double rotDelivered = m_currentRotation * dashAngularSpeed;
+    double xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed * (BaseConstants.DriveConstants.elevatorSpeedOverride ? 0.3 : 1);
+    double ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed * (BaseConstants.DriveConstants.elevatorSpeedOverride ? 0.3 : 1);
+    double rotDelivered = m_currentRotation * dashAngularSpeed * (BaseConstants.DriveConstants.elevatorSpeedOverride ? 0.3 : 1);
 
     // Convert values into either a robot relative or field oriented Chassis Speed object
     ChassisSpeeds positionCommanded = fieldRelative

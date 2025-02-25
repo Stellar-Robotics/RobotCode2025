@@ -17,6 +17,8 @@ public class RunAlgaeMechCommand extends Command {
         this.intake = intakeParam;
         this.speed = speedParam;
 
+        addRequirements(intakeParam);
+
     }
 
     @Override

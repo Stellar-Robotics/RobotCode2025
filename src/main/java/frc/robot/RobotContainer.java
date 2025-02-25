@@ -19,13 +19,11 @@ import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
-import frc.robot.RobotMechansims.MechanismConstants;
-import frc.robot.RobotMechansims.CoralMech.Commands.ToggleCoralExtension;
+import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
-import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorHighCommand;
-import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorLowCommand;
-import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorMidCommand;
+import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorCommand;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
+import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator.POSITIONS;
 
 public class RobotContainer {
 
@@ -102,33 +100,23 @@ public class RobotContainer {
     // Switch to snapping mode
     operatorController.a().whileTrue(new SnapToReefCommand(chassis));
 
-    // Toggle the extension of the coral mechanism back and forth
-    operatorController.rightBumper().toggleOnTrue(new ToggleCoralExtension(coralMech));
+    // Incrament coral mech forward or backwards
+    operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
+    operatorController.leftBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.5);
 
-    // Incrament elevator presets
-    operatorController.povUp().onTrue(new SetElevatorHighCommand(elevator)).debounce(0.1);
-    operatorController.povLeft().or(operatorController.povRight()).onTrue(
-      new SetElevatorMidCommand(elevator).andThen(new RunCommand(() -> {
-        coralMech.goToPosition(0); 
-        MechanismConstants.CoralMechValues.lastPos = false;
-      })))
-      .debounce(0.1);
-    operatorController.povDown().onTrue(
-      new SetElevatorLowCommand(elevator)
-      .andThen(new RunCommand(() -> {
-        coralMech.goToPosition(0); 
-        MechanismConstants.CoralMechValues.lastPos = false;
-      })))
-      .debounce(0.1);
+    // Elevator presets
+    operatorController.povUp().onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH)).debounce(0.1);
+    operatorController.povLeft().or(operatorController.povRight()).onTrue(new SetElevatorCommand(elevator, POSITIONS.MID)).debounce(0.1);
+    operatorController.povDown().onTrue(new SetElevatorCommand(elevator, POSITIONS.LOW)).debounce(0.1);
 
-
-    operatorController.y().onTrue(
-      new RunCommand(() -> {elevator.incramentUp();}, elevator)
-    );
-
-    // Run coral mechanism roller.
+    // Run coral mechanism roller forward and backward.
     operatorController.rightTrigger().whileTrue(
       new RunCommand(() -> {coralMech.setRollerPower(operatorController.getHID().getRightTriggerAxis());}, coralMech)
+    ).onFalse(
+      new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
+    );
+    operatorController.leftTrigger().whileTrue(
+      new RunCommand(() -> {coralMech.setRollerPower(-operatorController.getHID().getLeftTriggerAxis());}, coralMech)
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );

@@ -42,6 +42,9 @@ public final class BaseConstants {
     public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
+    // Speed Mode Modifier
+    public static boolean elevatorSpeedOverride = false;
+
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(27);
 
