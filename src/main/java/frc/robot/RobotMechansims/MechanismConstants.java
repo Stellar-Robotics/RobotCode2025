@@ -73,7 +73,7 @@ public class MechanismConstants {
         public static final int extensionMotorID2 = 12;
 
         public static final double maxExtension = 43;
-        public static final double minExtension = -48;
+        public static final double minExtension = -45;
 
         public static enum CORALEXTENSIONPOSITION {
             BACK,
