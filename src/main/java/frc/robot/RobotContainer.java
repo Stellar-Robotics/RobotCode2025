@@ -101,8 +101,8 @@ public class RobotContainer {
     operatorController.a().whileTrue(new SnapToReefCommand(chassis));
 
     // Incrament coral mech forward or backwards
-    operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.1);
-    operatorController.leftBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.1);
+    operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
+    operatorController.leftBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.5);
 
     // Elevator presets
     operatorController.povUp().onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH)).debounce(0.1);

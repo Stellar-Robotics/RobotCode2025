@@ -120,18 +120,18 @@ public final class Configs {
                 .smartCurrentLimit(25);
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                .pid(0.3, 0.0001, 0)
+                .pid(0.3, 0.0000, 0)
                 .maxOutput(0.3)
                 .minOutput(-0.3);
 
                 extensionMotorConfig2
                 .idleMode(IdleMode.kBrake)
-                .follow(MechanismConstants.CoralMechValues.extensionMotorID)
+                .follow(MechanismConstants.CoralMechValues.extensionMotorID, true)
                 .inverted(true)
                 .smartCurrentLimit(25);
             extensionMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                .pid(0.3, 0.0001, 0)
+                .pid(0.3, 0.0000, 0)
                 .maxOutput(0.3)
                 .minOutput(-0.3);
 

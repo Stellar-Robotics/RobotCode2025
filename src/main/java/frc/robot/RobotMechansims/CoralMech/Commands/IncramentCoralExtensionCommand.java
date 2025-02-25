@@ -4,6 +4,7 @@
 
 package frc.robot.RobotMechansims.CoralMech.Commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
@@ -30,25 +31,29 @@ public class IncramentCoralExtensionCommand extends Command {
     if (forward) {
       // Going Forward
       if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.MIDDLE) {
-        coral.goToPosition(0); // TBD FORWARD POS
+        coral.goToPosition(30); // TBD FORWARD POS
         MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD;
+        SmartDashboard.putString("Going To", "Forward");
       }
 
       if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.BACK) {
         coral.goToPosition(0); // Set
         MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.MIDDLE;
+        SmartDashboard.putString("Going To", "Middle");
       }
 
     } else {
       // Going Backward
       if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.MIDDLE) {
-        coral.goToPosition(0); // TBD BACK POS
+        coral.goToPosition(-30); // TBD BACK POS
         MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.BACK;
+        SmartDashboard.putString("Going To", "Back");
       }
       
       if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.FORWARD) {
         coral.goToPosition(0); // Set
         MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.MIDDLE;
+        SmartDashboard.putString("Going To", "Middle");
       }
     }
 

@@ -5,6 +5,7 @@
 package frc.robot.RobotMechansims.CoralMech.Subsystems;
 
 import com.revrobotics.REVLibError;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
@@ -13,6 +14,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
@@ -27,6 +29,7 @@ public class CoralMech extends SubsystemBase {
   // Declare the variables to hold the extention motor
   private final SparkMax coralExtension;
   private final SparkClosedLoopController extensionCLC;
+  private final RelativeEncoder extensionEncoder;
 
   private final SparkMax coralExtension2;
 
@@ -40,12 +43,15 @@ public class CoralMech extends SubsystemBase {
     coralExtension2 = new SparkMax(MechanismConstants.CoralMechValues.extensionMotorID2, MotorType.kBrushless);
 
 
+
     // Get the closed loop controller object from the newly created motor controller object that is stored in
     // the rollerMotor variable.  We'll then create a refrence to that closed loop controller object in the
     // rollerCLC variable.
     rollerCLC = rollerMotor.getClosedLoopController();
 
     extensionCLC = coralExtension.getClosedLoopController();
+
+    extensionEncoder = coralExtension.getEncoder();
 
     // Call the 'configure' method inside the motor controller object (stored in the rollerMotor
     // variable).  We'll then pass in the configuration parameters that the 'configure' method is looking for.
@@ -81,5 +87,6 @@ public void setRollerPower(double setPower) {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("CoralExtension", extensionEncoder.getPosition());
   }
 }
