@@ -5,6 +5,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -128,6 +130,12 @@ public class RobotContainer {
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
+  }
+
+  public void bindCommandsToPathPlanner() {
+    NamedCommands.registerCommand("ElevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
+    NamedCommands.registerCommand("ElevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
+    NamedCommands.registerCommand("ElevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
   }
 
 
