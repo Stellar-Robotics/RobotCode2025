@@ -45,7 +45,7 @@ public class IncramentCoralExtensionCommand extends Command {
     } else {
       // Going Backward
       if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.MIDDLE) {
-        coral.goToPosition(-44); // TBD BACK POS
+        coral.goToPosition(-40); // TBD BACK POS
         MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.BACK;
         SmartDashboard.putString("Going To", "Back");
       }
