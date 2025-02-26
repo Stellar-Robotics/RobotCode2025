@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMechansims.MechanismConstants;
 
 public class ClimbSubsystem extends SubsystemBase {
   /** Creates a new ClimbSubsystem. */
@@ -25,9 +26,9 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public ClimbSubsystem() { 
 
-    climbMotorFront = new SparkMax(0, MotorType.kBrushless);
+    climbMotorFront = new SparkMax(MechanismConstants.ClimberValues.motorFrontID, MotorType.kBrushless);
 
-    climbMotorBack = new SparkMax(0, MotorType.kBrushless);
+    climbMotorBack = new SparkMax(MechanismConstants.ClimberValues.motorBackID, MotorType.kBrushless);
 
     SparkCLC1 = climbMotorFront.getClosedLoopController();
 
@@ -38,6 +39,8 @@ public class ClimbSubsystem extends SubsystemBase {
   public void goTP(double setPoint) {
 
     SparkCLC1.setReference(setPoint, ControlType.kPosition);
+
+
 
   }
 

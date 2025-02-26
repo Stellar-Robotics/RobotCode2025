@@ -163,6 +163,37 @@ public final class Configs {
 
     }
 
+    public static final class ClimberConfig {
+
+        public static final SparkMaxConfig MotorFrontConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig MotorBackConfig = new SparkMaxConfig();
+
+        static {
+
+                MotorFrontConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(25);
+                MotorFrontConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.3, 0.0000, 0)
+                .maxOutput(0.5)
+                .minOutput(-0.5);
+
+                MotorBackConfig
+                .idleMode(IdleMode.kBrake)
+                .follow(MechanismConstants.ClimberValues.motorFrontID, true)
+                .inverted(true)
+                .smartCurrentLimit(25);
+                MotorBackConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.3, 0.0000, 0)
+                .maxOutput(0.5)
+                .minOutput(-0.5);
+
+        }
+
+    }
+
     public static final class PathPlanner {
 
         public static RobotConfig pathPlannerConfig;

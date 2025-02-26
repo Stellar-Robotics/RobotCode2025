@@ -67,6 +67,11 @@ public class MechanismConstants {
         public static final double maxHeightExtensionRotations = 178;
     }
 
+    public class ClimberValues {
+        public static final int motorFrontID = 14;
+        public static final int motorBackID = 15;
+    }
+
     public class CoralMechValues {
         public static final int rollerMotorID = 10;
         public static final int extensionMotorID = 11;
