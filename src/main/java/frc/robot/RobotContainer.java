@@ -109,14 +109,14 @@ public class RobotContainer {
     // Elevator presets
     operatorController.povUp().onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH)).debounce(0.1);
     operatorController.povLeft().or(operatorController.povRight()).onTrue(
-      new SetCoralMechPosition(coralMech, 0)
-      .andThen(new SetElevatorCommand(elevator, POSITIONS.MID)))
+      new SetElevatorCommand(elevator, POSITIONS.MID)
+      .andThen(new SetCoralMechPosition(coralMech, 0)))
       .debounce(0.1);
     operatorController.povDown().onTrue(
-      new SetCoralMechPosition(coralMech, 0)
-      .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW)))
+      new SetElevatorCommand(elevator, POSITIONS.LOW)
+      .andThen(new SetCoralMechPosition(coralMech, 0)))
       .debounce(0.1);
-      
+
     // Run coral mechanism roller forward and backward.
     operatorController.rightTrigger().whileTrue(
       new RunCommand(() -> {coralMech.setRollerPower(operatorController.getHID().getRightTriggerAxis());}, coralMech)

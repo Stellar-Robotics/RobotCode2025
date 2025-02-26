@@ -34,4 +34,9 @@ public class SetElevatorCommand extends Command {
         System.out.println("Elevator " + position);
 
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 } 
