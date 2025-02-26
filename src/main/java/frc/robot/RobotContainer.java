@@ -71,6 +71,9 @@ public class RobotContainer {
 
   public void initiateRobot() {
 
+    // Register commands with path planner
+    bindCommandsToPathPlanner();
+
     // Define subsystems
     chassis = new SwerveChassisSubsystem(); // Swerve subsystem
     vision = new VisionSubsystem(chassis.getPose());
@@ -90,6 +93,7 @@ public class RobotContainer {
 
     // Bind buttons to the controllers
     configureButtonBinds();
+  
   }
 
 
@@ -136,6 +140,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ElevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
     NamedCommands.registerCommand("ElevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
     NamedCommands.registerCommand("ElevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
+    System.out.println("Registered Commands With PathPlanner");
   }
 
 

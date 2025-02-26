@@ -112,7 +112,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     var visionEst = RobotContainer.getSingletonInstance().getVisionEstimate();
     if (visionEst != null) {
       // add vision estimate to pose
-      System.out.println("Vision Estimate Valid: Applying Estimate");
+      //System.out.println("Vision Estimate Valid: Applying Estimate");
       swervePoseEstimator.addVisionMeasurement(visionEst, Timer.getFPGATimestamp());
     }
 
