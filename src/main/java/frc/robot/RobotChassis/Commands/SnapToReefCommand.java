@@ -101,7 +101,7 @@ public class SnapToReefCommand extends Command {
     path.preventFlipping = true;
 
     // Follow the path
-    AutoBuilder.followPath(path).execute();
+    AutoBuilder.followPath(path).schedule();
   }
 
   // Called once the command ends or is interrupted.

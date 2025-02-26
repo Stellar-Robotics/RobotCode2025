@@ -5,7 +5,6 @@
 package frc.robot.RobotMechansims.CoralMech.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
