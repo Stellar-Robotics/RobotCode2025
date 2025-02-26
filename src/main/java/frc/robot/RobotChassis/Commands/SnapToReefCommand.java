@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
@@ -94,7 +95,7 @@ public class SnapToReefCommand extends Command {
       waypoints,
       MechanismConstants.FieldNav.snapConstraints, 
       null, 
-      null
+      new GoalEndState(0.0, closestPose.getRotation())
     );
 
     // Follow the path
