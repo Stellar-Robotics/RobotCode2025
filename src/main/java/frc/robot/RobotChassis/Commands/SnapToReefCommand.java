@@ -98,6 +98,8 @@ public class SnapToReefCommand extends Command {
       new GoalEndState(0.0, closestPose.getRotation())
     );
 
+    path.preventFlipping = true;
+
     // Follow the path
     AutoBuilder.followPath(path).execute();
   }
