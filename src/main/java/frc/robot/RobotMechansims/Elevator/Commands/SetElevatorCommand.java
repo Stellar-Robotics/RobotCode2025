@@ -12,7 +12,7 @@ public class SetElevatorCommand extends Command {
     public SetElevatorCommand(Elevator elev, POSITIONS position) {
         this.elevator = elev;
         this.position = position;
-        addRequirements(elev);
+        addRequirements(elevator);
     }
 
     @Override

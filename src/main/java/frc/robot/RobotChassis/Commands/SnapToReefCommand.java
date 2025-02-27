@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
@@ -16,7 +17,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotContainer;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
+import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotControl.StellarController;
 import frc.robot.RobotMechansims.MechanismConstants;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -32,8 +36,9 @@ public class SnapToReefCommand extends Command {
    * </pre>
   */
   public SnapToReefCommand(SwerveChassisSubsystem chassisSubsystem) {
-    addRequirements(chassisSubsystem);
+    
     this.chassis = chassisSubsystem;
+    //addRequirements(chassis);
   }
 
   // Called when the command is initially scheduled.
@@ -83,22 +88,38 @@ public class SnapToReefCommand extends Command {
     } else {
       System.out.println("Snapping Failed: No Alliance Found");
     }
+
+    System.out.println("Poses:");
+    System.out.println("Current Pose: " + currPose);
+    System.out.println("Closest/Target Pose: " + closestPose);
+
+    Pose2d rotatedPose = new Pose2d(currPose.getTranslation(), closestPose.getRotation());
     
     // Create list of waypoints from poses
     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
       currPose,
+      rotatedPose,
       closestPose
     );
+
+    System.out.println("Waypoints:");
+    for (Waypoint wp : waypoints) {
+        System.out.println(wp);
+    }
 
     // Create new path from waypoint list
     PathPlannerPath path = new PathPlannerPath(
       waypoints,
       MechanismConstants.FieldNav.snapConstraints, 
-      null, 
+      null,
       new GoalEndState(0.0, closestPose.getRotation())
     );
 
     path.preventFlipping = true;
+
+    StellarController driveController = ControllerIO.getPrimaryInstance().stellarController.getHID();
+
+    RobotContainer.getSingletonInstance().setRotaryOffset(closestPose.getRotation().getDegrees() - driveController.getRightRotary().getDegrees());
 
     // Follow the path
     AutoBuilder.followPath(path).schedule();

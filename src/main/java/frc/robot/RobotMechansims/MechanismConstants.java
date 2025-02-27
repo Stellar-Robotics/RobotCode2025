@@ -55,7 +55,7 @@ public class MechanismConstants {
 
         // Constraints to use when snaping to position at reef
         public static final PathConstraints snapConstraints = new PathConstraints(
-            3.0, 
+            0.5, 
             4.0,
             Units.degreesToRadians(540), 
             Units.degreesToRadians(720)

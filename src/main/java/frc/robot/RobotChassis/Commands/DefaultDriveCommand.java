@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.BaseConstants;
+import frc.robot.RobotContainer;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.BaseConstants.IOConstants;
 import frc.robot.BaseConstants.MiscConstants;
@@ -78,7 +79,7 @@ public class DefaultDriveCommand extends Command {
     Rotation2d rotaryAngle = driveController.getRightRotary();
     double rot; // Value will be assigned based off if were using vision or not
 
-    rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees());
+    rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees() + RobotContainer.getSingletonInstance().getRotaryOffset());
     SmartDashboard.putString("RotationStatus", "ControllerControlled");
 
     if (useDeadband) { // Apply deadband if specified

@@ -34,6 +34,7 @@ public class RobotContainer {
   private VisionSubsystem vision; // Vision subsystem
   private Elevator elevator; // Elevator subsystem
   private CoralMech coralMech; // Coral subsystem
+  private double rotaryOffset;
   //private AlgaeMech algaeMech; // Algae subsystem
   // Declare controllers
   public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
@@ -70,13 +71,14 @@ public class RobotContainer {
   public void initiateRobot() {
 
     // Register commands with path planner
-    bindCommandsToPathPlanner();
+    //bindCommandsToPathPlanner();
 
     // Define subsystems
     chassis = new SwerveChassisSubsystem(); // Swerve subsystem
     vision = new VisionSubsystem(chassis.getPose());
     elevator = new Elevator();
     coralMech = new CoralMech();
+    rotaryOffset = 0;
     //algaeMech = new AlgaeMech();
 
     // Create auto selector and post params to the dash
@@ -98,6 +100,14 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // Call the pathplanner auto lib
     return autoChooser.getSelected();
+  }
+
+  public void setRotaryOffset(double offset) {
+    rotaryOffset = offset;
+  }
+
+  public double getRotaryOffset() {
+    return rotaryOffset;
   }
 
   public void configureButtonBinds() {
@@ -138,6 +148,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ElevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
     NamedCommands.registerCommand("ElevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
     NamedCommands.registerCommand("ElevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
+    NamedCommands.registerCommand("Snap To Reef", new SnapToReefCommand(chassis));
     System.out.println("Registered Commands With PathPlanner");
   }
 
