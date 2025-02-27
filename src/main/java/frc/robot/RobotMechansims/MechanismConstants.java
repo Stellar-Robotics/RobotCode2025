@@ -26,31 +26,31 @@ public class MechanismConstants {
             // Blue 1
             new Pose2d(3.097, 4.200, new Rotation2d()),
             // Blue 2
-            new Pose2d(3.664, 2.902, new Rotation2d(60)),
+            new Pose2d(3.664, 2.902, Rotation2d.fromDegrees(60)),
             // Blue 3
-            new Pose2d(5.052, 2.715, new Rotation2d(120)), 
+            new Pose2d(5.052, 2.715, Rotation2d.fromDegrees(120)), 
             // Blue 4
-            new Pose2d(5.887, 3.865, new Rotation2d(180)),
+            new Pose2d(5.887, 3.865, Rotation2d.fromDegrees(180)),
             // Blue 5
-            new Pose2d(5.328, 5.155, new Rotation2d(-120)),
+            new Pose2d(5.328, 5.155, Rotation2d.fromDegrees(-120)),
             // Blue 6
-            new Pose2d(3.940, 5.335, new Rotation2d(-60)),
+            new Pose2d(3.940, 5.335, Rotation2d.fromDegrees(-60)),
         };
 
         public static final Pose2d[] reefCoordsRed = {
 
             // Red 1
-            new Pose2d(11.640, 4.193, new Rotation2d(0)),
+            new Pose2d(11.640, 4.193, Rotation2d.fromDegrees(0)),
             // Red 2
-            new Pose2d(12.222, 2.887, new Rotation2d(60)),
+            new Pose2d(12.222, 2.887, Rotation2d.fromDegrees(60)),
             // Red 3
-            new Pose2d(13.610, 2.738, new Rotation2d(120)),
+            new Pose2d(13.610, 2.738, Rotation2d.fromDegrees(120)),
             // Red 4
-            new Pose2d(14.483, 3.865, new Rotation2d(180)),
+            new Pose2d(14.483, 3.865, Rotation2d.fromDegrees(180)),
             // Red 5
-            new Pose2d(13.909, 5.155, new Rotation2d(-120)),
+            new Pose2d(13.909, 5.155, Rotation2d.fromDegrees(-120)),
             // Red 6
-            new Pose2d(12.521, 5.305, new Rotation2d(-60)),
+            new Pose2d(12.521, 5.305, Rotation2d.fromDegrees(-60)),
         };
 
         // Constraints to use when snaping to position at reef
