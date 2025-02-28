@@ -148,7 +148,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ElevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
     NamedCommands.registerCommand("ElevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
     NamedCommands.registerCommand("ElevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
-    NamedCommands.registerCommand("Snap To Reef", new SnapToReefCommand(chassis));
+    NamedCommands.registerCommand("SnapToReefCommand", new SnapToReefCommand(chassis));
     System.out.println("Registered Commands With PathPlanner");
   }
 

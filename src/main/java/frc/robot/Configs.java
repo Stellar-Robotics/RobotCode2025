@@ -181,7 +181,7 @@ public final class Configs {
 
                 MotorBackConfig
                 .idleMode(IdleMode.kBrake)
-                .follow(MechanismConstants.ClimberValues.motorFrontID, true)
+                .follow(MechanismConstants.ClimberValues.motorID1, true)
                 .inverted(true)
                 .smartCurrentLimit(25);
                 MotorBackConfig.closedLoop

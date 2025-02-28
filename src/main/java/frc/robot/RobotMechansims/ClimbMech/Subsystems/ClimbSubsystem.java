@@ -16,9 +16,9 @@ import frc.robot.RobotMechansims.MechanismConstants;
 public class ClimbSubsystem extends SubsystemBase {
   /** Creates a new ClimbSubsystem. */
 
-  public final SparkMax climbMotorFront;
+  public final SparkMax climbMotor1;
 
-  public final SparkMax climbMotorBack;
+  public final SparkMax climbMotor2;
 
   public final SparkClosedLoopController SparkCLC1;
 
@@ -26,22 +26,20 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public ClimbSubsystem() { 
 
-    climbMotorFront = new SparkMax(MechanismConstants.ClimberValues.motorFrontID, MotorType.kBrushless);
+    climbMotor1 = new SparkMax(MechanismConstants.ClimberValues.motorID1, MotorType.kBrushless);
 
-    climbMotorBack = new SparkMax(MechanismConstants.ClimberValues.motorBackID, MotorType.kBrushless);
+    climbMotor2 = new SparkMax(MechanismConstants.ClimberValues.motorID2, MotorType.kBrushless);
 
-    SparkCLC1 = climbMotorFront.getClosedLoopController();
+    SparkCLC1 = climbMotor1.getClosedLoopController();
 
-    SparkCLC2 = climbMotorBack.getClosedLoopController();
+    SparkCLC2 = climbMotor2.getClosedLoopController();
 
   }
 
-  public void goTP(double setPoint) {
-
-    SparkCLC1.setReference(setPoint, ControlType.kPosition);
-
-
-
+  /** Sets the forward speed of the climber. Negative values will not change the direction of the motors. */
+  public void setSpeed(double speed) {
+    SparkCLC1.setReference(Math.abs(speed), ControlType.kVelocity);
+    SparkCLC2.setReference(-Math.abs(speed), ControlType.kVelocity);
   }
 
   @Override

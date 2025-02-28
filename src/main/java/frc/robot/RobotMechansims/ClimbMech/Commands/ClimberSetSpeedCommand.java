@@ -3,18 +3,18 @@ package frc.robot.RobotMechansims.ClimbMech.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 
-public class ClimberGoToPositionCommand extends Command {
+public class ClimberSetSpeedCommand extends Command {
     ClimbSubsystem subsystem;
-    double setPoint;
+    double setSpeed;
 
-    public ClimberGoToPositionCommand(ClimbSubsystem sub, double point) {
+    public ClimberSetSpeedCommand(ClimbSubsystem sub, double speed) {
         subsystem = sub;
-        setPoint = point;
+        setSpeed = speed;
     }
 
     @Override
     public void execute() {
-        subsystem.goTP(setPoint);
+        subsystem.setSpeed(setSpeed);
     }
 
 }

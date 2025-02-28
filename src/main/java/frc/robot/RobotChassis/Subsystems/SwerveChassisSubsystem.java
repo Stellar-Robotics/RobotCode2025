@@ -118,7 +118,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     //   SmartDashboard.putBoolean("VisionEstimateStatusGeneral", false);
     // }
 
-    // Add the (General) vision estimate if new data is availible
+    // Add the (General) vision estimate if new data is available
     var visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
     if (visionEstReef != null) {
       // add vision estimate to pose

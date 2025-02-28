@@ -68,8 +68,8 @@ public class MechanismConstants {
     }
 
     public class ClimberValues {
-        public static final int motorFrontID = 14;
-        public static final int motorBackID = 15;
+        public static final int motorID1 = 13;
+        public static final int motorID2 = 14;
     }
 
     public class CoralMechValues {
