@@ -108,12 +108,24 @@ public class SwerveChassisSubsystem extends SubsystemBase {
       Rotation2d.fromDegrees(-m_navxgyro.getAngle()), 
       getModulePositions());
 
-    // Add the vision estimate if new data is availible
-    var visionEst = RobotContainer.getSingletonInstance().getVisionEstimate();
-    if (visionEst != null) {
+    // // Add the (General) vision estimate if new data is availible
+    // var visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
+    // if (visionEstGeneral != null) {
+    //   // add vision estimate to pose
+    //   SmartDashboard.putBoolean("VisionEstimateStatusGeneral", true);
+    //   swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
+    // } else {
+    //   SmartDashboard.putBoolean("VisionEstimateStatusGeneral", false);
+    // }
+
+    // Add the (General) vision estimate if new data is availible
+    var visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
+    if (visionEstReef != null) {
       // add vision estimate to pose
-      //System.out.println("Vision Estimate Valid: Applying Estimate");
-      swervePoseEstimator.addVisionMeasurement(visionEst, Timer.getFPGATimestamp());
+      SmartDashboard.putBoolean("VisionEstimateStatusReef", true);
+      swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
+    } else {
+      SmartDashboard.putBoolean("VisionEstimateStatusReef", false);
     }
 
     // Update the field object with the odometry data

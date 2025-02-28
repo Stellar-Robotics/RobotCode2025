@@ -23,7 +23,7 @@ public class SetElevatorCommand extends Command {
                 this.elevator.goToPositionClamped(0);
                 break;
             case MID:
-                this.elevator.goToPositionClamped(80);
+                this.elevator.goToPositionClamped(65);
                 break; 
             case HIGH:
                 this.elevator.goToPositionClamped(178);

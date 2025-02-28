@@ -153,8 +153,8 @@ public class RobotContainer {
   }
 
 
-  public Pose2d getVisionEstimate() {
+  public Pose2d getVisionEstimate(boolean reef) {
     // Call the latest vision estimate
-    return vision.getEstimatedGlobalPose();
+    return vision.getEstimatedGlobalPose(reef);
   }
 }
