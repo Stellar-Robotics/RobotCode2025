@@ -176,8 +176,8 @@ public final class Configs {
                 MotorFrontConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.3, 0.0000, 0)
-                .maxOutput(0.5)
-                .minOutput(-0.5);
+                .maxOutput(0.75)
+                .minOutput(-0.75);
 
                 MotorBackConfig
                 .idleMode(IdleMode.kBrake)
@@ -187,8 +187,8 @@ public final class Configs {
                 MotorBackConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.3, 0.0000, 0)
-                .maxOutput(0.5)
-                .minOutput(-0.5);
+                .maxOutput(0.75)
+                .minOutput(-0.75);
 
         }
 

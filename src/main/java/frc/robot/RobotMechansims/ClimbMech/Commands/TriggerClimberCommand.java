@@ -28,7 +28,7 @@ public class TriggerClimberCommand extends Command {
       return;
     } else {
       // Execute order 5413!
-      mechanism.setSpeed(5);
+      mechanism.setSpeed(42);
       MechanismConstants.ClimberValues.triggered = true;
     }
 

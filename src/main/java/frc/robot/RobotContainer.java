@@ -20,6 +20,7 @@ import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.ClimbMech.Commands.TriggerClimberCommand;
 import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
@@ -149,9 +150,17 @@ public class RobotContainer {
     );
 
     // Deploy the machettis!
-    operatorController.start().and(operatorController.back().onTrue(
+    operatorController.back().onTrue(
       new TriggerClimberCommand(climber)
-    ));
+    );
+
+    // FOR TESTING
+    operatorController.start().onTrue(
+      new RunCommand(() -> {
+        MechanismConstants.ClimberValues.triggered = false;
+        climber.setSpeed(0);
+      }, climber)
+    );
   }
 
   public void bindCommandsToPathPlanner() {

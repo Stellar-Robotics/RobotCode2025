@@ -39,13 +39,13 @@ public class ClimbSubsystem extends SubsystemBase {
     SparkCLC2 = climbMotor2.getClosedLoopController();
 
     climbMotor1.configure(Configs.ClimberConfig.MotorFrontConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    climbMotor2.configure(Configs.ClimberConfig.MotorFrontConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    climbMotor2.configure(Configs.ClimberConfig.MotorBackConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
   /** Sets the forward speed of the climber. Negative values will not change the direction of the motors. */
   public void setSpeed(double positionRotations) {
-    SparkCLC1.setReference(MiscUtils.clamp(0, 8, positionRotations), ControlType.kPosition);
+    SparkCLC1.setReference(MiscUtils.clamp(0, 42, positionRotations), ControlType.kPosition);
   }
 
   @Override
