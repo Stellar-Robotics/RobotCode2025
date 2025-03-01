@@ -70,6 +70,8 @@ public class MechanismConstants {
     public class ClimberValues {
         public static final int motorID1 = 13;
         public static final int motorID2 = 14;
+
+        public static boolean triggered = false;
     }
 
     public class CoralMechValues {

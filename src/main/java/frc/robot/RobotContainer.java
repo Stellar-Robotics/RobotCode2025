@@ -20,6 +20,8 @@ import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotMechansims.ClimbMech.Commands.TriggerClimberCommand;
+import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
 import frc.robot.RobotMechansims.CoralMech.Commands.SetCoralMechPosition;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
@@ -34,6 +36,7 @@ public class RobotContainer {
   private VisionSubsystem vision; // Vision subsystem
   private Elevator elevator; // Elevator subsystem
   private CoralMech coralMech; // Coral subsystem
+  private ClimbSubsystem climber; // Climber subsystem
   private double rotaryOffset;
   //private AlgaeMech algaeMech; // Algae subsystem
   // Declare controllers
@@ -78,6 +81,8 @@ public class RobotContainer {
     vision = new VisionSubsystem(chassis.getPose());
     elevator = new Elevator();
     coralMech = new CoralMech();
+    climber = new ClimbSubsystem();
+
     rotaryOffset = 0;
     //algaeMech = new AlgaeMech();
 
@@ -142,6 +147,11 @@ public class RobotContainer {
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
+
+    // Deploy the machettis!
+    operatorController.start().and(operatorController.back().onTrue(
+      new TriggerClimberCommand(climber)
+    ));
   }
 
   public void bindCommandsToPathPlanner() {

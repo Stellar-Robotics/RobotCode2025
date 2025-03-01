@@ -7,11 +7,15 @@ package frc.robot.RobotMechansims.ClimbMech.Subsystems;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
+import frc.robot.RobotUtilities.MiscUtils;
 
 public class ClimbSubsystem extends SubsystemBase {
   /** Creates a new ClimbSubsystem. */
@@ -34,12 +38,14 @@ public class ClimbSubsystem extends SubsystemBase {
 
     SparkCLC2 = climbMotor2.getClosedLoopController();
 
+    climbMotor1.configure(Configs.ClimberConfig.MotorFrontConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    climbMotor2.configure(Configs.ClimberConfig.MotorFrontConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
   }
 
   /** Sets the forward speed of the climber. Negative values will not change the direction of the motors. */
-  public void setSpeed(double speed) {
-    SparkCLC1.setReference(Math.abs(speed), ControlType.kVelocity);
-    SparkCLC2.setReference(-Math.abs(speed), ControlType.kVelocity);
+  public void setSpeed(double positionRotations) {
+    SparkCLC1.setReference(MiscUtils.clamp(0, 8, positionRotations), ControlType.kPosition);
   }
 
   @Override
