@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
@@ -129,12 +130,14 @@ public class RobotContainer {
     // Elevator presets
     operatorController.povUp().onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH)).debounce(0.1);
     operatorController.povLeft().or(operatorController.povRight()).onTrue(
-      new SetElevatorCommand(elevator, POSITIONS.MID)
-      .andThen(new SetCoralMechPosition(coralMech, 0)))
+      new SetCoralMechPosition(coralMech, 0, true)
+      .andThen(new WaitCommand(0.5))
+      .andThen(new SetElevatorCommand(elevator, POSITIONS.MID)))
       .debounce(0.1);
     operatorController.povDown().onTrue(
-      new SetElevatorCommand(elevator, POSITIONS.LOW)
-      .andThen(new SetCoralMechPosition(coralMech, 0)))
+      new SetCoralMechPosition(coralMech, 0, true)
+      .andThen(new WaitCommand(0.5))
+      .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW)))
       .debounce(0.1);
 
     // Run coral mechanism roller forward and backward.

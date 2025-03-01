@@ -5,19 +5,23 @@
 package frc.robot.RobotMechansims.CoralMech.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
+import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class SetCoralMechPosition extends Command {
 
   private CoralMech subsystem;
   private double position;
+  private boolean reset;
 
   /** Creates a new ToggleCoralExtension. */
-  public SetCoralMechPosition(CoralMech mechanism, double pos) {
+  public SetCoralMechPosition(CoralMech mechanism, double pos, boolean reset) {
     // Use addRequirements() here to declare subsystem dependencies.
     subsystem = mechanism;
     position = pos;
+    this.reset = reset;
     addRequirements(mechanism);
   }
 
@@ -26,6 +30,10 @@ public class SetCoralMechPosition extends Command {
   public void execute() {
 
     subsystem.goToPosition(position);
+
+    if (reset) {
+      MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.MIDDLE;
+    }
 
   }
 
