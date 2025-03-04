@@ -10,8 +10,6 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
-import java.util.function.Consumer;
-
 import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -31,6 +29,7 @@ public class Elevator extends SubsystemBase {
   private final SparkClosedLoopController elevatorCLC;
 
   private double prevPosition;
+  private boolean rampActive;
 
   public enum POSITIONS {
     LOW,
@@ -92,6 +91,14 @@ public class Elevator extends SubsystemBase {
 
   }
 
+  public void ramp() {
+    if (BaseConstants.DriveConstants.elevatorSpeedOverride < 1) {
+      BaseConstants.DriveConstants.elevatorSpeedOverride += 0.01;
+    } else {
+      rampActive = false;
+    }
+  }
+
   
 
   @Override
@@ -105,23 +112,15 @@ public class Elevator extends SubsystemBase {
     //   BaseConstants.DriveConstants.elevatorSpeedOverride = 0.3;
     // }
 
-
-
-    // Run code
     if (elevatorEncoder.getPosition() < 50 && prevPosition > 50) {
-
-      // Lambda to send to the action
-      Consumer<Double> action = (incrament) -> {
-        BaseConstants.DriveConstants.elevatorSpeedOverride += incrament;
-      };
-
-      MiscUtils.ramp(0.0005, 1, action);
-
+      rampActive = true;
     } else if (elevatorEncoder.getPosition() > 50 && prevPosition < 50) {
       BaseConstants.DriveConstants.elevatorSpeedOverride = 0.3;
     }
 
-
+    if (rampActive) {
+      ramp();
+    }
 
     prevPosition = elevatorEncoder.getPosition();
   }
