@@ -10,7 +10,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.BaseConstants;
-import frc.robot.RobotContainer;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.BaseConstants.IOConstants;
 import frc.robot.BaseConstants.MiscConstants;
@@ -61,7 +60,7 @@ public class DefaultDriveCommand extends Command {
   public void execute() {
 
     // Get robot's current angle
-    double robotCurrentAngle = chassis.getGyroZ().getDegrees() % 360; // This could be broken depending on if the direction is CW or CCW
+    double robotCurrentAngle = chassis.getGyroZ().getDegrees() + 90 % 360; // This could be broken depending on if the direction is CW or CCW
 
     // Resets to 360 when the angle hits 0
     if (robotCurrentAngle < 0) {
@@ -79,7 +78,7 @@ public class DefaultDriveCommand extends Command {
     Rotation2d rotaryAngle = driveController.getRightRotary();
     double rot; // Value will be assigned based off if were using vision or not
 
-    rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees() + RobotContainer.getSingletonInstance().getRotaryOffset());
+    rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees());
     SmartDashboard.putString("RotationStatus", "ControllerControlled");
 
     if (useDeadband) { // Apply deadband if specified

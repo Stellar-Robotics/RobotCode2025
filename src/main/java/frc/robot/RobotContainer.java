@@ -39,7 +39,6 @@ public class RobotContainer {
   private Elevator elevator; // Elevator subsystem
   private CoralMech coralMech; // Coral subsystem
   private ClimbSubsystem climber; // Climber subsystem
-  private double rotaryOffset;
   //private AlgaeMech algaeMech; // Algae subsystem
   // Declare controllers
   public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
@@ -84,8 +83,6 @@ public class RobotContainer {
     elevator = new Elevator();
     coralMech = new CoralMech();
     climber = new ClimbSubsystem();
-
-    rotaryOffset = 0;
     //algaeMech = new AlgaeMech();
 
     // Create auto selector and post params to the dash
@@ -107,14 +104,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // Call the pathplanner auto lib
     return autoChooser.getSelected();
-  }
-
-  public void setRotaryOffset(double offset) {
-    rotaryOffset = offset;
-  }
-
-  public double getRotaryOffset() {
-    return rotaryOffset;
   }
 
   public void configureButtonBinds() {

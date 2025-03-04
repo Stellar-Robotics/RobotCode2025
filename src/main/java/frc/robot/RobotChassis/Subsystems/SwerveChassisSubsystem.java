@@ -65,9 +65,9 @@ public class SwerveChassisSubsystem extends SubsystemBase {
   // Pose estimator object
   public SwerveDrivePoseEstimator swervePoseEstimator = new SwerveDrivePoseEstimator(
     DriveConstants.kDriveKinematics, 
-    Rotation2d.fromDegrees(-m_navxgyro.getAngle() /*- 90*/), 
+    Rotation2d.fromDegrees(-m_navxgyro.getAngle()  + 90), 
     getModulePositions(),
-    new Pose2d(0, 0, getGyroZ())
+    new Pose2d(14.347, 1.256, getGyroZ())
   );
 
   // Create a field object for pose visualization
