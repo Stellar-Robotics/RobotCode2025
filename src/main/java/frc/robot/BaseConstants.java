@@ -43,10 +43,10 @@ public final class BaseConstants {
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     // Speed Mode Modifier
-    public static boolean elevatorSpeedOverride = false;
+    public static double elevatorSpeedOverride = 1;
 
     // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(27);
+    public static final double kTrackWidth = Units.inchesToMeters(26);
 
     // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = Units.inchesToMeters(27);
@@ -85,7 +85,7 @@ public final class BaseConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
     // This changes the drive speed of the module (a pinion gear with more teeth will result in a
     // robot that drives faster).
-    public static final int kDrivingMotorPinionTeeth = 14;
+    public static final int kDrivingMotorPinionTeeth = 13;
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
@@ -138,6 +138,8 @@ public final class BaseConstants {
     // This is a place to store objects that need to be persistent
     public static double stellarControllerAngleOffset = 0;
     public final static PIDController aimBot = new PIDController(0.02, 0, 0);
+
+    public static double lastRampVal;
   }
 
   public static final class PathPlannerConstants {

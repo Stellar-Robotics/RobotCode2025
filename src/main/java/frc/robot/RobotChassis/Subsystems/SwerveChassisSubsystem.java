@@ -67,7 +67,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     DriveConstants.kDriveKinematics, 
     Rotation2d.fromDegrees(-m_navxgyro.getAngle()  + 90), 
     getModulePositions(),
-    new Pose2d(14.347, 1.256, getGyroZ())
+    new Pose2d(15.380, 0.468, getGyroZ())
   );
 
   // Create a field object for pose visualization

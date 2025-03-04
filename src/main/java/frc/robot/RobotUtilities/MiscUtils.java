@@ -5,6 +5,7 @@
 package frc.robot.RobotUtilities;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -93,5 +94,15 @@ public class MiscUtils {
         }
     }
 
-    // Next common and painful functionality to implement
+    // A function that will incrament a value every loop of the code, creating a ramp
+    public static void ramp(double incrament, double cap, Consumer<Double> operation) {
+        // DONT USE, CURRENTLY CAUSES STACK OVERFLOW
+        if (incrament < cap) {
+            operation.accept(incrament);
+            ramp(incrament, cap, operation);
+        } else {
+            return;
+        }
+
+    }
 }
