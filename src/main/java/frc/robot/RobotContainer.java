@@ -40,6 +40,7 @@ public class RobotContainer {
   private CoralMech coralMech; // Coral subsystem
   private ClimbSubsystem climber; // Climber subsystem
   //private AlgaeMech algaeMech; // Algae subsystem
+  
   // Declare controllers
   public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
   public CommandXboxController operatorController = ControllerIO.getSecondaryInstance().xboxController;
@@ -86,8 +87,6 @@ public class RobotContainer {
     //algaeMech = new AlgaeMech();
 
     // Create auto selector and post params to the dash
-    autoChooser = AutoBuilder.buildAutoChooser("Default");
-    SmartDashboard.putData("Select Auto", autoChooser);
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     SmartDashboard.putNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
 
@@ -95,8 +94,13 @@ public class RobotContainer {
     chassis.setDefaultCommand(new DefaultDriveCommand(true, true, chassis));
     vision.setDefaultCommand(new RunCommand(() -> {vision.periodic();}, vision));
 
-    // Bind buttons to the controllers
+    // Bind commands to the controllers and pathplanner
     configureButtonBinds();
+    bindCommandsToPathPlanner();
+
+    // Build autos
+    autoChooser = AutoBuilder.buildAutoChooser("Default");
+    SmartDashboard.putData("Select Auto", autoChooser);
   
   }
 
