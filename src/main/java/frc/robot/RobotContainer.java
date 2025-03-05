@@ -95,8 +95,9 @@ public class RobotContainer {
     vision.setDefaultCommand(new RunCommand(() -> {vision.periodic();}, vision));
 
     // Bind commands to the controllers and pathplanner
-    configureButtonBinds();
     bindCommandsToPathPlanner();
+    configureButtonBinds();
+    chassis.initAutoBuilder();
 
     // Build autos
     autoChooser = AutoBuilder.buildAutoChooser("Default");

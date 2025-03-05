@@ -48,7 +48,7 @@
   "folder": "BlueCenter",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.13066590632596
+    "rotation": 178.130665906326
   },
   "useDefaultConstraints": false
 }

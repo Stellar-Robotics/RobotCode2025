@@ -80,19 +80,19 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     field = new Field2d();
     SmartDashboard.putData("Field", field);
 
-    AutoBuilder.configure(this::getPose,
-      this::resetOdometry,
-      this::getChassisSpeeds,
-      (speeds) -> drive(speeds),
-      new PPHolonomicDriveController
-        (
-          new PIDConstants(5.0, 0.0, 0.0),
-          new PIDConstants(5.0, 0.0, 0.0)
-        ),
-      Configs.PathPlanner.pathPlannerConfig,
-      MiscUtils.isRedAlliance(),
-      this
-    );
+    // AutoBuilder.configure(this::getPose,
+    //   this::resetOdometry,
+    //   this::getChassisSpeeds,
+    //   (speeds) -> drive(speeds),
+    //   new PPHolonomicDriveController
+    //     (
+    //       new PIDConstants(5.0, 0.0, 0.0),
+    //       new PIDConstants(5.0, 0.0, 0.0)
+    //     ),
+    //   Configs.PathPlanner.pathPlannerConfig,
+    //   MiscUtils.isRedAlliance(),
+    //   this
+    // );
 
     // Zero Robot Heading
     this.zeroHeading();
@@ -162,6 +162,22 @@ public class SwerveChassisSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       },
       pose);
+  }
+
+  public void initAutoBuilder() {
+    AutoBuilder.configure(this::getPose,
+      this::resetOdometry,
+      this::getChassisSpeeds,
+      (speeds) -> drive(speeds),
+      new PPHolonomicDriveController
+        (
+          new PIDConstants(5.0, 0.0, 0.0),
+          new PIDConstants(5.0, 0.0, 0.0)
+        ),
+      Configs.PathPlanner.pathPlannerConfig,
+      MiscUtils.isRedAlliance(),
+      this
+    );
   }
 
   // The primary method of commanding the chassis speeds.  Any higher control leveles should be handled outside this class.

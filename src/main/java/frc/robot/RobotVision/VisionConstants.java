@@ -22,7 +22,10 @@ public class VisionConstants {
         /* These names are the same as the camera name in
          * chosen the photon client for each camera and
          * are identified as so in network tables */ 
+
+        // Reef Cam
         public static final String cameraName2 = "StellarCam1";
+        // GenCam
         public static final String cameraName1 = "StellarCam2";
 
     }
@@ -34,10 +37,10 @@ public class VisionConstants {
         //public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.5/*-0.3524*/, 0, 0.2318), new Rotation3d(0, Math.toRadians(-32), Math.toRadians(180)));
 
         //public static final Transform3d reefCamTransform = new Transform3d(new Translation3d(0.081, -0.2572, 0.4413), new Rotation3d(0, 0, Math.toRadians(160.940)));
-        public static final Transform3d reefCamTransform = new Transform3d(new Translation3d(-0.081, 0.2572, 0.4413), new Rotation3d(0, 0, Math.toRadians(340.94)));
+        public static final Transform3d reefCamTransform = new Transform3d(new Translation3d(-0.254, 0.0508, 0.2588), new Rotation3d(0, 0, Math.toRadians(345)));
 
 
-        public static final Transform3d generalCamTransform = new Transform3d(new Translation3d(-0.2762, 0.1683, 0.7461), new Rotation3d(90, Math.toRadians(0), Math.toRadians(174.5)));
+        public static final Transform3d generalCamTransform = new Transform3d(new Translation3d(-0.2664, 0.2238, 0.7477), new Rotation3d(0, Math.toRadians(354.7), Math.toRadians(180)));
 
         // Get apriltag position data via FIRST provided json file (ChangeMe for 2025)
         public static final AprilTagFieldLayout tagPositions = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);

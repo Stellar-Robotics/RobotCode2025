@@ -35,8 +35,8 @@ public class VisionSubsystem extends SubsystemBase {
   // Create camera objects for each camera on the robot.
   // The camera name should be the name of the Network Table
   // that contains the camera stream.
-  public PhotonCamera camera1 = new PhotonCamera(PhotonConstants.cameraName1);
-  public PhotonCamera camera2 = new PhotonCamera(PhotonConstants.cameraName2);
+  public PhotonCamera camera2 = new PhotonCamera(PhotonConstants.cameraName1);
+  public PhotonCamera camera1 = new PhotonCamera(PhotonConstants.cameraName2);
 
   // Declare a variable to refrence a pose estimator
   private Pose2d robotPose;
