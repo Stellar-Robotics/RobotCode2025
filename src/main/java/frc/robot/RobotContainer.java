@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -90,16 +91,17 @@ public class RobotContainer {
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     SmartDashboard.putNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
 
+    bindCommandsToPathPlanner();
+
     // Configure default commands for subsystems
     chassis.setDefaultCommand(new DefaultDriveCommand(true, true, chassis));
     vision.setDefaultCommand(new RunCommand(() -> {vision.periodic();}, vision));
 
     // Bind commands to the controllers and pathplanner
-    bindCommandsToPathPlanner();
     configureButtonBinds();
     chassis.initAutoBuilder();
 
-    // Build autos
+    // Build autosP
     autoChooser = AutoBuilder.buildAutoChooser("Default");
     SmartDashboard.putData("Select Auto", autoChooser);
   
