@@ -65,6 +65,14 @@ public class MechanismConstants {
     public class elevatorValues {
         public static final int motorID = 19;
         public static final double maxHeightExtensionRotations = 178;
+
+        public static enum ELEVATORPOSITION {
+            LOW,
+            MID,
+            HIGH
+        };
+
+        public static ELEVATORPOSITION currentPos = ELEVATORPOSITION.LOW;
     }
 
     public class ClimberValues {

@@ -1,8 +1,10 @@
 package frc.robot.RobotMechansims.Elevator.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator.POSITIONS;
+import frc.robot.RobotMechansims.MechanismConstants.elevatorValues.ELEVATORPOSITION;
 
 public class SetElevatorCommand extends Command {
 
@@ -21,12 +23,15 @@ public class SetElevatorCommand extends Command {
         switch (position) {
             case LOW:
                 this.elevator.goToPositionClamped(0);
+                MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.LOW;
                 break;
             case MID:
                 this.elevator.goToPositionClamped(65);
+                MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.MID;
                 break; 
             case HIGH:
                 this.elevator.goToPositionClamped(178);
+                MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.HIGH;
             default:
                 break;
         }

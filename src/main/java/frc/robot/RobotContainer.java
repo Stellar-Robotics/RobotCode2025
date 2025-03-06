@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -23,6 +24,8 @@ import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotMechansims.MechanismConstants;
+import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
+import frc.robot.RobotMechansims.MechanismConstants.elevatorValues.ELEVATORPOSITION;
 import frc.robot.RobotMechansims.ClimbMech.Commands.TriggerClimberCommand;
 import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
@@ -124,11 +127,22 @@ public class RobotContainer {
     operatorController.leftBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.5);
 
     // Elevator presets
-    operatorController.povUp().onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH)).debounce(0.1);
-    operatorController.povLeft().or(operatorController.povRight()).onTrue(
-      new SetCoralMechPosition(coralMech, 0, true)
+    operatorController.povUp().onTrue(
+      new SetElevatorCommand(elevator, POSITIONS.HIGH)
       .andThen(new WaitCommand(0.5))
-      .andThen(new SetElevatorCommand(elevator, POSITIONS.MID)))
+      .andThen(new SetCoralMechPosition(coralMech, 34, false))
+      .andThen(new RunCommand(() -> MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD)))
+      .debounce(0.1);
+    operatorController.povLeft().or(operatorController.povRight()).onTrue(
+      new ConditionalCommand(
+        new SetElevatorCommand(elevator, POSITIONS.MID)
+        .andThen(new WaitCommand(0.5))
+        .andThen(new SetCoralMechPosition(coralMech, 34, false))
+        .andThen(new RunCommand(() -> MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD)),
+        new SetCoralMechPosition(coralMech, 0, true)
+        .andThen(new WaitCommand(0.5))
+        .andThen(new SetElevatorCommand(elevator, POSITIONS.MID)),
+        () -> { return MechanismConstants.elevatorValues.currentPos == ELEVATORPOSITION.LOW; }))
       .debounce(0.1);
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
