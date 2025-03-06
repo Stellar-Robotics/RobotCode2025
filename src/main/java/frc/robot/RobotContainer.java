@@ -125,6 +125,9 @@ public class RobotContainer {
     // Incrament coral mech forward or backwards
     operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
     operatorController.rightTrigger().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.5);
+    operatorController.b().onTrue(new RunCommand(() -> { coralMech.goToPosition(-43); 
+      MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.XBACK;
+    }, coralMech));
 
     // Elevator presets
     operatorController.povUp().onTrue(
@@ -152,12 +155,12 @@ public class RobotContainer {
 
     // Run coral mechanism roller forward and backward.
     operatorController.leftBumper().whileTrue(
-      new RunCommand(() -> {coralMech.setRollerPower(operatorController.getHID().getRightTriggerAxis());}, coralMech)
+      new RunCommand(() -> {coralMech.setRollerPower(1);}, coralMech)
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
     operatorController.leftTrigger().whileTrue(
-      new RunCommand(() -> {coralMech.setRollerPower(-operatorController.getHID().getLeftTriggerAxis());}, coralMech)
+      new RunCommand(() -> {coralMech.setRollerPower(-1);}, coralMech)
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );

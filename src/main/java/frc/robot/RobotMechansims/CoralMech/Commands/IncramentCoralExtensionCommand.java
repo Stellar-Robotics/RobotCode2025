@@ -30,8 +30,14 @@ public class IncramentCoralExtensionCommand extends Command {
 
     if (forward) {
       // Going Forward
+      if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.XBACK) {
+        coral.goToPosition(0);
+        MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.MIDDLE;
+        SmartDashboard.putString("Going To", "Middle");
+      }
+
       if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.MIDDLE) {
-        coral.goToPosition(34); // FORWARD POS
+        coral.goToPosition(28); // FORWARD POS
         MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD;
         SmartDashboard.putString("Going To", "Forward");
       }
@@ -45,7 +51,7 @@ public class IncramentCoralExtensionCommand extends Command {
     } else {
       // Going Backward
       if (MechanismConstants.CoralMechValues.currentPos == CORALEXTENSIONPOSITION.MIDDLE) {
-        coral.goToPosition(-40); // BACK POS
+        coral.goToPosition(-34); // BACK POS
         MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.BACK;
         SmartDashboard.putString("Going To", "Back");
       }

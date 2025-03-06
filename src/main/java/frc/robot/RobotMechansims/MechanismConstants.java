@@ -93,7 +93,8 @@ public class MechanismConstants {
         public static enum CORALEXTENSIONPOSITION {
             BACK,
             MIDDLE,
-            FORWARD
+            FORWARD,
+            XBACK
         };
 
         public static boolean lastPos = false;
