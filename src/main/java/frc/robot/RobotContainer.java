@@ -129,7 +129,7 @@ public class RobotContainer {
     // Elevator presets
     operatorController.povUp().onTrue(
       new SetElevatorCommand(elevator, POSITIONS.HIGH)
-      .andThen(new WaitCommand(0.5))
+      .andThen(new WaitCommand(2))
       .andThen(new SetCoralMechPosition(coralMech, 34, false))
       .andThen(new RunCommand(() -> MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD)))
       .debounce(0.1);
