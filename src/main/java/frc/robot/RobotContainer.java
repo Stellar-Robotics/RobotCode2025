@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.CommandStellarController;
+import frc.robot.RobotChassis.Commands.ChangeReefAlignment;
 import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
@@ -43,6 +44,13 @@ public class RobotContainer {
   private Elevator elevator; // Elevator subsystem
   private CoralMech coralMech; // Coral subsystem
   private ClimbSubsystem climber; // Climber subsystem
+
+  public static enum REEFALIGNMENT {
+    LEFT,
+    CENTER,
+    RIGHT
+  }
+
   //private AlgaeMech algaeMech; // Algae subsystem
   
   // Declare controllers
@@ -53,6 +61,8 @@ public class RobotContainer {
   private SendableChooser<Command> autoChooser;
 
   private double rotaryOffset;
+  private REEFALIGNMENT currentReefAlignment;
+  private boolean snapping;
 
   public RobotContainer() { 
     /* Initialization code is handled by calling initializeRobot in the Robot class */
@@ -92,6 +102,8 @@ public class RobotContainer {
     //algaeMech = new AlgaeMech();
 
     rotaryOffset = 0;
+    currentReefAlignment =  REEFALIGNMENT.LEFT;
+    snapping = false;
 
     // Create auto selector and post params to the dash
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
@@ -127,15 +139,38 @@ public class RobotContainer {
     return this.rotaryOffset;
   }
 
+  public void setReefAlignment(REEFALIGNMENT alignment) {
+    this.currentReefAlignment = alignment;
+  }
+
+  public REEFALIGNMENT getReefAlignment() {
+    return this.currentReefAlignment;
+  } 
+
   public void configureButtonBinds() {
     // Bind commands to triggers
 
     // Switch to snapping mode
-    operatorController.a().whileTrue(new SnapToReefCommand(chassis));
+    operatorController.a().onTrue(
+      new SnapToReefCommand(chassis)
+      .andThen(new RunCommand(() -> currentReefAlignment = REEFALIGNMENT.LEFT))
+      .andThen(new RunCommand(() -> snapping = true))
+    )
+    .debounce(0.1);
+
+    operatorController.a().onFalse(
+      new RunCommand(() -> snapping = false)
+    )
+    .debounce(0.1);
 
     // Incrament coral mech forward or backwards
     operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
-    operatorController.rightTrigger().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.5);
+    operatorController.rightTrigger().onTrue(
+      new ConditionalCommand(
+        new ChangeReefAlignment(chassis, REEFALIGNMENT.RIGHT),
+        new IncramentCoralExtensionCommand(coralMech, false), 
+        () -> snapping))
+      .debounce(0.5);
     operatorController.b().onTrue(new RunCommand(() -> { coralMech.goToPosition(-43); 
       MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.XBACK;
     }, coralMech));
@@ -171,7 +206,10 @@ public class RobotContainer {
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
     operatorController.leftTrigger().whileTrue(
-      new RunCommand(() -> {coralMech.setRollerPower(-1);}, coralMech)
+      new ConditionalCommand(
+        new ChangeReefAlignment(chassis, REEFALIGNMENT.RIGHT),
+        new RunCommand(() -> {coralMech.setRollerPower(-1);}, coralMech), 
+        () -> snapping)
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );

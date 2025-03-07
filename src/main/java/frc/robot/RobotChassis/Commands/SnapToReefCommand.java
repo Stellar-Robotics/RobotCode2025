@@ -95,6 +95,7 @@ public class SnapToReefCommand extends Command {
 
     Pose2d rotatedPose = new Pose2d(currPose.getTranslation(), closestPose.getRotation());
     
+    
     // Create list of waypoints from poses
     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
       currPose,
