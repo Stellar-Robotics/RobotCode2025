@@ -15,8 +15,12 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotContainer;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
+import frc.robot.RobotControl.ControllerIO;
+import frc.robot.RobotControl.StellarController;
 import frc.robot.RobotMechansims.MechanismConstants;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -112,6 +116,12 @@ public class SnapToReefCommand extends Command {
     );
 
     path.preventFlipping = true;
+
+    StellarController driveController = ControllerIO.getPrimaryInstance().stellarController.getHID();
+
+    double offset = closestPose.getRotation().getDegrees() - driveController.getRightRotary().getDegrees() + 180;
+    RobotContainer.getSingletonInstance().setRotaryOffset(offset);
+    SmartDashboard.putNumber("Rotary Offset", RobotContainer.getSingletonInstance().getRotaryOffset());
 
     // Follow the path
     AutoBuilder.followPath(path).schedule();

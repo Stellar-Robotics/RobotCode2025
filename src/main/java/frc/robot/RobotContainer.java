@@ -52,6 +52,7 @@ public class RobotContainer {
   // Declare Auto Selector
   private SendableChooser<Command> autoChooser;
 
+  private double rotaryOffset;
 
   public RobotContainer() { 
     /* Initialization code is handled by calling initializeRobot in the Robot class */
@@ -90,6 +91,8 @@ public class RobotContainer {
     climber = new ClimbSubsystem();
     //algaeMech = new AlgaeMech();
 
+    rotaryOffset = 0;
+
     // Create auto selector and post params to the dash
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     SmartDashboard.putNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
@@ -114,6 +117,14 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // Call the pathplanner auto lib
     return autoChooser.getSelected();
+  }
+
+  public void setRotaryOffset(double offset) {
+    this.rotaryOffset = offset;
+  }
+
+  public double getRotaryOffset() {
+    return this.rotaryOffset;
   }
 
   public void configureButtonBinds() {

@@ -13,6 +13,7 @@ import frc.robot.BaseConstants;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.BaseConstants.IOConstants;
 import frc.robot.BaseConstants.MiscConstants;
+import frc.robot.RobotContainer;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotControl.StellarController;
@@ -78,7 +79,7 @@ public class DefaultDriveCommand extends Command {
     Rotation2d rotaryAngle = driveController.getRightRotary();
     double rot; // Value will be assigned based off if were using vision or not
 
-    rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees());
+    rot = rotaryPID.calculate(robotCurrentAngle, rotaryAngle.getDegrees() + RobotContainer.getSingletonInstance().getRotaryOffset());
     SmartDashboard.putString("RotationStatus", "ControllerControlled");
 
     if (useDeadband) { // Apply deadband if specified
