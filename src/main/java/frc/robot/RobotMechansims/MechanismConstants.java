@@ -103,7 +103,6 @@ public class MechanismConstants {
     }
 
     public class AlgaeMechValues {
-        public static final int extensionMotorID = 51;
         public static final int pickupMotorID = 50;
     }
 

@@ -91,7 +91,7 @@ public class DefaultDriveCommand extends Command {
     }
 
     // Bind a button to reseting the gyro to the odometry.
-    if (driveController.getBButtonPressed()) {
+    if (driveController.getCenterPressed()) {
       chassis.zeroHeading();
     }
 
@@ -110,7 +110,7 @@ public class DefaultDriveCommand extends Command {
 
     double xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride;
     double ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride;
-    double rotDelivered = m_currentRotation * dashAngularSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride;
+    double rotDelivered = m_currentRotation * dashAngularSpeed;
 
     // Convert values into either a robot relative or field oriented Chassis Speed object
     ChassisSpeeds positionCommanded = fieldRelative

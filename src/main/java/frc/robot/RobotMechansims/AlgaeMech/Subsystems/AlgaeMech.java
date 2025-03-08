@@ -9,30 +9,37 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
 
 public class AlgaeMech extends SubsystemBase {
 
-  // Declare the variables that will hold our motor controller objects.
-  private final SparkMax extensionMotor;
+  // Declare the variable that will hold our motor controller object.
   private final SparkMax pickupMotor;
 
-  public AlgaeMech() {
+  private final Solenoid leftSolenoid;
+  private final Solenoid rightSolenoid;
+
+  private boolean lastPos = false;
+
+  public AlgaeMech(Solenoid leftSolenoid, Solenoid rightSolenoid) {
 
     // Create two new motor controller objects and store them in the 'extensionMotor' and
     // 'pickupMotor' variables.  We pass in the motor controller ids and motor
     // types a parameters when creating the new motor controller objects.
-    extensionMotor = new SparkMax(MechanismConstants.AlgaeMechValues.extensionMotorID, MotorType.kBrushless);
     pickupMotor = new SparkMax(MechanismConstants.AlgaeMechValues.pickupMotorID, MotorType.kBrushless);
 
     // We'll call the 'configure' method in each of our new motor controller objects
     // that we are storing in our aformentioned variables.  We'll pass in some configuration
     // objects from another file as parameters to the 'configure' method.
-    extensionMotor.configure(Configs.AlgaeMechConfig.extensionMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     pickupMotor.configure(Configs.AlgaeMechConfig.pickupMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+
+    // Configure solenoids
+    this.leftSolenoid = leftSolenoid;
+    this.rightSolenoid = rightSolenoid;
   }
 
   // We'll create a method that other code can call to run the intake motors.
@@ -43,6 +50,15 @@ public class AlgaeMech extends SubsystemBase {
     // speed parameter.
     pickupMotor.set(speed);
     
+  }
+
+  public void toggleExtension() {
+
+    leftSolenoid.set(!lastPos);
+    rightSolenoid.set(!lastPos);
+
+    lastPos = !lastPos;
+
   }
 
   @Override

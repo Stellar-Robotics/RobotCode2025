@@ -41,181 +41,364 @@ public class CommandStellarController extends CommandGenericHID {
     return m_hid;
   }
 
+
   /**
-   * Constructs a Trigger instance around the A button's digital signal.
+   * Constructs a Trigger instance around the LT button's digital signal.
    *
-   * @return a Trigger instance representing the A button's digital signal attached
+   * @return a Trigger instance representing the LT button's digital signal attached
    *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #a(EventLoop)
+   * @see #leftTrigger(EventLoop)
    */
-  public Trigger a() {
-    return a(CommandScheduler.getInstance().getDefaultButtonLoop());
+  public Trigger leftTrigger() {
+    return leftTrigger(CommandScheduler.getInstance().getDefaultButtonLoop());
   }
 
   /**
-   * Constructs a Trigger instance around the A button's digital signal.
+   * Constructs a Trigger instance around the LT button's digital signal.
    *
    * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the A button's digital signal attached
+   * @return a Trigger instance representing the LT button's digital signal attached
    *     to the given loop.
    */
-  public Trigger a(EventLoop loop) {
-    return button(StellarController.Button.kA.value, loop);
+  public Trigger leftTrigger(EventLoop loop) {
+    return button(StellarController.Buttons.kLeftTrigger.value, loop);
   }
 
+
+
+
   /**
-   * Constructs a Trigger instance around the B button's digital signal.
+   * Constructs a Trigger instance around the RT button's digital signal.
    *
-   * @return a Trigger instance representing the B button's digital signal attached
+   * @return a Trigger instance representing the RT button's digital signal attached
    *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #b(EventLoop)
+   * @see #rightTrigger(EventLoop)
    */
-  public Trigger b() {
-    return b(CommandScheduler.getInstance().getDefaultButtonLoop());
+  public Trigger rightTrigger() {
+    return rightTrigger(CommandScheduler.getInstance().getDefaultButtonLoop());
   }
 
   /**
-   * Constructs a Trigger instance around the B button's digital signal.
+   * Constructs a Trigger instance around the RT button's digital signal.
    *
    * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the B button's digital signal attached
+   * @return a Trigger instance representing the RT button's digital signal attached
    *     to the given loop.
    */
-  public Trigger b(EventLoop loop) {
-    return button(StellarController.Button.kB.value, loop);
+  public Trigger rightTrigger(EventLoop loop) {
+    return button(StellarController.Buttons.kRightTrigger.value, loop);
   }
 
-  /**
-   * Constructs a Trigger instance around the X button's digital signal.
-   *
-   * @return a Trigger instance representing the X button's digital signal attached
-   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #x(EventLoop)
-   */
-  public Trigger x() {
-    return x(CommandScheduler.getInstance().getDefaultButtonLoop());
-  }
+
+
 
   /**
-   * Constructs a Trigger instance around the X button's digital signal.
+   * Constructs a Trigger instance around the RB button's digital signal.
    *
-   * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the X button's digital signal attached
-   *     to the given loop.
-   */
-  public Trigger x(EventLoop loop) {
-    return button(StellarController.Button.kX.value, loop);
-  }
-
-  /**
-   * Constructs a Trigger instance around the Y button's digital signal.
-   *
-   * @return a Trigger instance representing the Y button's digital signal attached
-   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #y(EventLoop)
-   */
-  public Trigger y() {
-    return y(CommandScheduler.getInstance().getDefaultButtonLoop());
-  }
-
-  /**
-   * Constructs a Trigger instance around the Y button's digital signal.
-   *
-   * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the Y button's digital signal attached
-   *     to the given loop.
-   */
-  public Trigger y(EventLoop loop) {
-    return button(StellarController.Button.kY.value, loop);
-  }
-
-  /**
-   * Constructs a Trigger instance around the left bumper button's digital signal.
-   *
-   * @return a Trigger instance representing the left bumper button's digital signal attached
-   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #leftBumper(EventLoop)
-   */
-  public Trigger leftBumper() {
-    return leftBumper(CommandScheduler.getInstance().getDefaultButtonLoop());
-  }
-
-  /**
-   * Constructs a Trigger instance around the left bumper button's digital signal.
-   *
-   * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the left bumper button's digital signal attached
-   *     to the given loop.
-   */
-  public Trigger leftBumper(EventLoop loop) {
-    return button(StellarController.Button.kLeftBumper.value, loop);
-  }
-
-  /**
-   * Constructs a Trigger instance around the right bumper button's digital signal.
-   *
-   * @return a Trigger instance representing the right bumper button's digital signal attached
+   * @return a Trigger instance representing the RB button's digital signal attached
    *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
    * @see #rightBumper(EventLoop)
    */
-  public Trigger rightCenterButton() {
-    return rightCenterButton(CommandScheduler.getInstance().getDefaultButtonLoop());
+  public Trigger rightBumper() {
+    return rightBumper(CommandScheduler.getInstance().getDefaultButtonLoop());
   }
 
   /**
-   * Constructs a Trigger instance around the right bumper button's digital signal.
+   * Constructs a Trigger instance around the RB button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the RB button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger rightBumper(EventLoop loop) {
+    return button(StellarController.Buttons.kRightBumper.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the right center button's digital signal.
+   *
+   * @return a Trigger instance representing the right bumper button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #rightCenter(EventLoop)
+   */
+  public Trigger rightCenter() {
+    return rightCenter(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the right center button's digital signal.
    *
    * @param loop the event loop instance to attach the event to.
    * @return a Trigger instance representing the right bumper button's digital signal attached
    *     to the given loop.
    */
-  public Trigger rightCenterButton(EventLoop loop) {
-    return button(StellarController.Button.kRightBumper.value, loop);
+  public Trigger rightCenter(EventLoop loop) {
+    return button(StellarController.Buttons.kRightCenter.value, loop);
   }
 
+
+
+
   /**
-   * Constructs a Trigger instance around the back button's digital signal.
+   * Constructs a Trigger instance around the L1 button's digital signal.
    *
-   * @return a Trigger instance representing the back button's digital signal attached
+   * @return a Trigger instance representing the L1 button's digital signal attached
    *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #back(EventLoop)
+   * @see #leftTop(EventLoop)
    */
-  public Trigger back() {
-    return back(CommandScheduler.getInstance().getDefaultButtonLoop());
+  public Trigger leftTop() {
+    return leftTop(CommandScheduler.getInstance().getDefaultButtonLoop());
   }
 
   /**
-   * Constructs a Trigger instance around the back button's digital signal.
+   * Constructs a Trigger instance around the L1 button's digital signal.
    *
    * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the back button's digital signal attached
+   * @return a Trigger instance representing the L1 button's digital signal attached
    *     to the given loop.
    */
-  public Trigger back(EventLoop loop) {
-    return button(StellarController.Button.kBack.value, loop);
+  public Trigger leftTop(EventLoop loop) {
+    return button(StellarController.Buttons.kLeftTop.value, loop);
   }
 
+
+
+
   /**
-   * Constructs a Trigger instance around the start button's digital signal.
+   * Constructs a Trigger instance around the L2 button's digital signal.
    *
-   * @return a Trigger instance representing the start button's digital signal attached
+   * @return a Trigger instance representing the L2 button's digital signal attached
    *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #start(EventLoop)
+   * @see #leftBottom(EventLoop)
    */
-  public Trigger start() {
-    return start(CommandScheduler.getInstance().getDefaultButtonLoop());
+  public Trigger leftBottom() {
+    return leftBottom(CommandScheduler.getInstance().getDefaultButtonLoop());
   }
 
   /**
-   * Constructs a Trigger instance around the start button's digital signal.
+   * Constructs a Trigger instance around the L2 button's digital signal.
    *
    * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the start button's digital signal attached
+   * @return a Trigger instance representing the L2 button's digital signal attached
    *     to the given loop.
    */
-  public Trigger start(EventLoop loop) {
-    return button(StellarController.Button.kStart.value, loop);
+  public Trigger leftBottom(EventLoop loop) {
+    return button(StellarController.Buttons.kLeftBottom.value, loop);
   }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the R1 button's digital signal.
+   *
+   * @return a Trigger instance representing the R1 button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #rightTop(EventLoop)
+   */
+  public Trigger rightTop() {
+    return rightTop(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the R1 button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the R1 button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger rightTop(EventLoop loop) {
+    return button(StellarController.Buttons.kRightTop.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the R2 button's digital signal.
+   *
+   * @return a Trigger instance representing the R2 button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #rightBottom(EventLoop)
+   */
+  public Trigger rightBottom() {
+    return rightBottom(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the R2 button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the R2 button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger rightBottom(EventLoop loop) {
+    return button(StellarController.Buttons.kRightBottom.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the C1 button's digital signal.
+   *
+   * @return a Trigger instance representing the C1 button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #center(EventLoop)
+   */
+  public Trigger center() {
+    return center(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the C1 button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the C1 button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger center(EventLoop loop) {
+    return button(StellarController.Buttons.kCenter.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the SL button's digital signal.
+   *
+   * @return a Trigger instance representing the SL button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #switchLeft(EventLoop)
+   */
+  public Trigger switchLeft() {
+    return switchLeft(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the SL button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the SL button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger switchLeft(EventLoop loop) {
+    return button(StellarController.Buttons.kSwitchLeft.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the SM button's digital signal.
+   *
+   * @return a Trigger instance representing the SM button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #switchMiddle(EventLoop)
+   */
+  public Trigger switchMiddle() {
+    return switchMiddle(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the SM button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the SM button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger switchMiddle(EventLoop loop) {
+    return button(StellarController.Buttons.kSwitchMiddle.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the SR button's digital signal.
+   *
+   * @return a Trigger instance representing the SR button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #switchRight(EventLoop)
+   */
+  public Trigger switchRight() {
+    return switchRight(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the SR button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the SR button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger switchRight(EventLoop loop) {
+    return button(StellarController.Buttons.kSwitchRight.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the RP button's digital signal.
+   *
+   * @return a Trigger instance representing the RP button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #rightPaddle(EventLoop)
+   */
+  public Trigger rightPaddle() {
+    return rightPaddle(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the RP button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the RP button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger rightPaddle(EventLoop loop) {
+    return button(StellarController.Buttons.kRightPaddle.value, loop);
+  }
+
+
+
+
+  /**
+   * Constructs a Trigger instance around the LP button's digital signal.
+   *
+   * @return a Trigger instance representing the LP button's digital signal attached
+   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
+   * @see #leftPaddle(EventLoop)
+   */
+  public Trigger leftPaddle() {
+    return leftPaddle(CommandScheduler.getInstance().getDefaultButtonLoop());
+  }
+
+  /**
+   * Constructs a Trigger instance around the LP button's digital signal.
+   *
+   * @param loop the event loop instance to attach the event to.
+   * @return a Trigger instance representing the LP button's digital signal attached
+   *     to the given loop.
+   */
+  public Trigger leftPaddle(EventLoop loop) {
+    return button(StellarController.Buttons.kLeftPaddle.value, loop);
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    * Constructs a Trigger instance around the left stick button's digital signal.
@@ -236,68 +419,7 @@ public class CommandStellarController extends CommandGenericHID {
    *     to the given loop.
    */
   public Trigger leftStick(EventLoop loop) {
-    return button(StellarController.Button.kLeftStick.value, loop);
-  }
-
-  /**
-   * Constructs a Trigger instance around the right stick button's digital signal.
-   *
-   * @return a Trigger instance representing the right stick button's digital signal attached
-   *     to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   * @see #rightStick(EventLoop)
-   */
-  public Trigger rightStick() {
-    return rightStick(CommandScheduler.getInstance().getDefaultButtonLoop());
-  }
-
-  /**
-   * Constructs a Trigger instance around the right stick button's digital signal.
-   *
-   * @param loop the event loop instance to attach the event to.
-   * @return a Trigger instance representing the right stick button's digital signal attached
-   *     to the given loop.
-   */
-  public Trigger rightStick(EventLoop loop) {
-    return button(StellarController.Button.kRightStick.value, loop);
-  }
-
-  /**
-   * Constructs a Trigger instance around the axis value of the left trigger. The returned
-   * trigger will be true when the axis value is greater than {@code threshold}.
-   *
-   * @param threshold the minimum axis value for the returned {@link Trigger} to be true. This value
-   *     should be in the range [0, 1] where 0 is the unpressed state of the axis.
-   * @param loop the event loop instance to attach the Trigger to.
-   * @return a Trigger instance that is true when the left trigger's axis exceeds the provided
-   *     threshold, attached to the given event loop
-   */
-  public Trigger leftRotary(double threshold, EventLoop loop) {
-    return axisGreaterThan(StellarController.Axis.kLeftRotary.value, threshold, loop);
-  }
-
-  /**
-   * Constructs a Trigger instance around the axis value of the left trigger. The returned
-   * trigger will be true when the axis value is greater than {@code threshold}.
-   *
-   * @param threshold the minimum axis value for the returned {@link Trigger} to be true. This value
-   *     should be in the range [0, 1] where 0 is the unpressed state of the axis.
-   * @return a Trigger instance that is true when the left trigger's axis exceeds the provided
-   *     threshold, attached to the {@link CommandScheduler#getDefaultButtonLoop() default scheduler
-   *     button loop}.
-   */
-  public Trigger leftRotary(double threshold) {
-    return leftRotary(threshold, CommandScheduler.getInstance().getDefaultButtonLoop());
-  }
-
-  /**
-   * Constructs a Trigger instance around the axis value of the left trigger. The returned trigger
-   * will be true when the axis value is greater than 0.5.
-   *
-   * @return a Trigger instance that is true when the left trigger's axis exceeds 0.5, attached to
-   *     the {@link CommandScheduler#getDefaultButtonLoop() default scheduler button loop}.
-   */
-  public Trigger leftRotary() {
-    return leftRotary(0.5);
+    return button(StellarController.Buttons.kLeftStick.value, loop);
   }
 
   /**
@@ -349,39 +471,12 @@ public class CommandStellarController extends CommandGenericHID {
   }
 
   /**
-   * Get the X axis value of right side of the controller.
-   *
-   * @return The axis value.
-   */
-  public double getRightX() {
-    return m_hid.getRightX();
-  }
-
-  /**
    * Get the Y axis value of left side of the controller.
    *
    * @return The axis value.
    */
   public double getLeftY() {
     return m_hid.getLeftY();
-  }
-
-  /**
-   * Get the Y axis value of right side of the controller.
-   *
-   * @return The axis value.
-   */
-  public double getRightY() {
-    return m_hid.getRightY();
-  }
-
-  /**
-   * Get the rotation of the left rotary pad
-   *
-   * @return The axis value.
-   */
-  public Rotation2d getLeftRotary() {
-    return m_hid.getLeftRotary();
   }
 
   /**

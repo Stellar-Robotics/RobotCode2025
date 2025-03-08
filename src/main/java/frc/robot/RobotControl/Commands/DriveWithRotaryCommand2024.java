@@ -99,7 +99,7 @@ public class DriveWithRotaryCommand2024 extends Command {
     }
 
     // Bind a button to reseting the gyro to the odometry. (slight adjustment for compatability)
-    if (cIO.stellarController.getHID().getBButtonPressed()) {
+    if (cIO.stellarController.getHID().getCenterPressed()) {
       chassis.zeroHeading();
     }
 

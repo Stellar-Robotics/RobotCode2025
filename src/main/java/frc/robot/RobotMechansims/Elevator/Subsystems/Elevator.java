@@ -29,7 +29,7 @@ public class Elevator extends SubsystemBase {
   private final SparkClosedLoopController elevatorCLC;
 
   private double prevPosition;
-  private boolean rampActive;
+  public boolean rampActive;
 
   public enum POSITIONS {
     LOW,
@@ -105,12 +105,6 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Elevator Position", elevatorEncoder.getPosition());
-
-    // if (elevatorEncoder.getPosition() < 50) {
-    //   BaseConstants.DriveConstants.elevatorSpeedOverride = 1;
-    // } else {
-    //   BaseConstants.DriveConstants.elevatorSpeedOverride = 0.3;
-    // }
 
     if (elevatorEncoder.getPosition() < 50 && prevPosition > 50) {
       rampActive = true;

@@ -9,6 +9,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,6 +29,7 @@ import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
 import frc.robot.RobotMechansims.MechanismConstants.elevatorValues.ELEVATORPOSITION;
+import frc.robot.RobotMechansims.AlgaeMech.Subsystems.AlgaeMech;
 import frc.robot.RobotMechansims.ClimbMech.Commands.TriggerClimberCommand;
 import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
@@ -44,14 +47,19 @@ public class RobotContainer {
   private Elevator elevator; // Elevator subsystem
   private CoralMech coralMech; // Coral subsystem
   private ClimbSubsystem climber; // Climber subsystem
+  private AlgaeMech algaeMech; // Algae subsystem
+
+  // Pneumatics
+  private PneumaticHub pneumaticHub;
+  private Solenoid algaeLeft;
+  private Solenoid algaeRight;
+  private Solenoid climberLock;
 
   public static enum REEFALIGNMENT {
     LEFT,
     CENTER,
     RIGHT
   }
-
-  //private AlgaeMech algaeMech; // Algae subsystem
   
   // Declare controllers
   public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
@@ -90,16 +98,20 @@ public class RobotContainer {
 
   public void initiateRobot() {
 
-    // Register commands with path planner
-    //bindCommandsToPathPlanner();
+    // Pneumatic Hub
+    pneumaticHub = new PneumaticHub(23);
+    pneumaticHub.enableCompressorDigital();
+    algaeLeft = pneumaticHub.makeSolenoid(0);
+    algaeRight = pneumaticHub.makeSolenoid(1);
+    climberLock = pneumaticHub.makeSolenoid(2);
 
     // Define subsystems
     chassis = new SwerveChassisSubsystem(); // Swerve subsystem
     vision = new VisionSubsystem(chassis.getPose());
     elevator = new Elevator();
     coralMech = new CoralMech();
-    climber = new ClimbSubsystem();
-    //algaeMech = new AlgaeMech();
+    climber = new ClimbSubsystem(climberLock);
+    algaeMech = new AlgaeMech(algaeLeft, algaeRight);
 
     rotaryOffset = 0;
     currentReefAlignment =  REEFALIGNMENT.LEFT;
@@ -162,6 +174,26 @@ public class RobotContainer {
       new RunCommand(() -> snapping = false)
     )
     .debounce(0.1);
+
+
+    // Driver controller slow mode
+    driverController.switchLeft().whileTrue(
+      new RunCommand(() -> {
+        if (elevator.rampActive) {
+          elevator.rampActive = false;
+        }
+        DriveConstants.elevatorSpeedOverride = 0.3;
+
+      }));
+
+    
+    driverController.switchMiddle().onTrue(
+      new RunCommand(() -> {
+        if (elevator.getPosition() < 50 && MechanismConstants.elevatorValues.currentPos == ELEVATORPOSITION.LOW) {
+          elevator.rampActive = true;
+        }
+      }, elevator)
+    ).debounce(0.2);
 
     // Incrament coral mech forward or backwards
     operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);

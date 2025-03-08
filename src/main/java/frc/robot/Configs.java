@@ -82,17 +82,12 @@ public final class Configs {
     public static final class AlgaeMechConfig {
 
         public static final SparkMaxConfig pickupMotorConfig = new SparkMaxConfig();
-        public static final SparkMaxConfig extensionMotorConfig = new SparkMaxConfig();
 
         static {
                 
             pickupMotorConfig
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(30);
-
-            extensionMotorConfig
-                .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(20);
 
         }
 
