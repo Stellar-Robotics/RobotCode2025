@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueRight2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "snapToReefCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue2Reload"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralBackward"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Reload2ToBlue2"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "BlueRight",
+  "choreoAuto": false
+}

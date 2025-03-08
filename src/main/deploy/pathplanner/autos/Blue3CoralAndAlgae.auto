@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueRight3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "snapToReefCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueRight3ToProcessor"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "BlueRight",
+  "choreoAuto": false
+}

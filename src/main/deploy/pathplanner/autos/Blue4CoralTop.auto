@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueCenter4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "snapToReefCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorHigh"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralForward"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "BlueCenter",
+  "choreoAuto": false
+}
