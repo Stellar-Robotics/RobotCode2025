@@ -17,7 +17,6 @@ public class IncramentCoralExtensionCommand extends Command {
   private boolean forward;
   /** Creates a new IncramentCoralExtensionCommand. */
   public IncramentCoralExtensionCommand(CoralMech coral, boolean goingForward) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.coral = coral;
     forward = goingForward;
 

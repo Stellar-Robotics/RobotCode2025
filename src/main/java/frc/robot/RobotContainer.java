@@ -231,19 +231,28 @@ public class RobotContainer {
   public void bindCommandsToPathPlanner() {
     // Auto command bindings
 
-    // Elevator commands dont execute in pathplanner
-    NamedCommands.registerCommand("ElevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
-    NamedCommands.registerCommand("ElevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
-    NamedCommands.registerCommand("ElevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
+    // Elevator
+    NamedCommands.registerCommand("elevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
+    NamedCommands.registerCommand("elevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
+    NamedCommands.registerCommand("elevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
 
-    // Executes fine in pathplanner
-    NamedCommands.registerCommand("SnapToReefCommand", new SnapToReefCommand(chassis));
+    // Coral
+    NamedCommands.registerCommand("coralForward", new IncramentCoralExtensionCommand(coralMech, true));
+    NamedCommands.registerCommand("coralBackward", new IncramentCoralExtensionCommand(coralMech, false));
+
+    // Other
+    NamedCommands.registerCommand("snapToReefCommand", new SnapToReefCommand(chassis));
 
     // Path command bindings
-    // Works for event markers in pathplanner
+    
+    // Elevator
     new EventTrigger("ElevatorMedium").onTrue(new SetElevatorCommand(elevator, POSITIONS.MID));
     new EventTrigger("ElevatorHigh").onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH));
     new EventTrigger("ElevatorLow").onTrue(new SetElevatorCommand(elevator, POSITIONS.LOW));
+
+    // Coral
+    new EventTrigger("coralForward").onTrue(new IncramentCoralExtensionCommand(coralMech, true));
+    new EventTrigger("coralBackward").onTrue(new IncramentCoralExtensionCommand(coralMech, false));
 
     System.out.println("Registered Commands With PathPlanner");
   }
