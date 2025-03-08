@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueRight3"
+            "pathName": "BlueCenter4"
           }
         },
         {
@@ -17,9 +17,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "BlueRight3ToProcessor"
+            "name": "elevatorHigh"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralForward"
           }
         }
       ]
