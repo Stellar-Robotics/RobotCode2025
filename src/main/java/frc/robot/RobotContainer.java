@@ -175,25 +175,23 @@ public class RobotContainer {
     )
     .debounce(0.1);
 
-
-    // Driver controller slow mode
-    driverController.switchLeft().whileTrue(
+    driverController.rightPaddle().whileTrue(
       new RunCommand(() -> {
         if (elevator.rampActive) {
           elevator.rampActive = false;
         }
         DriveConstants.elevatorSpeedOverride = 0.3;
 
-      }));
+      })
+    );
 
-    
-    driverController.switchMiddle().onTrue(
+    driverController.rightPaddle().onFalse(
       new RunCommand(() -> {
         if (elevator.getPosition() < 50 && MechanismConstants.elevatorValues.currentPos == ELEVATORPOSITION.LOW) {
           elevator.rampActive = true;
         }
       }, elevator)
-    ).debounce(0.2);
+    );
 
     // Incrament coral mech forward or backwards
     operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
