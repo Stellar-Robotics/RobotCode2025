@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueCenter4"
+            "pathName": "BlueRight2"
           }
         },
         {
@@ -17,21 +17,27 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "elevatorHigh"
+            "pathName": "Blue2Reload"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralForward"
+            "name": "coralBackward"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Reload2ToBlue2"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "BlueCenter",
+  "folder": "BlueRight",
   "choreoAuto": false
 }

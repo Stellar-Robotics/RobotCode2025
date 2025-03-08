@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueCenter4"
+            "pathName": "FarLeftBlue5"
           }
         },
         {
@@ -15,23 +15,11 @@
           "data": {
             "name": "snapToReefCommand"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "elevatorHigh"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralForward"
-          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "BlueCenter",
+  "folder": "BlueLeft",
   "choreoAuto": false
 }

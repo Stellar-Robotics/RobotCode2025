@@ -15,18 +15,6 @@
           "data": {
             "name": "snapToReefCommand"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "elevatorHigh"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "coralForward"
-          }
         }
       ]
     }

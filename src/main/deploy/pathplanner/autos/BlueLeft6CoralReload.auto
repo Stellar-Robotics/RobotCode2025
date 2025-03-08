@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueCenter4"
+            "pathName": "BlueLeft6"
           }
         },
         {
@@ -17,21 +17,33 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "elevatorHigh"
+            "pathName": "BlueLeft6Reload"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "coralForward"
+            "name": "coralBackward"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Reload1ToBlue6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "snapToReefCommand"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "BlueCenter",
+  "folder": "BlueLeft",
   "choreoAuto": false
 }

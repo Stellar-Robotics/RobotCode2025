@@ -12,7 +12,10 @@
     "RedRight"
   ],
   "autoFolders": [
-    "LeavingTheLine"
+    "BlueCenter",
+    "BlueRight",
+    "LeavingTheLine",
+    "BlueLeft"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
