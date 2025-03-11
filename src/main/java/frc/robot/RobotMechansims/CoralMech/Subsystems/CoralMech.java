@@ -15,9 +15,12 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
+import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
 import frc.robot.RobotUtilities.MiscUtils;
 
 public class CoralMech extends SubsystemBase {
@@ -82,6 +85,13 @@ public void setRollerPower(double setPower) {
     if (error != REVLibError.kOk) {
       coralExtension.stopMotor();
     }
+  }
+
+  public Command goFullBack(CoralMech subsystem) {
+    return Commands.runOnce(() -> {
+      goToPosition(-43);
+      MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.BACK;
+    }, subsystem);
   }
 
   @Override

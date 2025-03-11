@@ -14,7 +14,7 @@ public class ClimberSetSpeedCommand extends Command {
 
     @Override
     public void execute() {
-        subsystem.setSpeed(setSpeed);
+        subsystem.setPosition(setSpeed);
     }
 
 }

@@ -12,6 +12,8 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
@@ -49,13 +51,34 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   /** Sets the forward speed of the climber. Negative values will not change the direction of the motors. */
-  public void setSpeed(double positionRotations) {
-    SparkCLC1.setReference(MiscUtils.clamp(0, 42, positionRotations), ControlType.kPosition);
+  public void setPosition(double positionRotations) {
+    SparkCLC1.setReference(MiscUtils.clamp(-45, 2, positionRotations), ControlType.kPosition);
   }
 
-  public void toggleLock() {
-    lockSolenoid.set(!lockState);
-    lockState = !lockState;
+  public Command toggleLock(ClimbSubsystem subsystem, int direction) {
+    return Commands.runOnce(() -> {
+      if (direction == 1) {
+        lockSolenoid.set(false);
+        lockState = false;
+      } else if (direction == 2) {
+        lockSolenoid.set(true);
+        lockState = true;
+      } else {
+        lockSolenoid.set(!lockState);
+        lockState = !lockState;
+      }
+    }, subsystem);
+  }
+
+
+  public Command setClimber(ClimbSubsystem subsystem, boolean direction) {
+    return Commands.runOnce(() -> {
+      this.setPosition(direction ? 2 : -45);
+    }, subsystem);
+  }
+
+  public double getPostion() {
+    return climbMotor1.getEncoder().getPosition();
   }
 
   @Override

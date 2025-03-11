@@ -14,9 +14,12 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
@@ -35,6 +38,7 @@ import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
 import frc.robot.RobotMechansims.CoralMech.Commands.SetCoralMechPosition;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
+import frc.robot.RobotMechansims.Elevator.Commands.GoToClimbPosition;
 import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorCommand;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator.POSITIONS;
@@ -99,7 +103,7 @@ public class RobotContainer {
   public void initiateRobot() {
 
     // Pneumatic Hub
-    pneumaticHub = new PneumaticHub(23);
+    pneumaticHub = new PneumaticHub(18);
     pneumaticHub.enableCompressorDigital();
     algaeLeft = pneumaticHub.makeSolenoid(0);
     algaeRight = pneumaticHub.makeSolenoid(1);
@@ -161,8 +165,9 @@ public class RobotContainer {
 
   public void configureButtonBinds() {
     // Bind commands to triggers
-
+    // ____________________________________________________________________________________________
     // Switch to snapping mode
+
     operatorController.a().onTrue(
       new SnapToReefCommand(chassis)
       .andThen(new RunCommand(() -> currentReefAlignment = REEFALIGNMENT.LEFT))
@@ -174,6 +179,8 @@ public class RobotContainer {
       new RunCommand(() -> snapping = false)
     )
     .debounce(0.1);
+    // ____________________________________________________________________________________________
+    // Speed control
 
     driverController.rightPaddle().whileTrue(
       new RunCommand(() -> {
@@ -192,8 +199,9 @@ public class RobotContainer {
         }
       }, elevator)
     );
-
+    // _____________________________________________________________________________________________
     // Incrament coral mech forward or backwards
+
     operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
     operatorController.rightTrigger().onTrue(
       new ConditionalCommand(
@@ -204,8 +212,9 @@ public class RobotContainer {
     operatorController.b().onTrue(new RunCommand(() -> { coralMech.goToPosition(-43); 
       MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.XBACK;
     }, coralMech));
-
+    // _____________________________________________________________________________________________
     // Elevator presets
+
     operatorController.povUp().onTrue(
       new SetElevatorCommand(elevator, POSITIONS.HIGH)
       .andThen(new WaitCommand(2))
@@ -225,11 +234,17 @@ public class RobotContainer {
       .debounce(0.1);
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
+      .andThen(Commands.runOnce(() -> {
+        if (climber.getPostion() < -8) {
+          climber.setClimber(climber, true);
+        }
+      }, climber).andThen(new WaitCommand(1)))
       .andThen(new WaitCommand(0.5))
       .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW)))
       .debounce(0.1);
+    // ______________________________________________________________________________________________
+    // Run coral mechanism roller forward and backward
 
-    // Run coral mechanism roller forward and backward.
     operatorController.leftBumper().whileTrue(
       new RunCommand(() -> {coralMech.setRollerPower(1);}, coralMech)
     ).onFalse(
@@ -243,19 +258,49 @@ public class RobotContainer {
     ).onFalse(
       new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
     );
-
+    // ______________________________________________________________________________________________
     // Deploy the machettis!
+
     operatorController.back().onTrue(
       new TriggerClimberCommand(climber)
     );
 
-    // FOR TESTING
-    operatorController.start().onTrue(
-      new RunCommand(() -> {
-        MechanismConstants.ClimberValues.triggered = false;
-        climber.setSpeed(0);
-      }, climber)
+    // // FOR TESTING
+    // operatorController.start().onTrue(
+    //   new RunCommand(() -> {
+    //     MechanismConstants.ClimberValues.triggered = false;
+    //     climber.setSpeed(0);
+    //   }, climber)
+    // );
+    // _______________________________________________________________________________________________
+    // Toggle climbing position
+
+    operatorController.start().toggleOnTrue(
+      new SequentialCommandGroup(
+        // Raise the elevator
+        new GoToClimbPosition(elevator)
+        // Send the coral mechanism to the corner
+        .andThen(coralMech.goFullBack(coralMech))
+        // Wait for the elevator to clear
+        .andThen(new WaitCommand(1))
+        // Bring the climber up
+        .andThen(climber.setClimber(climber, false))
+        // Wait until it's toggled off.
+        .andThen(new WaitUntilCommand(operatorController.start()))
+      )
     );
+    // _______________________________________________________________________________________________
+    // Algae Mechanism
+
+    // Toggle extension
+    operatorController.x().onChange(new RunCommand(() -> {
+      algaeMech.toggleExtension();
+    }, algaeMech));
+
+    algaeMech.setDefaultCommand(new RunCommand(() -> {
+      algaeMech.runPickup(-operatorController.getLeftY());
+    }, algaeMech));
+
   }
 
   public void bindCommandsToPathPlanner() {
