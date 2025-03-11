@@ -14,12 +14,10 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
@@ -177,9 +175,9 @@ public class RobotContainer {
     // ____________________________________________________________________________________________
     // Snapping alignment
 
-    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0).onlyIf(driverController.center())).debounce(0.5);
-    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2).onlyIf(driverController.center()));
-    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1).onlyIf(driverController.center()));
+    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0));
+    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2));
+    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1));
 
     
     // ____________________________________________________________________________________________
@@ -232,14 +230,10 @@ public class RobotContainer {
       .debounce(0.1);
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
-      .andThen(Commands.runOnce(() -> {
-        if (climber.getPostion() < -8) {
-          climber.setClimber(climber, true);
-        }
-      }, climber).andThen(new WaitCommand(1)))
-      .andThen(new WaitCommand(0.5))
-      .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW)))
-      .debounce(0.1);
+      .andThen(climber.resetClimber())
+      .andThen(new WaitCommand(1))
+      .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW))
+      ).debounce(0.1);
     // ______________________________________________________________________________________________
     // Run coral mechanism roller forward and backward
 
@@ -259,8 +253,8 @@ public class RobotContainer {
         climber.toggleLock(climber, 1), // Ensure the climber is unlocked
         algaeMech.actuateExtension(false),
         new WaitCommand(1), // Wait for the elevator to clear
-        climber.setClimber(climber, false), // Bring the climber up
-        new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
+        climber.setClimber(false) // Bring the climber up
+        //new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
       ));
     operatorController.back().onTrue(climber.engageAndLock()); // Commit to climb
     // _______________________________________________________________________________________________

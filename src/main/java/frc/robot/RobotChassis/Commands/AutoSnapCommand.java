@@ -84,10 +84,12 @@ public class AutoSnapCommand extends Command {
     }
 
     if (position == 1) {
-      closestPose = closestPose.transformBy(new Transform2d(0.165, 0, new Rotation2d()));
+      closestPose = closestPose.transformBy(new Transform2d(0, -0.165, new Rotation2d()));
     } else if (position == 2) {
-      closestPose = closestPose.transformBy(new Transform2d(0.33, 0, new Rotation2d()));
+      closestPose = closestPose.transformBy(new Transform2d(0, -0.33, new Rotation2d()));
     }
+
+    System.out.println("Closest Pose: " + closestPose.toString());
 
     System.out.println("Poses:");
     System.out.println("Current Pose: " + currPose);
@@ -135,6 +137,6 @@ public class AutoSnapCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

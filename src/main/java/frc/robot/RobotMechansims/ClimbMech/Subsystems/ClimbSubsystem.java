@@ -79,15 +79,25 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
 
-  public Command setClimber(ClimbSubsystem subsystem, boolean down) {
+  public Command setClimber(boolean down) {
     return Commands.runOnce(() -> {
       this.setPosition(down ? 2 : -45);
-    }, subsystem);
+    }, this);
+  }
+
+  public Command resetClimber() {
+    return this.toggleLock(this, 1) 
+    .andThen(new WaitCommand(0.4))
+    .andThen(
+      Commands.runOnce(() -> {
+        this.setPosition(0);
+      }, this)
+    );
   }
 
   public Command engageAndLock() {
     return new SequentialCommandGroup(
-      this.setClimber(this, false),
+      this.setClimber(true),
       new WaitCommand(3),
       this.toggleLock(this, 2)
     );
