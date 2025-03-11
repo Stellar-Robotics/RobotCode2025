@@ -10,6 +10,8 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
@@ -43,7 +45,7 @@ public class AlgaeMech extends SubsystemBase {
   }
 
   // We'll create a method that other code can call to run the intake motors.
-  public void runPickup(double speed) {
+  public void setSpeed(double speed) {
 
     // We'll call the 'set' method in the motor controller object stored
     // in the pickupMotor variable.  We'll make sure to pass in our
@@ -52,13 +54,32 @@ public class AlgaeMech extends SubsystemBase {
     
   }
 
-  public void toggleExtension() {
+  public Command toggleExtension() {
+    return Commands.runOnce(() -> {
+      leftSolenoid.set(!lastPos);
+      rightSolenoid.set(!lastPos);
+      lastPos = !lastPos;
+    }, this);
+  }
 
-    leftSolenoid.set(!lastPos);
-    rightSolenoid.set(!lastPos);
+  public Command actuateExtension(boolean in) {
+    return Commands.runOnce(() -> {
+      if (in) {
+        leftSolenoid.set(false);
+        rightSolenoid.set(false);
+        lastPos = false;
+      } else {
+        leftSolenoid.set(true);
+        rightSolenoid.set(true);
+        lastPos = true;      
+      }
+    }, this);
+  }
 
-    lastPos = !lastPos;
-
+  public Command runPickup(double speed) {
+    return Commands.runOnce(() -> {
+      this.setSpeed(speed);
+    }, this);
   }
 
   @Override

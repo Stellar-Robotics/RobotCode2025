@@ -24,21 +24,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.CommandStellarController;
-import frc.robot.RobotChassis.Commands.ChangeReefAlignment;
+import frc.robot.RobotChassis.Commands.AutoSnapCommand;
 import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
-import frc.robot.RobotChassis.Commands.SnapToReefCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
 import frc.robot.RobotMechansims.MechanismConstants.elevatorValues.ELEVATORPOSITION;
 import frc.robot.RobotMechansims.AlgaeMech.Subsystems.AlgaeMech;
-import frc.robot.RobotMechansims.ClimbMech.Commands.TriggerClimberCommand;
 import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
 import frc.robot.RobotMechansims.CoralMech.Commands.SetCoralMechPosition;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
-import frc.robot.RobotMechansims.Elevator.Commands.GoToClimbPosition;
 import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorCommand;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator;
 import frc.robot.RobotMechansims.Elevator.Subsystems.Elevator.POSITIONS;
@@ -74,7 +71,7 @@ public class RobotContainer {
 
   private double rotaryOffset;
   private REEFALIGNMENT currentReefAlignment;
-  private boolean snapping;
+  //private boolean snapping;
 
   public RobotContainer() { 
     /* Initialization code is handled by calling initializeRobot in the Robot class */
@@ -119,7 +116,7 @@ public class RobotContainer {
 
     rotaryOffset = 0;
     currentReefAlignment =  REEFALIGNMENT.LEFT;
-    snapping = false;
+    //snapping = false;
 
     // Create auto selector and post params to the dash
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
@@ -168,17 +165,23 @@ public class RobotContainer {
     // ____________________________________________________________________________________________
     // Switch to snapping mode
 
-    operatorController.a().onTrue(
-      new SnapToReefCommand(chassis)
-      .andThen(new RunCommand(() -> currentReefAlignment = REEFALIGNMENT.LEFT))
-      .andThen(new RunCommand(() -> snapping = true))
-    )
-    .debounce(0.1);
+    // operatorController.a().onTrue(
+    //   new SnapToReefCommand(chassis)
+    //   .andThen(new RunCommand(() -> currentReefAlignment = REEFALIGNMENT.LEFT))
+    //   .andThen(new RunCommand(() -> snapping = true))
+    // ).debounce(0.1);
 
-    operatorController.a().onFalse(
-      new RunCommand(() -> snapping = false)
-    )
-    .debounce(0.1);
+    // operatorController.a().onFalse(
+    //   new RunCommand(() -> snapping = false)
+    // ).debounce(0.1);
+    // ____________________________________________________________________________________________
+    // Snapping alignment
+
+    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0).onlyIf(driverController.center())).debounce(0.5);
+    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2).onlyIf(driverController.center()));
+    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1).onlyIf(driverController.center()));
+
+    
     // ____________________________________________________________________________________________
     // Speed control
 
@@ -203,12 +206,7 @@ public class RobotContainer {
     // Incrament coral mech forward or backwards
 
     operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
-    operatorController.rightTrigger().onTrue(
-      new ConditionalCommand(
-        new ChangeReefAlignment(chassis, REEFALIGNMENT.RIGHT),
-        new IncramentCoralExtensionCommand(coralMech, false), 
-        () -> snapping))
-      .debounce(0.5);
+    operatorController.rightTrigger().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.5);
     operatorController.b().onTrue(new RunCommand(() -> { coralMech.goToPosition(-43); 
       MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.XBACK;
     }, coralMech));
@@ -245,61 +243,32 @@ public class RobotContainer {
     // ______________________________________________________________________________________________
     // Run coral mechanism roller forward and backward
 
-    operatorController.leftBumper().whileTrue(
-      new RunCommand(() -> {coralMech.setRollerPower(1);}, coralMech)
-    ).onFalse(
-      new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
-    );
-    operatorController.leftTrigger().whileTrue(
-      new ConditionalCommand(
-        new ChangeReefAlignment(chassis, REEFALIGNMENT.RIGHT),
-        new RunCommand(() -> {coralMech.setRollerPower(-1);}, coralMech), 
-        () -> snapping)
-    ).onFalse(
-      new RunCommand(() -> {coralMech.setRollerPower(0);}, coralMech)
-    );
-    // ______________________________________________________________________________________________
-    // Deploy the machettis!
-
-    operatorController.back().onTrue(
-      new TriggerClimberCommand(climber)
-    );
-
-    // // FOR TESTING
-    // operatorController.start().onTrue(
-    //   new RunCommand(() -> {
-    //     MechanismConstants.ClimberValues.triggered = false;
-    //     climber.setSpeed(0);
-    //   }, climber)
-    // );
+    operatorController.leftBumper() // Run forward
+    .whileTrue(coralMech.setRollerPower(1))
+    .onFalse(coralMech.setRollerPower(0));
+    operatorController.leftTrigger() // Run backward
+    .whileTrue(coralMech.setRollerPower(-1))
+    .onFalse(coralMech.setRollerPower(0));
     // _______________________________________________________________________________________________
-    // Toggle climbing position
+    // Climbing
 
     operatorController.start().toggleOnTrue(
       new SequentialCommandGroup(
-        // Raise the elevator
-        new GoToClimbPosition(elevator)
-        // Send the coral mechanism to the corner
-        .andThen(coralMech.goFullBack(coralMech))
-        // Wait for the elevator to clear
-        .andThen(new WaitCommand(1))
-        // Bring the climber up
-        .andThen(climber.setClimber(climber, false))
-        // Wait until it's toggled off.
-        .andThen(new WaitUntilCommand(operatorController.start()))
-      )
-    );
+        elevator.GoToClimbPosition(), // Raise the elevator
+        coralMech.goFullBack(), // Send the coral mechanism to the corner
+        climber.toggleLock(climber, 1), // Ensure the climber is unlocked
+        algaeMech.actuateExtension(false),
+        new WaitCommand(1), // Wait for the elevator to clear
+        climber.setClimber(climber, false), // Bring the climber up
+        new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
+      ));
+    operatorController.back().onTrue(climber.engageAndLock()); // Commit to climb
     // _______________________________________________________________________________________________
-    // Algae Mechanism
+    // Algae controls
 
-    // Toggle extension
-    operatorController.x().onChange(new RunCommand(() -> {
-      algaeMech.toggleExtension();
-    }, algaeMech));
-
-    algaeMech.setDefaultCommand(new RunCommand(() -> {
-      algaeMech.runPickup(-operatorController.getLeftY());
-    }, algaeMech));
+    operatorController.x().onChange(algaeMech.toggleExtension()); // Extension toggle
+    algaeMech.setDefaultCommand(algaeMech.runPickup(operatorController.getLeftY())); // Algae pickup
+    // _______________________________________________________________________________________________
 
   }
 
@@ -310,25 +279,37 @@ public class RobotContainer {
     NamedCommands.registerCommand("elevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
     NamedCommands.registerCommand("elevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
     NamedCommands.registerCommand("elevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
-
     // Coral
     NamedCommands.registerCommand("coralForward", new IncramentCoralExtensionCommand(coralMech, true));
     NamedCommands.registerCommand("coralBackward", new IncramentCoralExtensionCommand(coralMech, false));
+    NamedCommands.registerCommand("runCoral", coralMech.setRollerPower(1)
+    .andThen(new WaitCommand(1))
+    .andThen(coralMech.setRollerPower(0))
+    );
+    // Algae
+    NamedCommands.registerCommand("algaeExtend", algaeMech.actuateExtension(false));
+    NamedCommands.registerCommand("algaeRetract", algaeMech.actuateExtension(true));
+    NamedCommands.registerCommand("algaeIn", algaeMech.runPickup(1)
+    .andThen(new WaitCommand(1))
+    .andThen(algaeMech.runPickup(0)));
+    NamedCommands.registerCommand("algaeOut", algaeMech.runPickup(-1)
+    .andThen(new WaitCommand(1))
+    .andThen(algaeMech.runPickup(0)));
+    // Snapping
+    NamedCommands.registerCommand("snapLeft", new AutoSnapCommand(chassis, 0));
+    NamedCommands.registerCommand("snapCenter", new AutoSnapCommand(chassis, 1));
+    NamedCommands.registerCommand("snapRight", new AutoSnapCommand(chassis, 2));
 
-    // Other
-    NamedCommands.registerCommand("snapToReefCommand", new SnapToReefCommand(chassis));
+    // Event bindings
 
-    // Path command bindings
-    
     // Elevator
     new EventTrigger("ElevatorMedium").onTrue(new SetElevatorCommand(elevator, POSITIONS.MID));
     new EventTrigger("ElevatorHigh").onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH));
     new EventTrigger("ElevatorLow").onTrue(new SetElevatorCommand(elevator, POSITIONS.LOW));
-
     // Coral
     new EventTrigger("coralForward").onTrue(new IncramentCoralExtensionCommand(coralMech, true));
     new EventTrigger("coralBackward").onTrue(new IncramentCoralExtensionCommand(coralMech, false));
-
+    // Debugging info
     System.out.println("Registered Commands With PathPlanner");
   }
 

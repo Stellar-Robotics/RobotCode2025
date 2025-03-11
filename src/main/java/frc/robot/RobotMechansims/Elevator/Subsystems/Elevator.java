@@ -15,6 +15,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.BaseConstants;
 import frc.robot.Configs;
@@ -97,6 +99,12 @@ public class Elevator extends SubsystemBase {
     } else {
       rampActive = false;
     }
+  }
+
+  public Command GoToClimbPosition() {
+    return Commands.runOnce(() -> {
+      this.goToPositionClamped(54);
+    }, this);
   }
 
   

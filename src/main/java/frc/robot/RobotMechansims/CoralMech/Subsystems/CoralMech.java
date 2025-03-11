@@ -73,9 +73,10 @@ public class CoralMech extends SubsystemBase {
 
   }
 
-public void setRollerPower(double setPower) {
-
-    rollerMotor.set(setPower);
+public Command setRollerPower(double setPower) {
+    return Commands.runOnce(() -> {
+      rollerMotor.set(setPower);
+    }, this);
 
 }
 
@@ -87,11 +88,11 @@ public void setRollerPower(double setPower) {
     }
   }
 
-  public Command goFullBack(CoralMech subsystem) {
+  public Command goFullBack() {
     return Commands.runOnce(() -> {
       goToPosition(-43);
       MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.BACK;
-    }, subsystem);
+    }, this);
   }
 
   @Override

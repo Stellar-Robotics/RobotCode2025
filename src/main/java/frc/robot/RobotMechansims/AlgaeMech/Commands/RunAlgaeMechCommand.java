@@ -27,7 +27,7 @@ public class RunAlgaeMechCommand extends Command {
         // Call the 'runPickup' method from the object stored in the
         // intake variable.  We'll pass in the variable that holds
         // the speed value that we want to run the motor at.
-        intake.runPickup(speed);
+        intake.setSpeed(speed);
         
     }
 } 

@@ -14,7 +14,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotUtilities.MiscUtils;
@@ -48,6 +50,9 @@ public class ClimbSubsystem extends SubsystemBase {
     climbMotor2.configure(Configs.ClimberConfig.MotorBackConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     this.lockSolenoid = lockSolenoid;
+
+    // Lock solenoid is on by default
+    this.lockSolenoid.set(true);
   }
 
   /** Sets the forward speed of the climber. Negative values will not change the direction of the motors. */
@@ -57,12 +62,15 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public Command toggleLock(ClimbSubsystem subsystem, int direction) {
     return Commands.runOnce(() -> {
+      // Retract
       if (direction == 1) {
-        lockSolenoid.set(false);
-        lockState = false;
-      } else if (direction == 2) {
         lockSolenoid.set(true);
+        lockState = false;
+      // Extend
+      } else if (direction == 2) {
+        lockSolenoid.set(false);
         lockState = true;
+      // Toggle
       } else {
         lockSolenoid.set(!lockState);
         lockState = !lockState;
@@ -71,10 +79,18 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
 
-  public Command setClimber(ClimbSubsystem subsystem, boolean direction) {
+  public Command setClimber(ClimbSubsystem subsystem, boolean down) {
     return Commands.runOnce(() -> {
-      this.setPosition(direction ? 2 : -45);
+      this.setPosition(down ? 2 : -45);
     }, subsystem);
+  }
+
+  public Command engageAndLock() {
+    return new SequentialCommandGroup(
+      this.setClimber(this, false),
+      new WaitCommand(3),
+      this.toggleLock(this, 2)
+    );
   }
 
   public double getPostion() {
