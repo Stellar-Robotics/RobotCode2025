@@ -19,7 +19,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.BaseConstants.AutoConstants;
 import frc.robot.BaseConstants.DriveConstants;
+import frc.robot.RobotAutonomous.AutoFactory;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.CommandStellarController;
 import frc.robot.RobotChassis.Commands.AutoSnapCommand;
@@ -63,6 +65,9 @@ public class RobotContainer {
   // Declare controllers
   public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
   public CommandXboxController operatorController = ControllerIO.getSecondaryInstance().xboxController;
+
+  // Custom auto factory
+  private AutoFactory autoFactory;
 
   // Declare Auto Selector
   private SendableChooser<Command> autoChooser;
@@ -116,6 +121,9 @@ public class RobotContainer {
     currentReefAlignment =  REEFALIGNMENT.LEFT;
     //snapping = false;
 
+    // Custom auto
+    autoFactory = new AutoFactory(chassis, elevator, coralMech, algaeMech);
+
     // Create auto selector and post params to the dash
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     SmartDashboard.putNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
@@ -139,7 +147,11 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // Call the pathplanner auto lib
-    return autoChooser.getSelected();
+    if (AutoConstants.kUseAutoFactory) {
+      return autoFactory.buildCustomAuto();
+    } else {
+      return autoChooser.getSelected();
+    }
   }
 
   public void setRotaryOffset(double offset) {
@@ -175,11 +187,9 @@ public class RobotContainer {
     // ____________________________________________________________________________________________
     // Snapping alignment
 
-    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0));
-    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2));
-    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1));
-
-    
+    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0).onlyIf(() -> driverController.center().getAsBoolean() == true));
+    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2).onlyIf(() -> driverController.center().getAsBoolean() == true));
+    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1).onlyIf(() -> driverController.center().getAsBoolean() == true));
     // ____________________________________________________________________________________________
     // Speed control
 
@@ -312,4 +322,25 @@ public class RobotContainer {
     // Call the latest vision estimate
     return vision.getEstimatedGlobalPose(reef);
   }
+
+
+  // __________________________________________________________________________________
+  // Commands
+
+  public Command positionForScoreCommand(int level) {
+    POSITIONS elevatorPos;
+    if (level == 2) {
+      elevatorPos = POSITIONS.LOW;
+    } else if (level == 3) {
+      elevatorPos = POSITIONS.MID;
+    } else {
+      elevatorPos = POSITIONS.HIGH;
+    }
+
+    return new SequentialCommandGroup(
+      new SetElevatorCommand(elevator, elevatorPos),
+      new IncramentCoralExtensionCommand(coralMech, true)
+    );
+  }
+
 }
