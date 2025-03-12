@@ -13,7 +13,25 @@
         {
           "type": "named",
           "data": {
-            "name": "snapToReefCommand"
+            "name": "snapRight"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorHigh"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralForward"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runCoral"
           }
         }
       ]

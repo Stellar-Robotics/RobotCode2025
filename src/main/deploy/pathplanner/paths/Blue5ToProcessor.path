@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.29675,
-        "y": 7.09625
+        "x": 5.406375000000001,
+        "y": 5.521625
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.233522236620553,
-        "y": 6.456106403814881
+        "x": 7.1857500000000005,
+        "y": 5.131624999999999
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.339375,
-        "y": 5.789750000000001
+        "x": 5.957249999999999,
+        "y": 0.5734999999999991
       },
       "prevControl": {
-        "x": 2.402390690718371,
-        "y": 6.40806364977248
+        "x": 6.976125,
+        "y": 1.8507499999999988
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,19 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "coralForward",
-      "waypointRelativePos": 0.91,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "elevatorHigh"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -54,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -58.60973189581223
+    "rotation": -88.69804732742114
   },
   "reversed": false,
   "folder": "AutoPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -53.13010235415599
+    "rotation": -120.27702493824975
   },
   "useDefaultConstraints": true
 }

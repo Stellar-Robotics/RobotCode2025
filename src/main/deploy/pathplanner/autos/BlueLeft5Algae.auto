@@ -7,13 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueRight3"
+            "pathName": "BlueLeft5"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "snapLeft"
+            "name": "snapCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorHigh"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorMedium"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "algaeExtend"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "algaeIn"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "algaeRetract"
           }
         },
         {
@@ -35,9 +65,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "snapCenter"
+            "pathName": "Blue5ToProcessor"
           }
         },
         {
@@ -49,25 +79,19 @@
         {
           "type": "named",
           "data": {
-            "name": "algaeIn"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BlueRight3ToProcessor"
+            "name": "algaeOut"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "algaeOut"
+            "name": null
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "BlueRight",
+  "folder": "BlueLeft",
   "choreoAuto": false
 }

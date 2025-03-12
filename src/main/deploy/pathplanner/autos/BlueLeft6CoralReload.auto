@@ -13,7 +13,31 @@
         {
           "type": "named",
           "data": {
-            "name": "snapToReefCommand"
+            "name": "snapLeft"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorHigh"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralForward"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorLow"
           }
         },
         {
@@ -29,6 +53,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Reload1ToBlue6"
@@ -37,7 +67,25 @@
         {
           "type": "named",
           "data": {
-            "name": "snapToReefCommand"
+            "name": "snapRight"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorHigh"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralForward"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runCoral"
           }
         }
       ]

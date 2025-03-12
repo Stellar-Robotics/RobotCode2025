@@ -5,15 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "BlueCenter4"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "snapToReefCommand"
+            "name": "snapRight"
           }
         },
         {

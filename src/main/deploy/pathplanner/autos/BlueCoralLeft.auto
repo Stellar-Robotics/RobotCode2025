@@ -5,15 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "BlueCenter4"
+            "name": "snapLeft"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "snapToReefCommand"
+            "name": "elevatorHigh"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralForward"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runCoral"
           }
         }
       ]
