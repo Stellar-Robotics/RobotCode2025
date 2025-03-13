@@ -36,10 +36,10 @@ public class AutoFactory {
     private CoralMech coral; 
     private AlgaeMech algae;
 
-    private SendableChooser<String> startPositionChooser;
-    private SendableChooser<String> faceChooser;
-    private SendableChooser<Integer> positionChooser;
-    private SendableChooser<POSITIONS> levelChooser;
+    private SendableChooser<String> startPositionChooser = new SendableChooser<>();
+    private SendableChooser<String> faceChooser = new SendableChooser<>();
+    private SendableChooser<Integer> positionChooser = new SendableChooser<>();
+    private SendableChooser<POSITIONS> levelChooser = new SendableChooser<>();
 
     public AutoFactory(
         SwerveChassisSubsystem chassis, 
@@ -79,6 +79,7 @@ public class AutoFactory {
         SmartDashboard.putData("Select Face", faceChooser);
         SmartDashboard.putData("Select Face Position", positionChooser);
         SmartDashboard.putData("Select Reef Level", levelChooser);
+        SmartDashboard.putBoolean("Use Custom Auto?", false);
 
     }
 
@@ -86,6 +87,8 @@ public class AutoFactory {
         // In order for this to work path must use the
         // following naming format: <face_letter_lowercase>From<start_position_firstuppercase>
         // Example: 'aFromLeft'
+
+        System.out.println("Determining Initial Path");
         try {
             return PathPlannerPath.fromPathFile(face + "From" + startPos);
         } catch (Exception e) {
@@ -95,6 +98,9 @@ public class AutoFactory {
     }
 
     public Command lineupAndScore() {
+
+        System.out.println("Creating lineup and scoring sequence.");
+
         POSITIONS level = levelChooser.getSelected();
         Integer facePosition = positionChooser.getSelected();
         Command levelAndPosition;
@@ -128,6 +134,8 @@ public class AutoFactory {
 
     public Command backupAndLower() {
 
+        System.out.println("Generating backward movement.");
+
         Pose2d currentPosition = chassis.getPose();
         Pose2d adjustedPosition = currentPosition.transformBy(new Transform2d(-0.5, 0, currentPosition.getRotation()));
 
@@ -154,6 +162,8 @@ public class AutoFactory {
     }
 
     public Command buildCustomAuto() {
+
+        System.out.println("Using Custom Auto");
 
         String selectedStartPos = startPositionChooser.getSelected();
         String selectedFace = faceChooser.getSelected();

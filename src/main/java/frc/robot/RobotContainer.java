@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.BaseConstants.AutoConstants;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotAutonomous.AutoFactory;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
@@ -147,7 +146,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // Call the pathplanner auto lib
-    if (AutoConstants.kUseAutoFactory) {
+    if (SmartDashboard.getBoolean("Use Custom Auto?", false)) {
       return autoFactory.buildCustomAuto();
     } else {
       return autoChooser.getSelected();

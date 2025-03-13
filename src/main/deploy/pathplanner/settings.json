@@ -3,11 +3,14 @@
   "robotLength": 0.9144,
   "holonomicMode": true,
   "pathFolders": [
+    "AutoPaths",
     "BlueCenter",
     "BlueLeft",
     "BlueRight",
+    "DialUpCenter",
+    "DialUpRight",
     "LeaveLine",
-    "AutoPaths",
+    "DialUpLeft",
     "RedCenter",
     "RedLeft",
     "RedRight"
