@@ -282,7 +282,7 @@
         ],
         "containers": [
           {
-            "title": "Processed Steam",
+            "title": "Reef Camera Stream",
             "x": 256.0,
             "y": 0.0,
             "width": 1088.0,
@@ -309,7 +309,7 @@
               "show_other_objects": true,
               "show_trajectories": true,
               "field_rotation": 0.0,
-              "robot_color": 4279107839,
+              "robot_color": 4278194175,
               "trajectory_color": 4294956032
             }
           }
