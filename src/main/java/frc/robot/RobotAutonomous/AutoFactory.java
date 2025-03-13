@@ -59,12 +59,12 @@ public class AutoFactory {
         startPositionChooser.addOption("Middle", "Middle");
         startPositionChooser.setDefaultOption("Right", "Right");
         // Create options for face
-        faceChooser.setDefaultOption("Face D", "d");
-        faceChooser.addOption("Face E", "e");
-        faceChooser.addOption("Face F", "f");
         faceChooser.addOption("Face A", "a");
         faceChooser.addOption("Face B", "b");
         faceChooser.addOption("Face C", "c");
+        faceChooser.setDefaultOption("Face D", "d");
+        faceChooser.addOption("Face E", "e");
+        faceChooser.addOption("Face F", "f");
         // Create options for level
         levelChooser.setDefaultOption("L4", POSITIONS.HIGH);
         levelChooser.setDefaultOption("L3", POSITIONS.MID);
