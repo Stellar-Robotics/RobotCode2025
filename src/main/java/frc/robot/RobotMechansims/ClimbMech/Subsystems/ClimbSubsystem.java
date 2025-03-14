@@ -57,7 +57,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   /** Sets the forward speed of the climber. Negative values will not change the direction of the motors. */
   public void setPosition(double positionRotations) {
-    SparkCLC1.setReference(MiscUtils.clamp(-45, 2, positionRotations), ControlType.kPosition);
+    SparkCLC1.setReference(MiscUtils.clamp(-80, 4, positionRotations), ControlType.kPosition);
   }
 
   public Command toggleLock(ClimbSubsystem subsystem, int direction) {
@@ -81,7 +81,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public Command setClimber(boolean down) {
     return Commands.runOnce(() -> {
-      this.setPosition(down ? 2 : -45);
+      this.setPosition(down ? 4 : -80);
     }, this);
   }
 
