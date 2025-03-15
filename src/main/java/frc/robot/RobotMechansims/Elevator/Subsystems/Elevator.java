@@ -103,7 +103,7 @@ public class Elevator extends SubsystemBase {
 
   public Command GoToClimbPosition() {
     return Commands.runOnce(() -> {
-      this.goToPositionClamped(54);
+      this.goToPositionClamped(38);
     }, this);
   }
 

@@ -83,7 +83,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public Command setClimber(boolean down) {
     return Commands.runOnce(() -> {
-      this.setPosition(down ? 4 : -80);
+      this.setPosition(down ? 4 : -75);
     }, this);
   }
 

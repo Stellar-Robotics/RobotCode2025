@@ -106,7 +106,7 @@ public class RobotContainer {
     pneumaticHub.enableCompressorDigital();
     algaeLeft = pneumaticHub.makeDoubleSolenoid(0, 1);
     algaeRight = pneumaticHub.makeDoubleSolenoid(2, 3);
-    climberLock = pneumaticHub.makeDoubleSolenoid(3, 4);
+    climberLock = pneumaticHub.makeDoubleSolenoid(4, 5);
 
     // Define subsystems
     chassis = new SwerveChassisSubsystem(); // Swerve subsystem
