@@ -4,7 +4,7 @@
 
 package frc.robot.RobotMechansims.AlgaeMech.Subsystems;
 
-import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -20,7 +20,7 @@ import frc.robot.RobotMechansims.MechanismConstants;
 public class AlgaeMech extends SubsystemBase {
 
   // Declare the variable that will hold our motor controller object.
-  private final SparkMax pickupMotor;
+  private final SparkFlex pickupMotor;
 
   private final DoubleSolenoid leftSolenoid;
   private final DoubleSolenoid rightSolenoid;
@@ -32,7 +32,7 @@ public class AlgaeMech extends SubsystemBase {
     // Create two new motor controller objects and store them in the 'extensionMotor' and
     // 'pickupMotor' variables.  We pass in the motor controller ids and motor
     // types a parameters when creating the new motor controller objects.
-    pickupMotor = new SparkMax(MechanismConstants.AlgaeMechValues.pickupMotorID, MotorType.kBrushless);
+    pickupMotor = new SparkFlex(MechanismConstants.AlgaeMechValues.pickupMotorID, MotorType.kBrushless);
 
     // We'll call the 'configure' method in each of our new motor controller objects
     // that we are storing in our aformentioned variables.  We'll pass in some configuration
