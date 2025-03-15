@@ -37,7 +37,7 @@ public class VisionConstants {
         //public static final Transform3d robotToCam = new Transform3d(new Translation3d(-0.5/*-0.3524*/, 0, 0.2318), new Rotation3d(0, Math.toRadians(-32), Math.toRadians(180)));
 
         //public static final Transform3d reefCamTransform = new Transform3d(new Translation3d(0.081, -0.2572, 0.4413), new Rotation3d(0, 0, Math.toRadians(160.940)));
-        public static final Transform3d reefCamTransform = new Transform3d(new Translation3d(-0.254, 0.0508, 0.2588), new Rotation3d(0, 0, Math.toRadians(345)));
+        public static final Transform3d reefCamTransform = new Transform3d(new Translation3d(-0.254, 0.0508, 0.2586), new Rotation3d(0, 0, Math.toRadians(345)));
 
 
         public static final Transform3d generalCamTransform = new Transform3d(new Translation3d(-0.2664, 0.2238, 0.7477), new Rotation3d(0, Math.toRadians(354.7), Math.toRadians(180)));

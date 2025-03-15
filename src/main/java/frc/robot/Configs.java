@@ -167,7 +167,7 @@ public final class Configs {
 
                 MotorFrontConfig
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(25);
+                .smartCurrentLimit(40);
                 MotorFrontConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.3, 0.0000, 0)
@@ -178,7 +178,7 @@ public final class Configs {
                 .idleMode(IdleMode.kBrake)
                 .follow(MechanismConstants.ClimberValues.motorID1, true)
                 .inverted(true)
-                .smartCurrentLimit(25);
+                .smartCurrentLimit(40);
                 MotorBackConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(0.3, 0.0000, 0)

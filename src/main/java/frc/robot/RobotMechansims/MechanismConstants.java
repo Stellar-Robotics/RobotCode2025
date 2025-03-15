@@ -24,33 +24,33 @@ public class MechanismConstants {
             // Rotations are an estimate, be careful
 
             // Blue 1
-            new Pose2d(3.097, 4.200, new Rotation2d()),
+            new Pose2d(3.209, 4.183, new Rotation2d()),
             // Blue 2
-            new Pose2d(3.664, 2.902, Rotation2d.fromDegrees(60)),
+            new Pose2d(3.708, 2.996, Rotation2d.fromDegrees(60)),
             // Blue 3
-            new Pose2d(5.052, 2.715, Rotation2d.fromDegrees(120)), 
+            new Pose2d(4.982, 2.845, Rotation2d.fromDegrees(120)), 
             // Blue 4
-            new Pose2d(5.887, 3.865, Rotation2d.fromDegrees(180)),
+            new Pose2d(5.754, 3.862, Rotation2d.fromDegrees(180)),
             // Blue 5
-            new Pose2d(5.328, 5.155, Rotation2d.fromDegrees(-120)),
+            new Pose2d(5.270, 5.043, Rotation2d.fromDegrees(-120)),
             // Blue 6
-            new Pose2d(3.940, 5.335, Rotation2d.fromDegrees(-60)),
+            new Pose2d(3.990, 5.210, Rotation2d.fromDegrees(-60)),
         };
 
         public static final Pose2d[] reefCoordsRed = {
 
             // Red 1
-            new Pose2d(11.640, 4.193, Rotation2d.fromDegrees(0)),
+            new Pose2d(11.785, 4.178, Rotation2d.fromDegrees(0)),
             // Red 2
-            new Pose2d(12.222, 2.887, Rotation2d.fromDegrees(60)),
+            new Pose2d(12.276, 2.998, Rotation2d.fromDegrees(60)),
             // Red 3
-            new Pose2d(13.610, 2.738, Rotation2d.fromDegrees(120)),
+            new Pose2d(13.564, 2.834, Rotation2d.fromDegrees(120)),
             // Red 4
-            new Pose2d(14.483, 3.865, Rotation2d.fromDegrees(180)),
+            new Pose2d(14.344, 3.855, Rotation2d.fromDegrees(180)),
             // Red 5
-            new Pose2d(13.909, 5.155, Rotation2d.fromDegrees(-120)),
+            new Pose2d(13.847, 5.049, Rotation2d.fromDegrees(-120)),
             // Red 6
-            new Pose2d(12.521, 5.305, Rotation2d.fromDegrees(-60)),
+            new Pose2d(12.577, 5.221, Rotation2d.fromDegrees(-60)),
         };
 
         // Constraints to use when snaping to position at reef

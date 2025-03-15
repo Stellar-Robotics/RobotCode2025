@@ -46,10 +46,10 @@ public final class BaseConstants {
     public static double elevatorSpeedOverride = 1;
 
     // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(26);
+    public static final double kTrackWidth = Units.inchesToMeters(25.5);
 
     // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(27);
+    public static final double kWheelBase = Units.inchesToMeters(26.5);
 
     // Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(

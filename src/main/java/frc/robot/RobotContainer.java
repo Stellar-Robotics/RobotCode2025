@@ -186,9 +186,9 @@ public class RobotContainer {
     // ____________________________________________________________________________________________
     // Snapping alignment
 
-    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0).onlyIf(() -> driverController.center().getAsBoolean() == true));
-    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2).onlyIf(() -> driverController.center().getAsBoolean() == true));
-    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1).onlyIf(() -> driverController.center().getAsBoolean() == true));
+    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0)/*.onlyIf(() -> driverController.center().getAsBoolean() == true)*/);
+    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2)/*.onlyIf(() -> driverController.center().getAsBoolean() == true)*/);
+    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1)/* .onlyIf(() -> driverController.center().getAsBoolean() == true)*/);
     // ____________________________________________________________________________________________
     // Speed control
 
