@@ -9,7 +9,8 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,12 +22,12 @@ public class AlgaeMech extends SubsystemBase {
   // Declare the variable that will hold our motor controller object.
   private final SparkMax pickupMotor;
 
-  private final Solenoid leftSolenoid;
-  private final Solenoid rightSolenoid;
+  private final DoubleSolenoid leftSolenoid;
+  private final DoubleSolenoid rightSolenoid;
 
   private boolean lastPos = false;
 
-  public AlgaeMech(Solenoid leftSolenoid, Solenoid rightSolenoid) {
+  public AlgaeMech(DoubleSolenoid leftSolenoid, DoubleSolenoid rightSolenoid) {
 
     // Create two new motor controller objects and store them in the 'extensionMotor' and
     // 'pickupMotor' variables.  We pass in the motor controller ids and motor
@@ -56,8 +57,8 @@ public class AlgaeMech extends SubsystemBase {
 
   public Command toggleExtension() {
     return Commands.runOnce(() -> {
-      leftSolenoid.set(!lastPos);
-      rightSolenoid.set(!lastPos);
+      leftSolenoid.set(!lastPos ? Value.kForward : Value.kReverse);
+      rightSolenoid.set(!lastPos ? Value.kForward : Value.kReverse);
       lastPos = !lastPos;
     }, this);
   }
@@ -65,12 +66,12 @@ public class AlgaeMech extends SubsystemBase {
   public Command actuateExtension(boolean in) {
     return Commands.runOnce(() -> {
       if (in) {
-        leftSolenoid.set(false);
-        rightSolenoid.set(false);
+        leftSolenoid.set(Value.kReverse);
+        rightSolenoid.set(Value.kReverse);
         lastPos = false;
       } else {
-        leftSolenoid.set(true);
-        rightSolenoid.set(true);
+        leftSolenoid.set(Value.kForward);
+        rightSolenoid.set(Value.kForward);
         lastPos = true;      
       }
     }, this);

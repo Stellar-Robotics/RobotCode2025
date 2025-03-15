@@ -6,12 +6,14 @@ package frc.robot.RobotMechansims.ClimbMech.Subsystems;
 
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
+
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -32,11 +34,11 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public final SparkClosedLoopController SparkCLC2;
 
-  public Solenoid lockSolenoid;
+  public DoubleSolenoid lockSolenoid;
 
   private boolean lockState = false;
 
-  public ClimbSubsystem(Solenoid lockSolenoid) { 
+  public ClimbSubsystem(DoubleSolenoid lockSolenoid) { 
 
     climbMotor1 = new SparkMax(MechanismConstants.ClimberValues.motorID1, MotorType.kBrushless);
 
@@ -52,7 +54,7 @@ public class ClimbSubsystem extends SubsystemBase {
     this.lockSolenoid = lockSolenoid;
 
     // Lock solenoid is on by default
-    this.lockSolenoid.set(true);
+    this.lockSolenoid.set(Value.kForward);
   }
 
   /** Sets the forward speed of the climber. Negative values will not change the direction of the motors. */
@@ -64,15 +66,15 @@ public class ClimbSubsystem extends SubsystemBase {
     return Commands.runOnce(() -> {
       // Retract
       if (direction == 1) {
-        lockSolenoid.set(true);
+        lockSolenoid.set(Value.kForward);
         lockState = false;
       // Extend
       } else if (direction == 2) {
-        lockSolenoid.set(false);
+        lockSolenoid.set(Value.kReverse);
         lockState = true;
       // Toggle
       } else {
-        lockSolenoid.set(!lockState);
+        lockSolenoid.set(!lockState ? Value.kForward : Value.kReverse);
         lockState = !lockState;
       }
     }, subsystem);

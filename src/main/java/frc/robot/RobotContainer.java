@@ -9,6 +9,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -51,9 +52,9 @@ public class RobotContainer {
 
   // Pneumatics
   private PneumaticHub pneumaticHub;
-  private Solenoid algaeLeft;
-  private Solenoid algaeRight;
-  private Solenoid climberLock;
+  private DoubleSolenoid algaeLeft;
+  private DoubleSolenoid algaeRight;
+  private DoubleSolenoid climberLock;
 
   public static enum REEFALIGNMENT {
     LEFT,
@@ -104,9 +105,9 @@ public class RobotContainer {
     // Pneumatic Hub
     pneumaticHub = new PneumaticHub(18);
     pneumaticHub.enableCompressorDigital();
-    algaeLeft = pneumaticHub.makeSolenoid(0);
-    algaeRight = pneumaticHub.makeSolenoid(1);
-    climberLock = pneumaticHub.makeSolenoid(2);
+    algaeLeft = pneumaticHub.makeDoubleSolenoid(0, 1);
+    algaeRight = pneumaticHub.makeDoubleSolenoid(2, 3);
+    climberLock = pneumaticHub.makeDoubleSolenoid(3, 4);
 
     // Define subsystems
     chassis = new SwerveChassisSubsystem(); // Swerve subsystem
