@@ -30,4 +30,9 @@ public class RunAlgaeMechCommand extends Command {
         intake.setSpeed(speed);
         
     }
+
+    @Override
+    public boolean isFinished() {
+      return true;
+    }
 } 

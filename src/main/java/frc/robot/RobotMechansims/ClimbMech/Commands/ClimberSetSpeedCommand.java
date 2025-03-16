@@ -17,4 +17,9 @@ public class ClimberSetSpeedCommand extends Command {
         subsystem.setPosition(setSpeed);
     }
 
+    @Override
+    public boolean isFinished() {
+      return true;
+    }
+
 }

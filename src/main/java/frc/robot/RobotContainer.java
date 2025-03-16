@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -130,7 +131,6 @@ public class RobotContainer {
 
     // Configure default commands for subsystems
     chassis.setDefaultCommand(new DefaultDriveCommand(true, true, chassis));
-    vision.setDefaultCommand(new RunCommand(() -> {vision.periodic();}, vision));
 
     // Bind commands to the controllers and pathplanner
     configureButtonBinds();
@@ -169,19 +169,6 @@ public class RobotContainer {
   } 
 
   public void configureButtonBinds() {
-    // Bind commands to triggers
-    // ____________________________________________________________________________________________
-    // Switch to snapping mode
-
-    // operatorController.a().onTrue(
-    //   new SnapToReefCommand(chassis)
-    //   .andThen(new RunCommand(() -> currentReefAlignment = REEFALIGNMENT.LEFT))
-    //   .andThen(new RunCommand(() -> snapping = true))
-    // ).debounce(0.1);
-
-    // operatorController.a().onFalse(
-    //   new RunCommand(() -> snapping = false)
-    // ).debounce(0.1);
     // ____________________________________________________________________________________________
     // Snapping alignment
 
@@ -213,7 +200,7 @@ public class RobotContainer {
 
     operatorController.rightBumper().onTrue(new IncramentCoralExtensionCommand(coralMech, true)).debounce(0.5);
     operatorController.rightTrigger().onTrue(new IncramentCoralExtensionCommand(coralMech, false)).debounce(0.5);
-    operatorController.b().onTrue(new RunCommand(() -> { coralMech.goToPosition(-43); 
+    operatorController.b().onTrue(Commands.runOnce(() -> {coralMech.goToPosition(-43); 
       MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.XBACK;
     }, coralMech));
     // _____________________________________________________________________________________________
@@ -230,7 +217,7 @@ public class RobotContainer {
         new SetElevatorCommand(elevator, POSITIONS.MID)
         .andThen(new WaitCommand(0.5))
         .andThen(new SetCoralMechPosition(coralMech, 34, false))
-        .andThen(new RunCommand(() -> MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD)),
+        .andThen(Commands.runOnce(() -> MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.FORWARD, coralMech)),
         new SetCoralMechPosition(coralMech, 0, true)
         .andThen(new WaitCommand(0.5))
         .andThen(new SetElevatorCommand(elevator, POSITIONS.MID)),
@@ -255,7 +242,7 @@ public class RobotContainer {
     // _______________________________________________________________________________________________
     // Climbing
 
-    operatorController.start().toggleOnTrue(
+    operatorController.start().onTrue(
       new SequentialCommandGroup(
         elevator.GoToClimbPosition(), // Raise the elevator
         coralMech.goFullBack(), // Send the coral mechanism to the corner
@@ -270,9 +257,9 @@ public class RobotContainer {
     // Algae controls
 
     operatorController.x().onTrue(algaeMech.toggleExtension()).debounce(0.2); // Extension toggle
-    algaeMech.setDefaultCommand(new RunCommand(() -> {
+    algaeMech.setDefaultCommand(Commands.runOnce(() -> { // Algae pickup
       algaeMech.setSpeed(MathUtil.applyDeadband(operatorController.getHID().getLeftY(), 0.25));
-    }, algaeMech)); // Algae pickup
+    }, algaeMech));
     // _______________________________________________________________________________________________
 
   }
