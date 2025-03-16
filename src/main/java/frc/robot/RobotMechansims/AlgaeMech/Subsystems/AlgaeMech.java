@@ -22,12 +22,11 @@ public class AlgaeMech extends SubsystemBase {
   // Declare the variable that will hold our motor controller object.
   private final SparkFlex pickupMotor;
 
-  private final DoubleSolenoid leftSolenoid;
-  private final DoubleSolenoid rightSolenoid;
+  private final DoubleSolenoid solenoid;
 
   private boolean lastPos = false;
 
-  public AlgaeMech(DoubleSolenoid leftSolenoid, DoubleSolenoid rightSolenoid) {
+  public AlgaeMech(DoubleSolenoid solenoid) {
 
     // Create two new motor controller objects and store them in the 'extensionMotor' and
     // 'pickupMotor' variables.  We pass in the motor controller ids and motor
@@ -41,8 +40,7 @@ public class AlgaeMech extends SubsystemBase {
 
 
     // Configure solenoids
-    this.leftSolenoid = leftSolenoid;
-    this.rightSolenoid = rightSolenoid;
+    this.solenoid = solenoid;
   }
 
   // We'll create a method that other code can call to run the intake motors.
@@ -57,8 +55,7 @@ public class AlgaeMech extends SubsystemBase {
 
   public Command toggleExtension() {
     return Commands.runOnce(() -> {
-      leftSolenoid.set(!lastPos ? Value.kForward : Value.kReverse);
-      rightSolenoid.set(!lastPos ? Value.kForward : Value.kReverse);
+      solenoid.set(!lastPos ? Value.kForward : Value.kReverse);
       lastPos = !lastPos;
     }, this);
   }
@@ -66,12 +63,10 @@ public class AlgaeMech extends SubsystemBase {
   public Command actuateExtension(boolean in) {
     return Commands.runOnce(() -> {
       if (in) {
-        leftSolenoid.set(Value.kReverse);
-        rightSolenoid.set(Value.kReverse);
+        solenoid.set(Value.kReverse);
         lastPos = false;
       } else {
-        leftSolenoid.set(Value.kForward);
-        rightSolenoid.set(Value.kForward);
+        solenoid.set(Value.kForward);
         lastPos = true;      
       }
     }, this);

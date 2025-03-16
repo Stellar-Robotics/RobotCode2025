@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
@@ -51,8 +52,7 @@ public class RobotContainer {
 
   // Pneumatics
   private PneumaticHub pneumaticHub;
-  private DoubleSolenoid algaeLeft;
-  private DoubleSolenoid algaeRight;
+  private DoubleSolenoid algaeExtension;
   private DoubleSolenoid climberLock;
 
   public static enum REEFALIGNMENT {
@@ -104,9 +104,8 @@ public class RobotContainer {
     // Pneumatic Hub
     pneumaticHub = new PneumaticHub(18);
     pneumaticHub.enableCompressorDigital();
-    algaeLeft = pneumaticHub.makeDoubleSolenoid(0, 1);
-    algaeRight = pneumaticHub.makeDoubleSolenoid(2, 3);
-    climberLock = pneumaticHub.makeDoubleSolenoid(4, 5);
+    algaeExtension = pneumaticHub.makeDoubleSolenoid(4, 3);
+    climberLock = pneumaticHub.makeDoubleSolenoid(1, 2);
 
     // Define subsystems
     chassis = new SwerveChassisSubsystem(); // Swerve subsystem
@@ -114,7 +113,7 @@ public class RobotContainer {
     elevator = new Elevator();
     coralMech = new CoralMech();
     climber = new ClimbSubsystem(climberLock);
-    algaeMech = new AlgaeMech(algaeLeft, algaeRight);
+    algaeMech = new AlgaeMech(algaeExtension);
 
     rotaryOffset = 0;
     currentReefAlignment =  REEFALIGNMENT.LEFT;
@@ -240,7 +239,8 @@ public class RobotContainer {
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
       .andThen(climber.resetClimber())
-      .andThen(new WaitCommand(1))
+      .andThen(algaeMech.actuateExtension(true))
+      .andThen(new WaitCommand(0.5))
       .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW))
       ).debounce(0.1);
     // ______________________________________________________________________________________________
@@ -269,8 +269,10 @@ public class RobotContainer {
     // _______________________________________________________________________________________________
     // Algae controls
 
-    operatorController.x().onChange(algaeMech.toggleExtension()); // Extension toggle
-    algaeMech.setDefaultCommand(algaeMech.runPickup(operatorController.getLeftY())); // Algae pickup
+    operatorController.x().onTrue(algaeMech.toggleExtension()).debounce(0.2); // Extension toggle
+    algaeMech.setDefaultCommand(new RunCommand(() -> {
+      algaeMech.setSpeed(MathUtil.applyDeadband(operatorController.getHID().getLeftY(), 0.25));
+    }, algaeMech)); // Algae pickup
     // _______________________________________________________________________________________________
 
   }

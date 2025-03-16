@@ -40,7 +40,7 @@ public class VisionConstants {
         public static final Transform3d reefCamTransform = new Transform3d(new Translation3d(-0.254, 0.0508, 0.2586), new Rotation3d(0, 0, Math.toRadians(345)));
 
 
-        public static final Transform3d generalCamTransform = new Transform3d(new Translation3d(-0.2664, 0.2238, 0.7477), new Rotation3d(0, Math.toRadians(354.7), Math.toRadians(180)));
+        public static final Transform3d generalCamTransform = new Transform3d(new Translation3d(-0.0889, 0, 0.8255), new Rotation3d(0, Math.toRadians(345), Math.toRadians(180)));
 
         // Get apriltag position data via FIRST provided json file (ChangeMe for 2025)
         public static final AprilTagFieldLayout tagPositions = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
