@@ -34,6 +34,7 @@ public class AutoSnapCommand extends Command {
     this.chassis = chassisSubsystem;
     this.position = position;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(chassisSubsystem);
   }
 
   // Called when the command is initially scheduled.
