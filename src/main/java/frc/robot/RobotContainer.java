@@ -6,7 +6,6 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.events.EventTrigger;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -274,10 +273,7 @@ public class RobotContainer {
     // Coral
     NamedCommands.registerCommand("coralForward", new IncramentCoralExtensionCommand(coralMech, true));
     NamedCommands.registerCommand("coralBackward", new IncramentCoralExtensionCommand(coralMech, false));
-    NamedCommands.registerCommand("runCoral", coralMech.setRollerPower(1)
-    .andThen(new WaitCommand(1))
-    .andThen(coralMech.setRollerPower(0))
-    );
+    NamedCommands.registerCommand("runCoral", coralMech.runCoral(1));
     // Algae
     NamedCommands.registerCommand("algaeExtend", algaeMech.actuateExtension(false));
     NamedCommands.registerCommand("algaeRetract", algaeMech.actuateExtension(true));
@@ -291,16 +287,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("snapLeft", new AutoSnapCommand(chassis, 0));
     NamedCommands.registerCommand("snapCenter", new AutoSnapCommand(chassis, 1));
     NamedCommands.registerCommand("snapRight", new AutoSnapCommand(chassis, 2));
-
-    // Event bindings
-
-    // Elevator
-    new EventTrigger("ElevatorMedium").onTrue(new SetElevatorCommand(elevator, POSITIONS.MID));
-    new EventTrigger("ElevatorHigh").onTrue(new SetElevatorCommand(elevator, POSITIONS.HIGH));
-    new EventTrigger("ElevatorLow").onTrue(new SetElevatorCommand(elevator, POSITIONS.LOW));
-    // Coral
-    new EventTrigger("coralForward").onTrue(new IncramentCoralExtensionCommand(coralMech, true));
-    new EventTrigger("coralBackward").onTrue(new IncramentCoralExtensionCommand(coralMech, false));
+    // Other Commands
+    NamedCommands.registerCommand("scoreCoral", scoreAndResetCommand());
     // Debugging info
     System.out.println("Registered Commands With PathPlanner");
   }
@@ -315,20 +303,10 @@ public class RobotContainer {
   // __________________________________________________________________________________
   // Commands
 
-  public Command positionForScoreCommand(int level) {
-    POSITIONS elevatorPos;
-    if (level == 2) {
-      elevatorPos = POSITIONS.LOW;
-    } else if (level == 3) {
-      elevatorPos = POSITIONS.MID;
-    } else {
-      elevatorPos = POSITIONS.HIGH;
-    }
-
-    return new SequentialCommandGroup(
-      new SetElevatorCommand(elevator, elevatorPos),
-      new IncramentCoralExtensionCommand(coralMech, true)
-    );
+  public Command scoreAndResetCommand() {
+    return coralMech.runCoral(0.75)
+    .andThen(new IncramentCoralExtensionCommand(coralMech, false))
+    .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW));
   }
 
 }

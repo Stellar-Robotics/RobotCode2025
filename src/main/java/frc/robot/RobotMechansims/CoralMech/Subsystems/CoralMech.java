@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Configs;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
@@ -93,6 +94,12 @@ public Command setRollerPower(double setPower) {
       goToPosition(-43);
       MechanismConstants.CoralMechValues.currentPos = CORALEXTENSIONPOSITION.BACK;
     }, this);
+  }
+
+  public Command runCoral(double durationSeconds) {
+    return setRollerPower(1)
+    .andThen(new WaitCommand(durationSeconds))
+    .andThen(setRollerPower(0));
   }
 
   @Override
