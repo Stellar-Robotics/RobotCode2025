@@ -8,9 +8,10 @@
     "BlueLeft",
     "BlueRight",
     "DialUpCenter",
-    "DialUpRight",
-    "LeaveLine",
     "DialUpLeft",
+    "DialUpRight",
+    "L4EFromRight",
+    "LeaveLine",
     "RedCenter",
     "RedLeft",
     "RedRight"
