@@ -248,7 +248,7 @@ public class RobotContainer {
     // _______________________________________________________________________________________________
     // Climbing
 
-    driverController.rightTop().onTrue(
+    driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
         elevator.GoToClimbPosition(), // Raise the elevator
         coralMech.goFullBack(), // Send the coral mechanism to the corner
@@ -258,6 +258,9 @@ public class RobotContainer {
         climber.setClimber(false) // Bring the climber up
         //new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
       ));
+    driverController.rightTop().onTrue(Commands.runOnce(() -> {
+      climber.setPosition(-45);
+    }, climber));
     driverController.leftTop().onTrue(climber.engageAndLock()); // Commit to climb
     // _______________________________________________________________________________________________
     // Algae controls

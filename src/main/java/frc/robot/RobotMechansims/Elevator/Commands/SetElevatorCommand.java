@@ -26,7 +26,7 @@ public class SetElevatorCommand extends Command {
                 MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.LOW;
                 break;
             case ALGAELOW:
-                this.elevator.goToPositionClamped(80);
+                this.elevator.goToPositionClamped(85);
                 MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.ALGAELOW;
                 break;
             case MID:

@@ -87,7 +87,7 @@ public final class Configs {
                 
             pickupMotorConfig
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(40);
+                .smartCurrentLimit(50);
 
         }
 
