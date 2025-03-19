@@ -69,7 +69,9 @@ public class MechanismConstants {
         public static enum ELEVATORPOSITION {
             LOW,
             MID,
-            HIGH
+            HIGH,
+            ALGAELOW,
+            ALGAEHIGH
         };
 
         public static ELEVATORPOSITION currentPos = ELEVATORPOSITION.LOW;

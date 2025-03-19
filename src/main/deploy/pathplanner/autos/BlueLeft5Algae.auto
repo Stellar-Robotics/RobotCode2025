@@ -81,12 +81,6 @@
           "data": {
             "name": "algaeOut"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
-          }
         }
       ]
     }

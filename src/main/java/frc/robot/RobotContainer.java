@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotAutonomous.AutoFactory;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
@@ -222,6 +223,12 @@ public class RobotContainer {
         .andThen(new SetElevatorCommand(elevator, POSITIONS.MID)),
         () -> { return MechanismConstants.elevatorValues.currentPos == ELEVATORPOSITION.LOW; }))
       .debounce(0.1);
+      new Trigger(() -> operatorController.getRightY() < -0.5).onTrue(
+        new SetElevatorCommand(elevator, POSITIONS.ALGAEHIGH)
+      ).debounce(0.1);
+      new Trigger(() -> operatorController.getRightY() > 0.5).onTrue(
+        new SetElevatorCommand(elevator, POSITIONS.ALGAELOW)
+    ).debounce(0.1);
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
       .andThen(climber.resetClimber())
@@ -241,7 +248,7 @@ public class RobotContainer {
     // _______________________________________________________________________________________________
     // Climbing
 
-    operatorController.start().onTrue(
+    driverController.rightTop().onTrue(
       new SequentialCommandGroup(
         elevator.GoToClimbPosition(), // Raise the elevator
         coralMech.goFullBack(), // Send the coral mechanism to the corner
@@ -251,7 +258,7 @@ public class RobotContainer {
         climber.setClimber(false) // Bring the climber up
         //new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
       ));
-    operatorController.back().onTrue(climber.engageAndLock()); // Commit to climb
+    driverController.leftTop().onTrue(climber.engageAndLock()); // Commit to climb
     // _______________________________________________________________________________________________
     // Algae controls
 
@@ -273,6 +280,7 @@ public class RobotContainer {
     // Coral
     NamedCommands.registerCommand("coralForward", new IncramentCoralExtensionCommand(coralMech, true));
     NamedCommands.registerCommand("coralBackward", new IncramentCoralExtensionCommand(coralMech, false));
+    NamedCommands.registerCommand("coralPickup", coralMech.goFullBack());
     NamedCommands.registerCommand("runCoral", coralMech.runCoral(1));
     // Algae
     NamedCommands.registerCommand("algaeExtend", algaeMech.actuateExtension(false));

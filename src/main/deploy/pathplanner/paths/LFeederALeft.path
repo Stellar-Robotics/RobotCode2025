@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.031233616879112,
-        "y": 5.2419584575452305
+        "x": 3.212899619654605,
+        "y": 4.365518349095395
       },
       "prevControl": {
-        "x": 3.2767186215049344,
-        "y": 6.046987433182566
+        "x": 1.8168871427837172,
+        "y": 4.2414509020353615
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.9161103007181328,
+      "minWaypointRelativePos": 0.8212452311490125,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 3.0,
@@ -68,10 +68,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.778425275618275
+    "rotation": -0.57725323110219
   },
   "reversed": false,
-  "folder": "L4EFromRight",
+  "folder": "LFeederTo",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -53.19317669006771

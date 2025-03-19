@@ -36,7 +36,9 @@ public class Elevator extends SubsystemBase {
   public enum POSITIONS {
     LOW,
     MID,
-    HIGH
+    HIGH,
+    ALGAEHIGH,
+    ALGAELOW
   }
 
   public Elevator() {

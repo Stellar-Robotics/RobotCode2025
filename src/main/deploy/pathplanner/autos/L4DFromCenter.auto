@@ -5,36 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "EFromR1"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.3
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "scoreCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "EFromR2"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.5
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "elevatorHigh"
@@ -49,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LFeederALeft"
+            "pathName": "L4DC1"
           }
         },
         {
@@ -62,6 +32,24 @@
           "type": "named",
           "data": {
             "name": "scoreCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "L4DC2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LFeederBRight"
           }
         }
       ]

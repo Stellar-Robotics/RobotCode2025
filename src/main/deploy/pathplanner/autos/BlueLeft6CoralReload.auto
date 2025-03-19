@@ -13,12 +13,6 @@
         {
           "type": "named",
           "data": {
-            "name": "snapLeft"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "elevatorHigh"
           }
         },
@@ -26,12 +20,6 @@
           "type": "named",
           "data": {
             "name": "coralForward"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "runCoral"
           }
         },
         {
@@ -67,12 +55,6 @@
         {
           "type": "named",
           "data": {
-            "name": "snapRight"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "elevatorHigh"
           }
         },
@@ -80,12 +62,6 @@
           "type": "named",
           "data": {
             "name": "coralForward"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "runCoral"
           }
         }
       ]

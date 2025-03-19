@@ -25,10 +25,18 @@ public class SetElevatorCommand extends Command {
                 this.elevator.goToPositionClamped(0);
                 MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.LOW;
                 break;
+            case ALGAELOW:
+                this.elevator.goToPositionClamped(80);
+                MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.ALGAELOW;
+                break;
             case MID:
                 this.elevator.goToPositionClamped(65);
                 MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.MID;
                 break; 
+            case ALGAEHIGH:
+                this.elevator.goToPositionClamped(163);
+                MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.ALGAEHIGH;
+                break;
             case HIGH:
                 this.elevator.goToPositionClamped(178);
                 MechanismConstants.elevatorValues.currentPos = ELEVATORPOSITION.HIGH;
