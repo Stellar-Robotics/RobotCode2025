@@ -110,49 +110,49 @@ public class SwerveChassisSubsystem extends SubsystemBase {
       Rotation2d.fromDegrees(-m_navxgyro.getAngle()), 
       getModulePositions());
 
-    // Add the (Reef) vision estimate if new data is available
-    // var visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
-    // if (visionEstReef != null) {
-    //   // add vision estimate to pose
-    //   SmartDashboard.putBoolean("VisionEstimateStatusReef", true);
-    //   swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
-    // } else {
-    //   SmartDashboard.putBoolean("VisionEstimateStatusReef", false);
-
-    //   // Add the (General) vision estimate if new data is availible
-    //   var visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
-    //   if (visionEstGeneral != null) {
-    //     // add vision estimate to pose
-    //     SmartDashboard.putBoolean("VisionEstimateStatusGeneral", true);
-    //     swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
-    //   } else {
-    //     SmartDashboard.putBoolean("VisionEstimateStatusGeneral", false);
-    //   }
-
-    // }
-
-    // Get distance from center of the reef
-    Pose2d comparingPose = MiscUtils.isRedAlliance().getAsBoolean() ? MechanismConstants.FieldNav.reefCenterCoords[1] : MechanismConstants.FieldNav.reefCenterCoords[0];
-    var distance = getPose().getTranslation().getDistance(comparingPose.getTranslation());
-    // Get pose estimates from PhotonVision
+    //Add the (Reef) vision estimate if new data is available
     var visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
-    var visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
-    // Don't use reef cam when robot is really close.
-    if (distance >= 2) {
-      if (visionEstReef != null) {
-        // add reef vision estimate to pose
-        SmartDashboard.putBoolean("VisionEstimateStatusReef", true);
-        swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
-      } else if (visionEstGeneral != null) {
-        // add general vision if reef vision not availible
-        SmartDashboard.putBoolean("VisionEstimateStatusReef", false);
-        SmartDashboard.putBoolean("VisionEstimateStatusGeneral", true);
-        swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
-      }
+    if (visionEstReef != null) {
+      // add vision estimate to pose
+      SmartDashboard.putBoolean("VisionEstimateStatusReef", true);
+      swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
     } else {
       SmartDashboard.putBoolean("VisionEstimateStatusReef", false);
-      SmartDashboard.putBoolean("VisionEstimateStatusGeneral", false);
+
+      // Add the (General) vision estimate if new data is availible
+      var visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
+      if (visionEstGeneral != null) {
+        // add vision estimate to pose
+        SmartDashboard.putBoolean("VisionEstimateStatusGeneral", true);
+        swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
+      } else {
+        SmartDashboard.putBoolean("VisionEstimateStatusGeneral", false);
+      }
+
     }
+
+    // Get distance from center of the reef
+    // Pose2d comparingPose = MiscUtils.isRedAlliance().getAsBoolean() ? MechanismConstants.FieldNav.reefCenterCoords[1] : MechanismConstants.FieldNav.reefCenterCoords[0];
+    // var distance = getPose().getTranslation().getDistance(comparingPose.getTranslation());
+    // // Get pose estimates from PhotonVision
+    // var visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
+    // var visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
+    // // Don't use reef cam when robot is really close.
+    // if (distance >= 2) {
+    //   if (visionEstReef != null) {
+    //     // add reef vision estimate to pose
+    //     SmartDashboard.putBoolean("VisionEstimateStatusReef", true);
+    //     swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
+    //   } else if (visionEstGeneral != null) {
+    //     // add general vision if reef vision not availible
+    //     SmartDashboard.putBoolean("VisionEstimateStatusReef", false);
+    //     SmartDashboard.putBoolean("VisionEstimateStatusGeneral", true);
+    //     swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
+    //   }
+    // } else {
+    //   SmartDashboard.putBoolean("VisionEstimateStatusReef", false);
+    //   SmartDashboard.putBoolean("VisionEstimateStatusGeneral", false);
+    //}
 
     // Update the field object with the odometry data
     field.setRobotPose(getPose());
