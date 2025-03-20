@@ -270,13 +270,13 @@ public class RobotContainer {
         climber.toggleLock(climber, 1), // Ensure the climber is unlocked
         algaeMech.actuateExtension(false),
         new WaitCommand(1), // Wait for the elevator to clear
-        climber.setClimber(false) // Bring the climber up
+        climber.setClimber(elevator.getPosition(), false) // Bring the climber up
         //new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
       ));
     driverController.rightTop().onTrue(Commands.runOnce(() -> {
       climber.setPosition(-45);
     }, climber));
-    driverController.leftTop().onTrue(climber.engageAndLock()); // Commit to climb
+    driverController.leftTop().onTrue(climber.engageAndLock(elevator.getPosition())); // Commit to climb
     // _______________________________________________________________________________________________
     // Algae controls
 
