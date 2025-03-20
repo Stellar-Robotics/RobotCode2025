@@ -7,6 +7,9 @@ package frc.robot.RobotUtilities;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -104,5 +107,26 @@ public class MiscUtils {
             return;
         }
 
+    }
+
+    // Averages two poses
+    public static Pose2d averageTwoPoses(Pose2d pose1, Pose2d pose2) {
+        Translation2d translation1 = pose1.getTranslation();
+        Translation2d translation2 = pose2.getTranslation();
+
+        Translation2d averageTranslation = new Translation2d(
+            (translation1.getX() + translation2.getX()) / 2,
+            (translation1.getY() + translation2.getY()) / 2
+        );
+
+        Rotation2d rotation1 = pose1.getRotation();
+        Rotation2d rotation2 = pose2.getRotation();
+
+        Rotation2d averageRotation = new Rotation2d(
+            (rotation1.getRadians() + rotation2.getRadians()) / 2
+        );
+
+        Pose2d averagePose = new Pose2d(averageTranslation, averageRotation);
+        return averagePose;
     }
 }

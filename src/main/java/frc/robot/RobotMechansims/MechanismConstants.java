@@ -53,6 +53,14 @@ public class MechanismConstants {
             new Pose2d(12.577, 5.221, Rotation2d.fromDegrees(-60)),
         };
 
+        public static final Pose2d[] reefCenterCoords = {
+
+            // Blue
+            new Pose2d(4.5, 4.0, Rotation2d.fromDegrees(0)),
+            // Red
+            new Pose2d(13.05, 4.0, Rotation2d.fromDegrees(0))
+        };
+
         // Constraints to use when snaping to position at reef
         public static final PathConstraints snapConstraints = new PathConstraints(
             1.5, 
