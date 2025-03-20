@@ -172,9 +172,20 @@ public class RobotContainer {
     // ____________________________________________________________________________________________
     // Snapping alignment
 
-    driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0)/*.onlyIf(() -> driverController.center().getAsBoolean() == true)*/);
-    driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2)/*.onlyIf(() -> driverController.center().getAsBoolean() == true)*/);
-    driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1)/* .onlyIf(() -> driverController.center().getAsBoolean() == true)*/);
+    //driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0).onlyIf(() -> driverController.center().getAsBoolean() == true));
+    //driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2).onlyIf(() -> driverController.center().getAsBoolean() == true));
+    //driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1).onlyIf(() -> driverController.center().getAsBoolean() == true));
+
+    driverController.leftTrigger().onTrue(
+      new ConditionalCommand(new AutoSnapCommand(chassis, 0), new RunCommand(() -> {}, chassis), () -> driverController.center().getAsBoolean())
+    );
+    driverController.rightTrigger().onTrue(
+      new ConditionalCommand(new AutoSnapCommand(chassis, 2), new RunCommand(() -> {}, chassis), () -> driverController.center().getAsBoolean())
+    );
+    driverController.leftPaddle().onTrue(
+      new ConditionalCommand(new AutoSnapCommand(chassis, 1), new RunCommand(() -> {}, chassis), () -> driverController.center().getAsBoolean())
+    );
+
     // ____________________________________________________________________________________________
     // Speed control
 
