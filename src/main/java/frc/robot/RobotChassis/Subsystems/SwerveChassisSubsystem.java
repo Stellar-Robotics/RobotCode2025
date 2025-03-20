@@ -138,7 +138,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     var visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
     var visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
     // Don't use reef cam when robot is really close.
-    if (distance >= 2) {
+    if (distance >= 1) {
       if (visionEstReef != null) {
         // add reef vision estimate to pose
         SmartDashboard.putBoolean("VisionEstimateStatusReef", true);
