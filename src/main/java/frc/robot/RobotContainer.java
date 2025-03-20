@@ -168,6 +168,10 @@ public class RobotContainer {
     return this.currentReefAlignment;
   } 
 
+  public double getElevatorPosition() {
+    return elevator.getPosition();
+  }
+
   public void configureButtonBinds() {
     // ____________________________________________________________________________________________
     // Snapping alignment

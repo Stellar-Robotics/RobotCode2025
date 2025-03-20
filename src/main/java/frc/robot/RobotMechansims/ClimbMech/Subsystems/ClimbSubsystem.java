@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Configs;
+import frc.robot.RobotContainer;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotUtilities.MiscUtils;
 
@@ -80,11 +81,15 @@ public class ClimbSubsystem extends SubsystemBase {
     }, subsystem);
   }
 
-
+  // Move the climber, but only if the elevator clears it.
   public Command setClimber(boolean down) {
-    return Commands.runOnce(() -> {
-      this.setPosition(down ? 4 : -75);
-    }, this);
+    if (RobotContainer.getSingletonInstance().getElevatorPosition() > 35) {
+      return Commands.runOnce(() -> {
+        this.setPosition(down ? 4 : -75);
+      }, this);   
+    } else {
+      return Commands.runOnce(() -> {}, this);
+    }
   }
 
   public Command resetClimber() {
