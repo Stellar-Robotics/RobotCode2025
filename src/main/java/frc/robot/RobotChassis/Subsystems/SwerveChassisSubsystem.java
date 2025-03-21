@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Configs;
 import frc.robot.RobotContainer;
+import frc.robot.BaseConstants;
 import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotUtilities.MiscUtils;
@@ -69,7 +70,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
   Pose2d visionEstReef;
   Pose2d visionEstGeneral;
 
-
+  public boolean rampActive;
 
   // Pose estimator object
   public SwerveDrivePoseEstimator swervePoseEstimator = new SwerveDrivePoseEstimator(
@@ -89,6 +90,8 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     field = new Field2d();
     SmartDashboard.putData("Field", field);
 
+    rampActive = false;
+
     // AutoBuilder.configure(this::getPose,
     //   this::resetOdometry,
     //   this::getChassisSpeeds,
@@ -105,6 +108,14 @@ public class SwerveChassisSubsystem extends SubsystemBase {
 
     // Zero Robot Heading
     this.zeroHeading();
+  }
+
+  public void ramp() {
+      if (BaseConstants.DriveConstants.paddleSpeedOverride < 1) {
+        BaseConstants.DriveConstants.paddleSpeedOverride += 0.01;
+      } else {
+        rampActive = false;
+      }
   }
 
   @Override
@@ -165,6 +176,10 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     PathPlannerLogging.setLogActivePathCallback((poses) -> {field.getObject("path").setPoses(poses);});
 
     SmartDashboard.putNumber("Gyro Angle Yaw", -m_navxgyro.getAngle());
+
+    if (rampActive) {
+      ramp();
+    }
     
   }
 

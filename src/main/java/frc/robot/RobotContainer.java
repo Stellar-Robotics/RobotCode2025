@@ -193,10 +193,10 @@ public class RobotContainer {
     // ____________________________________________________________________________________________
     // Speed control
 
-    driverController.rightPaddle().whileTrue(
+    driverController.rightPaddle().onTrue(
       new RunCommand(() -> {
-        if (elevator.rampActive) {
-          elevator.rampActive = false;
+        if (chassis.rampActive) {
+          chassis.rampActive = false;
         }
         DriveConstants.paddleSpeedOverride = 0.3;
 
@@ -205,10 +205,8 @@ public class RobotContainer {
 
     driverController.rightPaddle().onFalse(
       new RunCommand(() -> {
-        if (elevator.getPosition() < 50 && MechanismConstants.elevatorValues.currentPos == ELEVATORPOSITION.LOW) {
-          elevator.rampActive = true;
-        }
-      }, elevator)
+        chassis.rampActive = true;
+      }, chassis)
     );
     // _____________________________________________________________________________________________
     // Incrament coral mech forward or backwards
