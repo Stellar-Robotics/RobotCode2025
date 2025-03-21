@@ -1,0 +1,85 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.829572496916118,
+        "y": 2.470830656352796
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.268112244892556,
+        "y": 2.245376275509417
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.9327168367292898,
+        "y": 1.066422193876765
+      },
+      "prevControl": {
+        "x": 1.477423469382351,
+        "y": 1.2529655612237025
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.613320079522862,
+      "rotationDegrees": 56.635599326100305
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7460095938061038,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "elevatorLow",
+      "waypointRelativePos": 0.10259433962264083,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "coralBackward"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 54.162347045721724
+  },
+  "reversed": false,
+  "folder": "EFromRight",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 120.26090676173487
+  },
+  "useDefaultConstraints": false
+}

@@ -10,10 +10,11 @@
     "DialUpCenter",
     "DialUpLeft",
     "DialUpRight",
-    "L4DFromCenter",
     "EFromRight",
+    "L4DFromCenter",
     "LFeederTo",
     "LeaveLine",
+    "RFeederTo",
     "RedCenter",
     "RedLeft",
     "RedRight"
