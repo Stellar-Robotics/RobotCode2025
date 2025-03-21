@@ -44,6 +44,7 @@ public final class BaseConstants {
 
     // Speed Mode Modifier
     public static double elevatorSpeedOverride = 1;
+    public static double paddleSpeedOverride = 1;
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(25.5);

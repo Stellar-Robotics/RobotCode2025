@@ -108,8 +108,8 @@ public class DefaultDriveCommand extends Command {
     double dashTranslationSpeed = SmartDashboard.getNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     double dashAngularSpeed =  SmartDashboard.getNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
 
-    double xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride;
-    double ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride;
+    double xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
+    double ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
     double rotDelivered = m_currentRotation * dashAngularSpeed;
 
     // Convert values into either a robot relative or field oriented Chassis Speed object

@@ -198,7 +198,7 @@ public class RobotContainer {
         if (elevator.rampActive) {
           elevator.rampActive = false;
         }
-        DriveConstants.elevatorSpeedOverride = 0.3;
+        DriveConstants.paddleSpeedOverride = 0.3;
 
       })
     );
