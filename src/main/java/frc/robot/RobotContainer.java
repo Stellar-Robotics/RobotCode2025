@@ -193,7 +193,7 @@ public class RobotContainer {
     // ____________________________________________________________________________________________
     // Speed control
 
-    driverController.rightPaddle().onTrue(
+    driverController.rightPaddle().whileTrue(
       new RunCommand(() -> {
         if (chassis.rampActive) {
           chassis.rampActive = false;
@@ -204,7 +204,7 @@ public class RobotContainer {
     );
 
     driverController.rightPaddle().onFalse(
-      new RunCommand(() -> {
+      Commands.runOnce(() -> {
         chassis.rampActive = true;
       }, chassis)
     );
