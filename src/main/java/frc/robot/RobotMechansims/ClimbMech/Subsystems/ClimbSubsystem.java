@@ -82,13 +82,9 @@ public class ClimbSubsystem extends SubsystemBase {
 
   // Move the climber, but only if the elevator clears it.
   public Command setClimber(double elevatorPos, boolean down) {
-    if ( elevatorPos > 35) {
       return Commands.runOnce(() -> {
         this.setPosition(down ? 4 : -75);
-      }, this);   
-    } else {
-      return Commands.runOnce(() -> {}, this);
-    }
+      }, this);
   }
 
   public Command resetClimber() {

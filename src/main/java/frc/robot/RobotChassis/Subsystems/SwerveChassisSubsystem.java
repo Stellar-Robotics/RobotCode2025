@@ -146,14 +146,16 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
     visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
     // Don't use reef cam when robot is really close.
-    if (distance >= 2) {
-      if (visionEstReef != null) {
-        // add reef vision estimate to pose
-        swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
-      } else if (visionEstGeneral != null) {
-        // add general vision if reef vision not availible
-        swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
-      }
+    // if (distance >= 2) {
+
+    // }
+
+    if (visionEstReef != null) {
+      // add reef vision estimate to pose
+      swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
+    } else if (visionEstGeneral != null) {
+      // add general vision if reef vision not availible
+      swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
     }
 
     // Update the field object with the odometry data
