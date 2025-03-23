@@ -72,7 +72,7 @@ public class MechanismConstants {
 
     public class elevatorValues {
         public static final int motorID = 19;
-        public static final double maxHeightExtensionRotations = 178;
+        public static final double maxHeightExtensionRotations = 180;
 
         public static enum ELEVATORPOSITION {
             LOW,

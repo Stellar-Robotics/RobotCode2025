@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     SmartDashboard.putData(CommandScheduler.getInstance());
-    SmartDashboard.putNumber("PaddleSpeed", BaseConstants.DriveConstants.paddleSpeedOverride);
+    //SmartDashboard.putNumber("PaddleSpeed", BaseConstants.DriveConstants.paddleSpeedOverride);
   }
 
   @Override
