@@ -28,11 +28,11 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public final SparkMax climbMotor1;
 
-  public final SparkMax climbMotor2;
+  // public final SparkMax climbMotor2;
 
   public final SparkClosedLoopController SparkCLC1;
 
-  public final SparkClosedLoopController SparkCLC2;
+  // public final SparkClosedLoopController SparkCLC2;
 
   public DoubleSolenoid lockSolenoid;
 
@@ -42,14 +42,14 @@ public class ClimbSubsystem extends SubsystemBase {
 
     climbMotor1 = new SparkMax(MechanismConstants.ClimberValues.motorID1, MotorType.kBrushless);
 
-    climbMotor2 = new SparkMax(MechanismConstants.ClimberValues.motorID2, MotorType.kBrushless);
+   // climbMotor2 = new SparkMax(MechanismConstants.ClimberValues.motorID2, MotorType.kBrushless);
 
     SparkCLC1 = climbMotor1.getClosedLoopController();
 
-    SparkCLC2 = climbMotor2.getClosedLoopController();
+   // SparkCLC2 = climbMotor2.getClosedLoopController();
 
     climbMotor1.configure(Configs.ClimberConfig.MotorFrontConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    climbMotor2.configure(Configs.ClimberConfig.MotorBackConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+   // climbMotor2.configure(Configs.ClimberConfig.MotorBackConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     this.lockSolenoid = lockSolenoid;
 

@@ -7,7 +7,6 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
@@ -32,7 +31,6 @@ import frc.robot.RobotControl.ControllerIO;
 import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotMechansims.MechanismConstants.CoralMechValues.CORALEXTENSIONPOSITION;
 import frc.robot.RobotMechansims.MechanismConstants.elevatorValues.ELEVATORPOSITION;
-import frc.robot.RobotMechansims.AlgaeMech.Subsystems.AlgaeMech;
 import frc.robot.RobotMechansims.ClimbMech.Subsystems.ClimbSubsystem;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
 import frc.robot.RobotMechansims.CoralMech.Commands.SetCoralMechPosition;
@@ -49,11 +47,11 @@ public class RobotContainer {
   private Elevator elevator; // Elevator subsystem
   private CoralMech coralMech; // Coral subsystem
   private ClimbSubsystem climber; // Climber subsystem
-  private AlgaeMech algaeMech; // Algae subsystem
+  //private AlgaeMech algaeMech; // Algae subsystem
 
   // Pneumatics
   private PneumaticHub pneumaticHub;
-  private DoubleSolenoid algaeExtension;
+  //private DoubleSolenoid algaeExtension;
   private DoubleSolenoid climberLock;
 
   public static enum REEFALIGNMENT {
@@ -105,7 +103,7 @@ public class RobotContainer {
     // Pneumatic Hub
     pneumaticHub = new PneumaticHub(18);
     pneumaticHub.enableCompressorDigital();
-    algaeExtension = pneumaticHub.makeDoubleSolenoid(4, 3);
+    //algaeExtension = pneumaticHub.makeDoubleSolenoid(4, 3);
     climberLock = pneumaticHub.makeDoubleSolenoid(1, 2);
 
     // Define subsystems
@@ -114,14 +112,14 @@ public class RobotContainer {
     elevator = new Elevator();
     coralMech = new CoralMech();
     climber = new ClimbSubsystem(climberLock);
-    algaeMech = new AlgaeMech(algaeExtension);
+    //algaeMech = new AlgaeMech(algaeExtension);
 
     rotaryOffset = 0;
     currentReefAlignment =  REEFALIGNMENT.LEFT;
     //snapping = false;
 
     // Custom auto
-    autoFactory = new AutoFactory(chassis, elevator, coralMech, algaeMech);
+    autoFactory = new AutoFactory(chassis, elevator, coralMech);
 
     // Create auto selector and post params to the dash
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
@@ -245,7 +243,7 @@ public class RobotContainer {
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
       .andThen(climber.resetClimber())
-      .andThen(algaeMech.actuateExtension(true))
+      //.andThen(algaeMech.actuateExtension(true))
       .andThen(new WaitCommand(0.5))
       .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW))
       ).debounce(0.1);
@@ -266,7 +264,6 @@ public class RobotContainer {
         elevator.GoToClimbPosition(), // Raise the elevator
         coralMech.goFullBack(), // Send the coral mechanism to the corner
         climber.toggleLock(climber, 1), // Ensure the climber is unlocked
-        algaeMech.actuateExtension(false),
         new WaitCommand(1), // Wait for the elevator to clear
         climber.setClimber(elevator.getPosition(), false) // Bring the climber up
         //new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
@@ -278,10 +275,10 @@ public class RobotContainer {
     // _______________________________________________________________________________________________
     // Algae controls
 
-    operatorController.x().onTrue(algaeMech.toggleExtension()).debounce(0.2); // Extension toggle
-    algaeMech.setDefaultCommand(Commands.runOnce(() -> { // Algae pickup
-      algaeMech.setSpeed(MathUtil.applyDeadband(operatorController.getHID().getLeftY(), 0.25));
-    }, algaeMech));
+    // operatorController.x().onTrue(algaeMech.toggleExtension()).debounce(0.2); // Extension toggle
+    // algaeMech.setDefaultCommand(Commands.runOnce(() -> { // Algae pickup
+    //   algaeMech.setSpeed(MathUtil.applyDeadband(operatorController.getHID().getLeftY(), 0.25));
+    // }, algaeMech));
     // _______________________________________________________________________________________________
 
   }
@@ -299,14 +296,14 @@ public class RobotContainer {
     NamedCommands.registerCommand("coralPickup", coralMech.goFullBack());
     NamedCommands.registerCommand("runCoral", coralMech.runCoral(1));
     // Algae
-    NamedCommands.registerCommand("algaeExtend", algaeMech.actuateExtension(false));
-    NamedCommands.registerCommand("algaeRetract", algaeMech.actuateExtension(true));
-    NamedCommands.registerCommand("algaeIn", algaeMech.runPickup(1)
-    .andThen(new WaitCommand(1))
-    .andThen(algaeMech.runPickup(0)));
-    NamedCommands.registerCommand("algaeOut", algaeMech.runPickup(-1)
-    .andThen(new WaitCommand(1))
-    .andThen(algaeMech.runPickup(0)));
+    // NamedCommands.registerCommand("algaeExtend", algaeMech.actuateExtension(false));
+    // NamedCommands.registerCommand("algaeRetract", algaeMech.actuateExtension(true));
+    // NamedCommands.registerCommand("algaeIn", algaeMech.runPickup(1)
+    // .andThen(new WaitCommand(1))
+    // .andThen(algaeMech.runPickup(0)));
+    // NamedCommands.registerCommand("algaeOut", algaeMech.runPickup(-1)
+    // .andThen(new WaitCommand(1))
+    // .andThen(algaeMech.runPickup(0)));
     // Snapping
     NamedCommands.registerCommand("snapLeft", new AutoSnapCommand(chassis, 0));
     NamedCommands.registerCommand("snapCenter", new AutoSnapCommand(chassis, 1));

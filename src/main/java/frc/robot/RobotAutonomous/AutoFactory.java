@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotChassis.Commands.AutoSnapCommand;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotMechansims.MechanismConstants;
-import frc.robot.RobotMechansims.AlgaeMech.Subsystems.AlgaeMech;
+//import frc.robot.RobotMechansims.AlgaeMech.Subsystems.AlgaeMech;
 import frc.robot.RobotMechansims.CoralMech.Commands.IncramentCoralExtensionCommand;
 import frc.robot.RobotMechansims.CoralMech.Subsystems.CoralMech;
 import frc.robot.RobotMechansims.Elevator.Commands.SetElevatorCommand;
@@ -34,7 +34,7 @@ public class AutoFactory {
     private SwerveChassisSubsystem chassis; 
     private Elevator elevator; 
     private CoralMech coral; 
-    private AlgaeMech algae;
+    //private AlgaeMech algae;
 
     private SendableChooser<String> startPositionChooser = new SendableChooser<>();
     private SendableChooser<String> faceChooser = new SendableChooser<>();
@@ -44,15 +44,15 @@ public class AutoFactory {
     public AutoFactory(
         SwerveChassisSubsystem chassis, 
         Elevator elevator, 
-        CoralMech coral, 
-        AlgaeMech algae
+        CoralMech coral 
+        //AlgaeMech algae
     )
     {
 
         this.chassis = chassis;
         this.elevator = elevator;
         this.coral = coral;
-        this.algae = algae;
+        //this.algae = algae;
 
         // Create options for starting position
         startPositionChooser.addOption("Left", "Left");
@@ -114,10 +114,10 @@ public class AutoFactory {
 
         if (facePosition == 1) {
             grabOrScore = new SequentialCommandGroup(
-                algae.actuateExtension(false),
-                algae.runPickup(1),
-                new WaitCommand(2),
-                algae.runPickup(0)
+                //algae.actuateExtension(false),
+                //algae.runPickup(1),
+                new WaitCommand(2)
+                //algae.runPickup(0)
             );
         } else {
             grabOrScore = new SequentialCommandGroup(
