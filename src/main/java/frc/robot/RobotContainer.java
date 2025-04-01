@@ -261,7 +261,7 @@ public class RobotContainer {
 
     driverController.rightBumper().onTrue(
       new SequentialCommandGroup(
-        elevator.GoToClimbPosition(), // Raise the elevator
+        // elevator.GoToClimbPosition(), // Raise the elevator
         coralMech.goFullBack(), // Send the coral mechanism to the corner
         climber.toggleLock(climber, 1), // Ensure the climber is unlocked
         new WaitCommand(1), // Wait for the elevator to clear
