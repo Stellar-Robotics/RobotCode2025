@@ -269,7 +269,7 @@ public class RobotContainer {
         //new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
       ));
     driverController.rightTop().onTrue(Commands.runOnce(() -> {
-      climber.setPosition(-45);
+      climber.setPosition(0);
     }, climber));
     driverController.leftTop().onTrue(climber.engageAndLock(elevator.getPosition())); // Commit to climb
     // _______________________________________________________________________________________________
