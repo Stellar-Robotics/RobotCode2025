@@ -242,7 +242,7 @@ public class RobotContainer {
     ).debounce(0.1);
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
-      .andThen(climber.resetClimber())
+      //.andThen(climber.resetClimber())
       //.andThen(algaeMech.actuateExtension(true))
       .andThen(new WaitCommand(0.5))
       .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW))
