@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.231058673469388,
-        "y": 1.9692920918367336
+        "x": 1.9695,
+        "y": 1.6508749999999996
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.533272512335526,
-        "y": 3.1723134894120064
+        "x": 3.6367500000050614,
+        "y": 3.0305000000014912
       },
       "prevControl": {
-        "x": 2.8467929204987916,
-        "y": 2.560451244514047
+        "x": 2.950270408168327,
+        "y": 2.4186377551035316
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.7912645870736087,
+      "minWaypointRelativePos": 0.6980468750000037,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 3.0,
@@ -68,7 +68,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 54.72566355706335
+    "rotation": 59.42077312751099
   },
   "reversed": false,
   "folder": "RFeederTo",
