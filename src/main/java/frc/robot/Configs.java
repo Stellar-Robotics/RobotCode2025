@@ -104,7 +104,7 @@ public final class Configs {
 
             rollerMotorConfig
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(30);
+                .smartCurrentLimit(40);
         
             rollerMotorConfig.closedLoop
                 .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
