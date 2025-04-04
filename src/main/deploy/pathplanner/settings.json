@@ -20,8 +20,6 @@
     "RedRight"
   ],
   "autoFolders": [
-    "BlueLeft",
-    "BlueRight",
     "LeavingTheLine"
   ],
   "defaultMaxVel": 3.0,
@@ -29,8 +27,8 @@
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
-  "robotMass": 56.25,
-  "robotMOI": 5.265,
+  "robotMass": 62.822,
+  "robotMOI": 7.83,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.0762,
   "driveGearing": 5.08,
