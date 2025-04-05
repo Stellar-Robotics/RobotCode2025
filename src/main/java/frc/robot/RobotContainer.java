@@ -146,7 +146,7 @@ public class RobotContainer {
     if (SmartDashboard.getBoolean("Use Custom Auto?", false)) {
       return autoFactory.buildCustomAuto();
     } else {
-      return autoChooser.getSelected();
+      return autoChooser.getSelected().withTimeout(15);
     }
   }
 

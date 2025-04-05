@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.net.WebServer;
-import edu.wpi.first.wpilibj.Filesystem;
+//import edu.wpi.first.net.WebServer;
+//import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,7 +18,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     m_robotContainer = RobotContainer.getSingletonInstance();
-    WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
+    //WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
   }
 
   @Override
@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+      CommandScheduler.getInstance().cancelAll();
     }
   }
 
