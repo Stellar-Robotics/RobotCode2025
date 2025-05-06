@@ -1,0 +1,96 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.146277636306328,
+        "y": 1.8460564018862748
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.600214073964689,
+        "y": 1.9128740618313758
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.845750000000001,
+        "y": 2.8208749999999996
+      },
+      "prevControl": {
+        "x": 5.221353258287585,
+        "y": 2.554936081345016
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6080283717105264,
+      "rotationDegrees": 121.395797465775
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.8345699618491922,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "coralForward",
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "elevatorHigh"
+        }
+      }
+    },
+    {
+      "name": "elevatorMedium",
+      "waypointRelativePos": 0.3809177740863786,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "coralForward"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 119.66273845791756
+  },
+  "reversed": false,
+  "folder": "EFromRight",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.71400549490716
+  },
+  "useDefaultConstraints": true
+}

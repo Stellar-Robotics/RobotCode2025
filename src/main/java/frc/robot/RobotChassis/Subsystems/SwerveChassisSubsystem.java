@@ -8,8 +8,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.util.PathPlannerLogging;
-// import com.studica.frc.AHRS;
-// import com.studica.frc.AHRS.NavXComType;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -18,14 +18,16 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
+//import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+//import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Configs;
 import frc.robot.RobotContainer;
+import frc.robot.BaseConstants;
 import frc.robot.BaseConstants.DriveConstants;
+import frc.robot.RobotMechansims.MechanismConstants;
 import frc.robot.RobotUtilities.MiscUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -35,35 +37,47 @@ public class SwerveChassisSubsystem extends SubsystemBase {
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
-      DriveConstants.kFrontLeftChassisAngularOffset);
+      DriveConstants.kFrontLeftChassisAngularOffset,
+      false);
 
   private final MAXSwerveModule m_frontRight = new MAXSwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
-      DriveConstants.kFrontRightChassisAngularOffset);
+      DriveConstants.kFrontRightChassisAngularOffset,
+      false);
 
   private final MAXSwerveModule m_rearLeft = new MAXSwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
-      DriveConstants.kBackLeftChassisAngularOffset);
+      DriveConstants.kBackLeftChassisAngularOffset,
+      false);
 
   private final MAXSwerveModule m_rearRight = new MAXSwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
-      DriveConstants.kBackRightChassisAngularOffset);
+      DriveConstants.kBackRightChassisAngularOffset,
+      false);
 
   // The gyro sensor
-  private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+  //private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
   // NavX gyro sensor
-  //private final AHRS m_navxgyro = new AHRS(NavXComType.kMXP_SPI);
+  private final AHRS m_navxgyro = new AHRS(NavXComType.kMXP_SPI);
+
+  // Vision Schuff
+  Pose2d comparingPose;
+  double distance;
+  Pose2d visionEstReef;
+  Pose2d visionEstGeneral;
+
+  public boolean rampActive;
 
   // Pose estimator object
   public SwerveDrivePoseEstimator swervePoseEstimator = new SwerveDrivePoseEstimator(
     DriveConstants.kDriveKinematics, 
-    Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)/* m_navxgyro.getAngle */ - 90), 
+    Rotation2d.fromDegrees(-m_navxgyro.getAngle()  + 90), 
     getModulePositions(),
-    new Pose2d(0, 0, getGyroZ())
+    new Pose2d(15.380, 0.468, getGyroZ())
   );
 
   // Create a field object for pose visualization
@@ -76,38 +90,83 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     field = new Field2d();
     SmartDashboard.putData("Field", field);
 
-    AutoBuilder.configure(this::getPose,
-      this::resetOdometry,
-      this::getChassisSpeeds,
-      (speeds) -> drive(speeds),
-      new PPHolonomicDriveController
-        (
-          new PIDConstants(5.0, 0.0, 0.0),
-          new PIDConstants(5.0, 0.0, 0.0)
-        ),
-      Configs.PathPlanner.pathPlannerConfig,
-      MiscUtils.isRedAlliance(),
-      this
-    );
+    rampActive = false;
+
+    // AutoBuilder.configure(this::getPose,
+    //   this::resetOdometry,
+    //   this::getChassisSpeeds,
+    //   (speeds) -> drive(speeds),
+    //   new PPHolonomicDriveController
+    //     (
+    //       new PIDConstants(5.0, 0.0, 0.0),
+    //       new PIDConstants(5.0, 0.0, 0.0)
+    //     ),
+    //   Configs.PathPlanner.pathPlannerConfig,
+    //   MiscUtils.isRedAlliance(),
+    //   this
+    // );
 
     // Zero Robot Heading
     this.zeroHeading();
   }
 
+  public void ramp() {
+      if (BaseConstants.DriveConstants.paddleSpeedOverride < 1) {
+        BaseConstants.DriveConstants.paddleSpeedOverride += 0.01;
+      } else {
+        rampActive = false;
+      }
+  }
+
   @Override
   public void periodic() {
+
+
 
     // Update pose estimation
     swervePoseEstimator.updateWithTime(
       Timer.getFPGATimestamp(), 
-      Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle */), 
+      Rotation2d.fromDegrees(-m_navxgyro.getAngle()), 
       getModulePositions());
 
-    // Add the vision estimate if new data is availible (BROKEN)
-    var visionEst = RobotContainer.getSingletonInstance().getVisionEstimate(); // (Causes sim to throw a SparkMax duplicate instance error!)
-    if (visionEst != null) {
-      // add vision estimate to pose
-      swervePoseEstimator.addVisionMeasurement(visionEst, Timer.getFPGATimestamp());
+    //Add the (Reef) vision estimate if new data is available
+    // var visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
+    // if (visionEstReef != null) {
+    //   // add vision estimate to pose
+    //   SmartDashboard.putBoolean("VisionEstimateStatusReef", true);
+    //   swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
+    // } else {
+    //   SmartDashboard.putBoolean("VisionEstimateStatusReef", false);
+
+    //   // Add the (General) vision estimate if new data is availible
+    //   var visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
+    //   if (visionEstGeneral != null) {
+    //     // add vision estimate to pose
+    //     SmartDashboard.putBoolean("VisionEstimateStatusGeneral", true);
+    //     swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
+    //   } else {
+    //     SmartDashboard.putBoolean("VisionEstimateStatusGeneral", false);
+    //   }
+
+    // }
+
+    // Get distance from center of the reef
+    comparingPose = MiscUtils.isRedAlliance().getAsBoolean() ? MechanismConstants.FieldNav.reefCenterCoords[1] : MechanismConstants.FieldNav.reefCenterCoords[0];
+    distance = getPose().getTranslation().getDistance(comparingPose.getTranslation());
+    // Get pose estimates from PhotonVision
+    visionEstReef = RobotContainer.getSingletonInstance().getVisionEstimate(true);
+    visionEstGeneral = RobotContainer.getSingletonInstance().getVisionEstimate(false);
+    // Don't use reef cam when robot is really close.
+    // if (distance >= 2) {
+
+    // }
+
+    if (visionEstReef != null) {
+      // add reef vision estimate to pose
+      swervePoseEstimator.addVisionMeasurement(visionEstReef, Timer.getFPGATimestamp());
+    } else if (visionEstGeneral != null) {
+      // add general vision if reef vision not availible
+      swervePoseEstimator.addVisionMeasurement(visionEstGeneral, Timer.getFPGATimestamp());
     }
 
     // Update the field object with the odometry data
@@ -115,6 +174,12 @@ public class SwerveChassisSubsystem extends SubsystemBase {
     PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {field.setRobotPose(pose);});
     PathPlannerLogging.setLogTargetPoseCallback((pose) -> {field.getObject("target pose").setPose(pose);});
     PathPlannerLogging.setLogActivePathCallback((poses) -> {field.getObject("path").setPoses(poses);});
+
+    SmartDashboard.putNumber("Gyro Angle Yaw", -m_navxgyro.getAngle());
+
+    if (rampActive) {
+      ramp();
+    }
     
   }
 
@@ -134,7 +199,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     swervePoseEstimator.resetPosition(
-      Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle */),
+      Rotation2d.fromDegrees(-m_navxgyro.getAngle()),
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
@@ -142,6 +207,22 @@ public class SwerveChassisSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       },
       pose);
+  }
+
+  public void initAutoBuilder() {
+    AutoBuilder.configure(this::getPose,
+      this::resetOdometry,
+      this::getChassisSpeeds,
+      (speeds) -> drive(speeds),
+      new PPHolonomicDriveController
+        (
+          new PIDConstants(5.0, 0.0, 0.0),
+          new PIDConstants(5.0, 0.0, 0.0)
+        ),
+      Configs.PathPlanner.pathPlannerConfig,
+      MiscUtils.isRedAlliance(),
+      this
+    );
   }
 
   // The primary method of commanding the chassis speeds.  Any higher control leveles should be handled outside this class.
@@ -203,10 +284,11 @@ public class SwerveChassisSubsystem extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    m_gyro.reset();
-    /* m_navxgyro.zeroYaw(); */
-    m_gyro.setGyroAngleZ(DriveConstants.kGyroOffset); // Add offset so the intake is the front
-    /* m_navxgyro.setAngleAdjustment(DriveConstants.kGyroOffset); */
+    // m_navxgyro.reset();
+    // m_navxgyro.zeroYaw();
+    m_navxgyro.reset();
+    // m_navxgyro.setGyroAngleZ(DriveConstants.kGyroOffset); // Add offset so the intake is the front
+    m_navxgyro.setAngleAdjustment(DriveConstants.kGyroOffset);
   }
 
   /**
@@ -215,12 +297,12 @@ public class SwerveChassisSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle() */).getDegrees();
+    return Rotation2d.fromDegrees(-m_navxgyro.getAngle()).getDegrees();
   }
 
   // Need to get the Rotation2D object from gyro for certain field oriented control commands
   public Rotation2d getGyroZ() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ) /* m_navxgyro.getAngle() */);
+    return Rotation2d.fromDegrees(-m_navxgyro.getAngle());
   }
 
   /**
@@ -229,7 +311,7 @@ public class SwerveChassisSubsystem extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return m_gyro.getRate(IMUAxis.kZ) /* m_navxgyro.getRate() */ * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return m_navxgyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
   public ChassisSpeeds getChassisSpeeds() {

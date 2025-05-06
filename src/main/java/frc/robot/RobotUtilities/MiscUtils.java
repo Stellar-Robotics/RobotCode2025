@@ -5,7 +5,11 @@
 package frc.robot.RobotUtilities;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -72,15 +76,14 @@ public class MiscUtils {
 
     // A quick function to get red aliance status
     public static BooleanSupplier isRedAlliance() {
-
-        var alliance = DriverStation.getAlliance();
-
-        if (alliance.isPresent()) {
-            return () -> alliance.get() == DriverStation.Alliance.Red;
-        }
-
-        return () -> false;
-
+        // Return an anonymous function for the caller to run when needed
+        return () -> {
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+            }
+            return false;
+        };
     }
 
     // A function to normaize the PID setpoint in order to eliminate osscilations along -180 and 180
@@ -94,5 +97,36 @@ public class MiscUtils {
         }
     }
 
-    // Next common and painful functionality to implement
+    // A function that will incrament a value every loop of the code, creating a ramp
+    public static void ramp(double incrament, double cap, Consumer<Double> operation) {
+        // DONT USE, CURRENTLY CAUSES STACK OVERFLOW
+        if (incrament < cap) {
+            operation.accept(incrament);
+            ramp(incrament, cap, operation);
+        } else {
+            return;
+        }
+
+    }
+
+    // Averages two poses
+    public static Pose2d averageTwoPoses(Pose2d pose1, Pose2d pose2) {
+        Translation2d translation1 = pose1.getTranslation();
+        Translation2d translation2 = pose2.getTranslation();
+
+        Translation2d averageTranslation = new Translation2d(
+            (translation1.getX() + translation2.getX()) / 2,
+            (translation1.getY() + translation2.getY()) / 2
+        );
+
+        Rotation2d rotation1 = pose1.getRotation();
+        Rotation2d rotation2 = pose2.getRotation();
+
+        Rotation2d averageRotation = new Rotation2d(
+            (rotation1.getRadians() + rotation2.getRadians()) / 2
+        );
+
+        Pose2d averagePose = new Pose2d(averageTranslation, averageRotation);
+        return averagePose;
+    }
 }

@@ -12,7 +12,6 @@ import frc.robot.BaseConstants.DriveConstants;
 import frc.robot.BaseConstants.IOConstants;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.ControllerIO;
-import frc.robot.RobotControl.ControllerIO.controllerType;
 import frc.robot.RobotUtilities.MiscUtils;
 import frc.robot.RobotUtilities.SwerveUtils;
 
@@ -64,8 +63,8 @@ public class DriveWithStandardCommand extends Command {
   @Override
   public void execute() {
 
-    // Obtain the singleton controller instance
-    ControllerIO cIO = ControllerIO.getPrimaryInstance(controllerType.XBOX);
+    // Obtain the singleton controller instance (Type must be an xbox controller)
+    ControllerIO cIO = ControllerIO.getPrimaryInstance();
 
     // (Temporary) Get raw controller axis
     double xSpeed = cIO.xboxController.getLeftX() * -1; // Invert x axis

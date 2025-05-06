@@ -1,0 +1,114 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.860147897820723,
+        "y": 4.238519287109375
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.928627415707236,
+        "y": 4.656725431743421
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.252514327199836,
+        "y": 5.347083162006579
+      },
+      "prevControl": {
+        "x": 5.833600143511647,
+        "y": 5.096516921808718
+      },
+      "nextControl": {
+        "x": 4.711932051809211,
+        "y": 5.580184133429276
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.1167540472943582,
+        "y": 7.104520768266033
+      },
+      "prevControl": {
+        "x": 1.3636976299213273,
+        "y": 7.065548124022183
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.65,
+      "rotationDegrees": -116.11090118517261
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Feeder Slowdown",
+      "minWaypointRelativePos": 1.8550830341113105,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Curve Slowdown",
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.7970292863554758,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "elevatorLow",
+      "waypointRelativePos": 1.2706463195691207,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "coralBackward"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -53.4072172270968
+  },
+  "reversed": false,
+  "folder": "L4DFromCenter",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.52669049307985
+  },
+  "useDefaultConstraints": false
+}

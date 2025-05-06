@@ -31,7 +31,7 @@ public class MAXSwerveModule {
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
   
-  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
+  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, boolean inverted) {
 
     // Motor Objects
     m_drivingSparkMax = new SparkMax(drivingCANId, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
@@ -46,7 +46,7 @@ public class MAXSwerveModule {
     m_turningPIDController = m_turningSparkMax.getClosedLoopController();
 
     // Apply motor controller configurations
-    m_drivingSparkMax.configure(Configs.MAXSwerveModule.drivingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_drivingSparkMax.configure(inverted ? Configs.MAXSwerveModule.invertedConfig : Configs.MAXSwerveModule.drivingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_turningSparkMax.configure(Configs.MAXSwerveModule.turningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     //Configure Offsets

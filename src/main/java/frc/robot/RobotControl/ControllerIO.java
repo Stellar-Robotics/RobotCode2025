@@ -4,17 +4,17 @@
 
 package frc.robot.RobotControl;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.BaseConstants.IOConstants;
 
 /** This class's purpose is to manage drive and operator control to the robot. */
 public class ControllerIO {
 
     // Temporarily set to public
-    public XboxController xboxController;
-    public StellarController stellarController;
-    public Joystick joystickController;
+    public CommandXboxController xboxController;
+    public CommandStellarController stellarController;
+    public CommandJoystick joystickController;
 
     // Singleton pattern handling
     private static ControllerIO primaryInst;
@@ -28,7 +28,7 @@ public class ControllerIO {
     }
 
     // Get singleton primary instance
-    public static ControllerIO getPrimaryInstance(controllerType controller) {
+    public static ControllerIO getPrimaryInstance() {
 
         // Check if instance already exists
         if(primaryInst == null) {
@@ -37,7 +37,7 @@ public class ControllerIO {
             primaryInst = new ControllerIO();
 
             // Initiate the specified controller type
-            switch (controller) {
+            switch (IOConstants.kDriverControllerType) {
                 case XBOX:
                     primaryInst.InitXBOX(false);
                     break;
@@ -56,14 +56,14 @@ public class ControllerIO {
     }
 
     // Get singleton secondary instance
-    public static ControllerIO getSecondaryInstance(controllerType controller) {
+    public static ControllerIO getSecondaryInstance() {
         if(secondaryInst == null) {
 
             // Create new secondary instance if not already exists
             secondaryInst = new ControllerIO();
 
             // Initiate the specified controller type
-            switch (controller) {
+            switch (IOConstants.kOperatorControllerType) {
                 case XBOX:
                     secondaryInst.InitXBOX(true);
                     break;
@@ -83,22 +83,20 @@ public class ControllerIO {
 
     // Initiate an xbox controller
     public void InitXBOX(boolean isSecondary) {
-        xboxController = new XboxController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
+        xboxController = new CommandXboxController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
         System.out.println("Initiated New Xbox Controller");
     }
 
     // Initiate a joystick
     public void InitJOYSTICK(boolean isSecondary) {
-        joystickController = new Joystick(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
+        joystickController = new CommandJoystick(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
         System.out.println("Initiated New Joystick Controller");
     }
 
     // Initiate a custom stellar controller
     public void InitSTELLAR(boolean isSecondary) {
-        stellarController = new StellarController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
+        stellarController = new CommandStellarController(isSecondary ? IOConstants.kOperatorControllerPort : IOConstants.kDriverControllerPort);
         System.out.println("Initiated New Stellar Controller");
     }
-
-    // THIS CLASS IS INCOMPLETE
 
 }

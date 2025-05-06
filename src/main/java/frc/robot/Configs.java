@@ -8,11 +8,15 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.BaseConstants.ModuleConstants;
 import frc.robot.BaseConstants.PathPlannerConstants;
+import frc.robot.RobotMechansims.MechanismConstants;
 
 public final class Configs {
+
     public static final class MAXSwerveModule {
+
         public static final SparkMaxConfig drivingConfig = new SparkMaxConfig();
         public static final SparkMaxConfig turningConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig invertedConfig = new SparkMaxConfig();
 
         static {
             // Use module constants to calculate conversion factors and feed forward gain.
@@ -20,6 +24,9 @@ public final class Configs {
                     / ModuleConstants.kDrivingMotorReduction;
             double turningFactor = 2 * Math.PI;
             double drivingVelocityFeedForward = 1 / ModuleConstants.kDriveWheelFreeSpeedRps;
+            double drivingP = 0.04;
+            double drivingI = 0;
+            double drivingD = 0;
 
             drivingConfig
                     .idleMode(IdleMode.kBrake)
@@ -30,7 +37,7 @@ public final class Configs {
             drivingConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     // These are example gains you may need to modify them for your own robot!
-                    .pid(0.04, 0, 0)
+                    .pid(drivingP, drivingI, drivingD)
                     .velocityFF(drivingVelocityFeedForward)
                     .outputRange(-1, 1);
 
@@ -54,13 +61,138 @@ public final class Configs {
                     // longer route.
                     .positionWrappingEnabled(true)
                     .positionWrappingInputRange(0, turningFactor);
+            invertedConfig
+                    .idleMode(IdleMode.kBrake)
+                    .smartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit)
+                    .inverted(true);
+            invertedConfig.encoder
+                    .positionConversionFactor(drivingFactor) // meters
+                    .velocityConversionFactor(drivingFactor / 60.0); // meters per second
+            invertedConfig.closedLoop
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    // These are example gains you may need to modify them for your own robot!
+                    .pid(drivingP, drivingI, drivingD)
+                    .velocityFF(drivingVelocityFeedForward)
+                    .outputRange(-1, 1);
+
         }
+
+    }
+
+    public static final class AlgaeMechConfig {
+
+        public static final SparkMaxConfig pickupMotorConfig = new SparkMaxConfig();
+
+        static {
+                
+            pickupMotorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(50);
+
+        }
+
+    }
+
+    public static final class CoralMechConfig {
+
+        public static final SparkMaxConfig rollerMotorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig extensionMotorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig extensionMotorConfig2 = new SparkMaxConfig();
+
+
+        static {
+
+            rollerMotorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(40);
+        
+            rollerMotorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.2, 0, 0);
+
+            extensionMotorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(25);
+            extensionMotorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.3, 0.0000, 0)
+                .maxOutput(0.3)
+                .minOutput(-0.3);
+
+                extensionMotorConfig2
+                .idleMode(IdleMode.kBrake)
+                .follow(MechanismConstants.CoralMechValues.extensionMotorID, true)
+                .inverted(true)
+                .smartCurrentLimit(25);
+            extensionMotorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.3, 0.0000, 0)
+                .maxOutput(0.3)
+                .minOutput(-0.3);
+
+        }  
+
+    }
+
+    public static final class ElevatorConfig {
+
+        public static final SparkMaxConfig elevatorMotorConfig = new SparkMaxConfig();
+
+        static {
+
+                elevatorMotorConfig
+                        .idleMode(IdleMode.kBrake)
+                        .smartCurrentLimit(25)
+                        .inverted(true);
+                elevatorMotorConfig.closedLoop
+                        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                        .pid(0.1, 0, 0)
+                        .minOutput(-1)
+                        .maxOutput(1);
+                // elevatorMotorConfig.limitSwitch // The elevator will also have a limit switch
+                //         .forwardLimitSwitchEnabled(true)
+                //         .forwardLimitSwitchType(Type.kNormallyClosed)
+                //         .setSparkMaxDataPortConfig();
+
+        }
+
+    }
+
+    public static final class ClimberConfig {
+
+        public static final SparkMaxConfig MotorFrontConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig MotorBackConfig = new SparkMaxConfig();
+
+        static {
+
+                MotorFrontConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(40);
+                MotorFrontConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.3, 0.0000, 0)
+                .maxOutput(0.75)
+                .minOutput(-0.75);
+
+                MotorBackConfig
+                .idleMode(IdleMode.kBrake)
+                .follow(MechanismConstants.ClimberValues.motorID1, true)
+                .inverted(true)
+                .smartCurrentLimit(40);
+                MotorBackConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .pid(0.3, 0.0000, 0)
+                .maxOutput(0.75)
+                .minOutput(-0.75);
+
+        }
+
     }
 
     public static final class PathPlanner {
 
         public static RobotConfig pathPlannerConfig;
-
+        
         // Configure Me Please
         public static Translation2d[] moduleOffsets = {
                 new Translation2d(0, 0), // FL
@@ -70,12 +202,18 @@ public final class Configs {
         };
         
         static {
-                pathPlannerConfig = new RobotConfig(
-                        PathPlannerConstants.massKG, 
-                        PathPlannerConstants.momentOfInertia, 
-                        PathPlannerConstants.moduleConfig, 
-                        moduleOffsets
-                );
+
+                try {
+                        pathPlannerConfig = RobotConfig.fromGUISettings();
+                } catch (Exception e) {
+                        System.out.println("PathPlanner Auto Config Failed, Falling back!");
+                        pathPlannerConfig = new RobotConfig(
+                                PathPlannerConstants.massKG, 
+                                PathPlannerConstants.momentOfInertia, 
+                                PathPlannerConstants.moduleConfig, 
+                                moduleOffsets
+                        );   
+                }
         }
     }
 }

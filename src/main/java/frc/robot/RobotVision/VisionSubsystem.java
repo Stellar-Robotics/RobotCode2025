@@ -35,15 +35,22 @@ public class VisionSubsystem extends SubsystemBase {
   // Create camera objects for each camera on the robot.
   // The camera name should be the name of the Network Table
   // that contains the camera stream.
-  public PhotonCamera camera1 = new PhotonCamera(PhotonConstants.cameraName1);
+  public PhotonCamera camera2 = new PhotonCamera(PhotonConstants.cameraName1);
+  public PhotonCamera camera1 = new PhotonCamera(PhotonConstants.cameraName2);
 
   // Declare a variable to refrence a pose estimator
   private Pose2d robotPose;
 
   // Create a photon pose estimator for april tag, field pose estimation
-  private PhotonPoseEstimator poseEstimator = new PhotonPoseEstimator(VisionConstants.PositionConstants.tagPositions,
+  // General camera pose estimator
+  private PhotonPoseEstimator poseEstimator2 = new PhotonPoseEstimator(VisionConstants.PositionConstants.tagPositions,
   PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-  PositionConstants.robotToCam);
+  PositionConstants.generalCamTransform);
+
+  // Reef camera pose estimator
+  private PhotonPoseEstimator poseEstimator1 = new PhotonPoseEstimator(VisionConstants.PositionConstants.tagPositions, 
+  PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, 
+  PositionConstants.reefCamTransform);
 
   // Get a robot pose source from the instantiator
   public VisionSubsystem(Pose2d robotPose) { this.robotPose = robotPose; }
@@ -118,16 +125,31 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   // Get updated estimate of the global robot pose based off of april tags.
-  public Pose2d getEstimatedGlobalPose() {
-    poseEstimator.setReferencePose(robotPose);
+  public Pose2d getEstimatedGlobalPose(boolean reef) {
+
+    // Determine which camera to use
+    if (reef) {
+      poseEstimator1.setReferencePose(robotPose);
+    } else {
+      poseEstimator2.setReferencePose(robotPose);
+    }
     try {
-      Optional<EstimatedRobotPose> estimate = poseEstimator.update(getLatest(camera1));
+      Optional<EstimatedRobotPose> estimate;
+
+      // Determine which camera to use
+      if (reef) {
+        estimate = poseEstimator1.update(getLatest(camera1));
+      } else {
+        estimate = poseEstimator2.update(getLatest(camera2));
+      }
+
       if (estimate.isPresent()) {
         Pose3d estimatedRobotPose = estimate.get().estimatedPose;
         return estimatedRobotPose.toPose2d();
       } else {
         return null;
       }
+
     } catch (Exception e) {
       return null;
     }
