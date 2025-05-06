@@ -21,10 +21,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.BaseConstants.DriveConstants;
-import frc.robot.RobotAutonomous.AutoFactory;
 import frc.robot.RobotChassis.Subsystems.SwerveChassisSubsystem;
 import frc.robot.RobotControl.CommandStellarController;
-import frc.robot.RobotChassis.Commands.AutoSnapCommand;
 import frc.robot.RobotChassis.Commands.DefaultDriveCommand;
 import frc.robot.RobotVision.VisionSubsystem;
 import frc.robot.RobotControl.ControllerIO;
@@ -47,31 +45,19 @@ public class RobotContainer {
   private Elevator elevator; // Elevator subsystem
   private CoralMech coralMech; // Coral subsystem
   private ClimbSubsystem climber; // Climber subsystem
-  //private AlgaeMech algaeMech; // Algae subsystem
 
   // Pneumatics
   private PneumaticHub pneumaticHub;
-  //private DoubleSolenoid algaeExtension;
   private DoubleSolenoid climberLock;
-
-  public static enum REEFALIGNMENT {
-    LEFT,
-    CENTER,
-    RIGHT
-  }
   
   // Declare controllers
   public CommandStellarController driverController = ControllerIO.getPrimaryInstance().stellarController;
   public CommandXboxController operatorController = ControllerIO.getSecondaryInstance().xboxController;
 
-  // Custom auto factory
-  private AutoFactory autoFactory;
-
   // Declare Auto Selector
   private SendableChooser<Command> autoChooser;
 
   private double rotaryOffset;
-  private REEFALIGNMENT currentReefAlignment;
   //private boolean snapping;
 
   public RobotContainer() { 
@@ -103,7 +89,6 @@ public class RobotContainer {
     // Pneumatic Hub
     pneumaticHub = new PneumaticHub(18);
     pneumaticHub.enableCompressorDigital();
-    //algaeExtension = pneumaticHub.makeDoubleSolenoid(4, 3);
     climberLock = pneumaticHub.makeDoubleSolenoid(1, 2);
 
     // Define subsystems
@@ -112,14 +97,8 @@ public class RobotContainer {
     elevator = new Elevator();
     coralMech = new CoralMech();
     climber = new ClimbSubsystem(climberLock);
-    //algaeMech = new AlgaeMech(algaeExtension);
 
     rotaryOffset = 0;
-    currentReefAlignment =  REEFALIGNMENT.LEFT;
-    //snapping = false;
-
-    // Custom auto
-    autoFactory = new AutoFactory(chassis, elevator, coralMech);
 
     // Create auto selector and post params to the dash
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
@@ -142,12 +121,7 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    // Call the pathplanner auto lib
-    if (SmartDashboard.getBoolean("Use Custom Auto?", false)) {
-      return autoFactory.buildCustomAuto();
-    } else {
       return autoChooser.getSelected().withTimeout(15);
-    }
   }
 
   public void setRotaryOffset(double offset) {
@@ -158,35 +132,11 @@ public class RobotContainer {
     return this.rotaryOffset;
   }
 
-  public void setReefAlignment(REEFALIGNMENT alignment) {
-    this.currentReefAlignment = alignment;
-  }
-
-  public REEFALIGNMENT getReefAlignment() {
-    return this.currentReefAlignment;
-  } 
-
   public double getElevatorPosition() {
     return elevator.getPosition();
   }
 
   public void configureButtonBinds() {
-    // ____________________________________________________________________________________________
-    // Snapping alignment
-
-    //driverController.leftTrigger().onTrue(new AutoSnapCommand(chassis, 0).onlyIf(() -> driverController.center().getAsBoolean() == true));
-    //driverController.rightTrigger().onTrue(new AutoSnapCommand(chassis, 2).onlyIf(() -> driverController.center().getAsBoolean() == true));
-    //driverController.leftPaddle().onTrue(new AutoSnapCommand(chassis, 1).onlyIf(() -> driverController.center().getAsBoolean() == true));
-
-    driverController.leftTrigger().onTrue(
-      new ConditionalCommand(new AutoSnapCommand(chassis, 0), new RunCommand(() -> {}, chassis), () -> driverController.center().getAsBoolean())
-    );
-    driverController.rightTrigger().onTrue(
-      new ConditionalCommand(new AutoSnapCommand(chassis, 2), new RunCommand(() -> {}, chassis), () -> driverController.center().getAsBoolean())
-    );
-    driverController.leftPaddle().onTrue(
-      new ConditionalCommand(new AutoSnapCommand(chassis, 1), new RunCommand(() -> {}, chassis), () -> driverController.center().getAsBoolean())
-    );
 
     // ____________________________________________________________________________________________
     // Speed control
@@ -242,8 +192,6 @@ public class RobotContainer {
     ).debounce(0.1);
     operatorController.povDown().onTrue(
       new SetCoralMechPosition(coralMech, 0, true)
-      //.andThen(climber.resetClimber())
-      //.andThen(algaeMech.actuateExtension(true))
       .andThen(new WaitCommand(0.5))
       .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW))
       ).debounce(0.1);
@@ -266,19 +214,11 @@ public class RobotContainer {
         climber.toggleLock(climber, 1), // Ensure the climber is unlocked
         new WaitCommand(1), // Wait for the elevator to clear
         climber.setClimber(elevator.getPosition(), false) // Bring the climber up
-        //new WaitUntilCommand(operatorController.start()) // Wait until it's toggled off.
       ));
     driverController.rightTop().onTrue(Commands.runOnce(() -> {
       climber.setPosition(0);
     }, climber));
     driverController.leftTop().onTrue(climber.engageAndLock(elevator.getPosition())); // Commit to climb
-    // _______________________________________________________________________________________________
-    // Algae controls
-
-    // operatorController.x().onTrue(algaeMech.toggleExtension()).debounce(0.2); // Extension toggle
-    // algaeMech.setDefaultCommand(Commands.runOnce(() -> { // Algae pickup
-    //   algaeMech.setSpeed(MathUtil.applyDeadband(operatorController.getHID().getLeftY(), 0.25));
-    // }, algaeMech));
     // _______________________________________________________________________________________________
 
   }
@@ -295,21 +235,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("coralBackward", new IncramentCoralExtensionCommand(coralMech, false));
     NamedCommands.registerCommand("coralPickup", coralMech.goFullBack());
     NamedCommands.registerCommand("runCoral", coralMech.runCoral(1));
-    // Algae
-    // NamedCommands.registerCommand("algaeExtend", algaeMech.actuateExtension(false));
-    // NamedCommands.registerCommand("algaeRetract", algaeMech.actuateExtension(true));
-    // NamedCommands.registerCommand("algaeIn", algaeMech.runPickup(1)
-    // .andThen(new WaitCommand(1))
-    // .andThen(algaeMech.runPickup(0)));
-    // NamedCommands.registerCommand("algaeOut", algaeMech.runPickup(-1)
-    // .andThen(new WaitCommand(1))
-    // .andThen(algaeMech.runPickup(0)));
-    // Snapping
-    NamedCommands.registerCommand("snapLeft", new AutoSnapCommand(chassis, 0));
-    NamedCommands.registerCommand("snapCenter", new AutoSnapCommand(chassis, 1));
-    NamedCommands.registerCommand("snapRight", new AutoSnapCommand(chassis, 2));
+
     // Other Commands
     NamedCommands.registerCommand("scoreCoral", scoreAndResetCommand());
+    
     // Debugging info
     System.out.println("Registered Commands With PathPlanner");
   }

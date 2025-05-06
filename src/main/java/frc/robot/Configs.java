@@ -149,10 +149,6 @@ public final class Configs {
                         .pid(0.1, 0, 0)
                         .minOutput(-1)
                         .maxOutput(1);
-                // elevatorMotorConfig.limitSwitch // The elevator will also have a limit switch
-                //         .forwardLimitSwitchEnabled(true)
-                //         .forwardLimitSwitchType(Type.kNormallyClosed)
-                //         .setSparkMaxDataPortConfig();
 
         }
 

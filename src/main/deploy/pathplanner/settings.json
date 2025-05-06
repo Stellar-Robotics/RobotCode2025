@@ -3,21 +3,11 @@
   "robotLength": 0.838,
   "holonomicMode": true,
   "pathFolders": [
-    "AutoPaths",
-    "BlueCenter",
-    "BlueLeft",
-    "BlueRight",
-    "DialUpCenter",
-    "DialUpLeft",
-    "DialUpRight",
     "EFromRight",
     "L4DFromCenter",
     "LFeederTo",
     "LeaveLine",
-    "RFeederTo",
-    "RedCenter",
-    "RedLeft",
-    "RedRight"
+    "RFeederTo"
   ],
   "autoFolders": [
     "LeavingTheLine"
@@ -28,7 +18,7 @@
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
   "robotMass": 62.822,
-  "robotMOI": 7.83,
+  "robotMOI": 6.883,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.0762,
   "driveGearing": 5.08,
