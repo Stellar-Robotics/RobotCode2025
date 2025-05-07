@@ -210,18 +210,21 @@ public class SwerveChassisSubsystem extends SubsystemBase {
   }
 
   public void initAutoBuilder() {
-    AutoBuilder.configure(this::getPose,
+    AutoBuilder.configure(
+
+      this::getPose,
       this::resetOdometry,
       this::getChassisSpeeds,
       (speeds) -> drive(speeds),
       new PPHolonomicDriveController
         (
-          new PIDConstants(5.0, 0.0, 0.0),
-          new PIDConstants(5.0, 0.0, 0.0)
+          new PIDConstants(10, 0.0, 0.0),
+          new PIDConstants(5, 0.0, 0.0)
         ),
       Configs.PathPlanner.pathPlannerConfig,
       MiscUtils.isRedAlliance(),
       this
+
     );
   }
 
