@@ -5,15 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "elevatorHigh"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "LFeederALeft"
+            "pathName": "RightScore"
           }
         },
         {
