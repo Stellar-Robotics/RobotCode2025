@@ -98,6 +98,8 @@ public class DefaultDriveCommand extends Command {
     // Define the variables for holding the modified values in a broader scope
     double xSpeedCommanded;
     double ySpeedCommanded;
+    double xSpeedDelivered;
+    double ySpeedDelivered;
 
     // Set final speeds
     xSpeedCommanded = xSpeed;
@@ -108,8 +110,16 @@ public class DefaultDriveCommand extends Command {
     double dashTranslationSpeed = SmartDashboard.getNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     double dashAngularSpeed =  SmartDashboard.getNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
 
-    double xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
-    double ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
+    if (SmartDashboard.getBoolean("Turbo Turtle Mode", false)) {
+
+      xSpeedDelivered = xSpeedCommanded * 1 * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
+      ySpeedDelivered = ySpeedCommanded * 1 * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
+    } else {
+
+      xSpeedDelivered = xSpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
+      ySpeedDelivered = ySpeedCommanded * dashTranslationSpeed * BaseConstants.DriveConstants.elevatorSpeedOverride * BaseConstants.DriveConstants.paddleSpeedOverride;
+    }
+
     double rotDelivered = m_currentRotation * dashAngularSpeed;
 
     // Convert values into either a robot relative or field oriented Chassis Speed object

@@ -103,6 +103,7 @@ public class RobotContainer {
     // Create auto selector and post params to the dash
     SmartDashboard.putNumber("TranslationSpeed", DriveConstants.kMaxSpeedMetersPerSecond);
     SmartDashboard.putNumber("RotationSpeed", DriveConstants.kMaxAngularSpeedFactor);
+    SmartDashboard.putBoolean("Turbo Turtle Mode", false);
 
     bindCommandsToPathPlanner();
 
