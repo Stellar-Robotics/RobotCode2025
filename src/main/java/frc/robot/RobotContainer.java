@@ -56,6 +56,9 @@ public class RobotContainer {
 
   // Declare Auto Selector
   private SendableChooser<Command> autoChooser;
+  
+  // Declare dynamic elevator chooser
+  private SendableChooser<Command> dynElevator;
 
   private double rotaryOffset;
   //private boolean snapping;
@@ -113,6 +116,13 @@ public class RobotContainer {
     // Bind commands to the controllers and pathplanner
     configureButtonBinds();
     chassis.initAutoBuilder();
+
+    // Build dynElevtor options and publish
+    dynElevator = new SendableChooser<Command>();
+    dynElevator.setDefaultOption("L2 (Low)", new SetElevatorCommand(elevator, POSITIONS.LOW));
+    dynElevator.addOption("L3 (Mid)", new SetElevatorCommand(elevator, POSITIONS.MID));
+    dynElevator.addOption("L4 (Hig - Don't Use!)", new SetElevatorCommand(elevator, POSITIONS.HIGH));
+    SmartDashboard.putData("Auto Score Level", dynElevator);
 
     // Build autosP
     autoChooser = AutoBuilder.buildAutoChooser("Default");
@@ -231,6 +241,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("elevatorMedium", new SetElevatorCommand(elevator, POSITIONS.MID));
     NamedCommands.registerCommand("elevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
     NamedCommands.registerCommand("elevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
+    // Dynamic Elevator Position (decided by drive team)
+    NamedCommands.registerCommand("elevatorDynamic", Commands.runOnce(() -> dynElevator.getSelected(), elevator));
     // Coral
     NamedCommands.registerCommand("coralForward", new IncramentCoralExtensionCommand(coralMech, true));
     NamedCommands.registerCommand("coralBackward", new IncramentCoralExtensionCommand(coralMech, false));
