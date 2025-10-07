@@ -8,6 +8,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -250,6 +252,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("runCoral", coralMech.runCoral(1));
 
     // Other Commands
+    NamedCommands.registerCommand("backAway", backAway());
     NamedCommands.registerCommand("scoreCoral", scoreAndResetCommand());
     
     // Debugging info
@@ -270,6 +273,16 @@ public class RobotContainer {
     return coralMech.runCoral(0.75)
     .andThen(new IncramentCoralExtensionCommand(coralMech, false))
     .andThen(new SetElevatorCommand(elevator, POSITIONS.LOW));
+  }
+
+  // Move the bot -Y relative to robot heading
+  public Command backAway() {
+    return Commands.runOnce(() -> {
+      Rotation2d robotHeading = chassis.getGyroZ();
+      ChassisSpeeds desiredRelativeSpeeds = new ChassisSpeeds(0, -4, 0);
+      ChassisSpeeds convertedSpeeds = ChassisSpeeds.fromRobotRelativeSpeeds(desiredRelativeSpeeds, robotHeading);
+      chassis.drive(convertedSpeeds);
+    }, chassis);
   }
 
 }

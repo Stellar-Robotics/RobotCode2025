@@ -1,0 +1,55 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorDynamic"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ScoreFrmRight"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "scoreCoral"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EFromR2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "backAway"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "VoltageValley",
+  "choreoAuto": false
+}

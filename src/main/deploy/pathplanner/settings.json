@@ -7,10 +7,12 @@
     "L4DFromCenter",
     "LFeederTo",
     "LeaveLine",
+    "VoltageValley",
     "RFeederTo"
   ],
   "autoFolders": [
-    "LeavingTheLine"
+    "LeavingTheLine",
+    "VoltageValley"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
