@@ -244,7 +244,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("elevatorHigh", new SetElevatorCommand(elevator, POSITIONS.HIGH));
     NamedCommands.registerCommand("elevatorLow", new SetElevatorCommand(elevator, POSITIONS.LOW));
     // Dynamic Elevator Position (decided by drive team)
-    NamedCommands.registerCommand("elevatorDynamic", Commands.runOnce(() -> dynElevator.getSelected(), elevator));
+    //NamedCommands.registerCommand("elevatorDynamic", dynElevator.getSelected());
     // Coral
     NamedCommands.registerCommand("coralForward", new IncramentCoralExtensionCommand(coralMech, true));
     NamedCommands.registerCommand("coralBackward", new IncramentCoralExtensionCommand(coralMech, false));

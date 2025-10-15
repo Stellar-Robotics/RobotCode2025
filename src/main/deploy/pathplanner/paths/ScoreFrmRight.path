@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.988556229440789,
-        "y": 2.827284963507401
+        "x": 4.962170639909553,
+        "y": 2.8223254934357156
       },
       "prevControl": {
-        "x": 6.0810515867551285,
-        "y": 2.23116891130631
+        "x": 5.358652766245902,
+        "y": 2.5591190918115383
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,20 +29,41 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.398479578096948,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [
     {
       "fieldPosition": {
-        "x": 2.5,
+        "x": 1.2,
         "y": 5.5
       },
       "rotationOffset": 0.0,
       "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.6048796566427291,
+      "maxWaypointRelativePos": 0.7586610749551169,
       "name": "Point Towards Zone"
     }
   ],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "elevatorLow",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -53,7 +74,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.74929262646384
+    "rotation": 121.30801549171734
   },
   "reversed": false,
   "folder": "VoltageValley",
