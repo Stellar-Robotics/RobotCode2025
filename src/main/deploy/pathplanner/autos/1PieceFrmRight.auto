@@ -45,6 +45,12 @@
           "data": {
             "name": "backAway"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OutFromRight"
+          }
         }
       ]
     }
