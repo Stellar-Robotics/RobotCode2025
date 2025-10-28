@@ -7,7 +7,7 @@
         {
           "type": "named",
           "data": {
-            "name": "elevatorLow"
+            "name": "elevatorHigh"
           }
         },
         {
@@ -19,13 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ScoreFrmRight"
+            "pathName": "ScoreFrmCenter"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {
@@ -49,7 +49,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "OutFromRight"
+            "pathName": "OutFromCenter"
           }
         }
       ]
